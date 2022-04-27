@@ -1,7 +1,13 @@
 from searchbound import *
-...
-#INSPIRATION: https://www.geeksforgeeks.org/given-linked-list-representation-of-complete-tree-convert-it-to-linked-representation/
 
+#DOCUMENTATION: 
+# treelib
+# https://treelib.readthedocs.io/en/latest/#:~:text=treelib%20is%20created%20to%20provide,deep%20copying%2C%20subtree%20cutting%20etc
+# from treelib import Node, Tree
+
+# anytree
+# https://anytree.readthedocs.io/en/latest/ 
+from anytree import Node, RenderTree, AsciiStyle, NodeMixin
 """
 So, we're not using binary trees
 we got n nodes in a graph, where we make a tour
@@ -24,6 +30,16 @@ def fillTheTree(input):
 
 def main():
     input = [1,4,8,14,55,21,44,61]
-    theTree = fillTheTree(input)
+    f = Node("f")
+    b = Node("b", parent=f)
+    a = Node("a", parent=b)
+    d = Node("d", parent=b)
+    c = Node("c", parent=d)
+    e = Node("e", parent=d)
+    g = Node("g", parent=f)
+    i = Node("i", parent=g)
+    h = Node("h", parent=i)
+    print(RenderTree(f, style=AsciiStyle()))
+    # theTree = fillTheTree(input)
 
 main()
