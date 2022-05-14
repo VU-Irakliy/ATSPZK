@@ -46,16 +46,20 @@ def fillTheTree(input):
 
 def main():
     input = [1,4,8,14,55,21,44,61]
-    f = Node("f")
-    b = Node("b", parent=f)
-    g = Node("g", parent=f)
-    a = Node("a", parent=b)
-    d = Node("d", parent=b)
-    c = Node("c", parent=d)
-    e = Node("e", parent=d)
-    i = Node("i", parent=g)
-    h = Node("h", parent=i)
+    f = Node("f", weight = 0)
+    b = Node("b", parent=f, weight = 3)
+    g = Node("g", parent=f, weight = 4)
+    a = Node("a", parent=b, weight = 5)
+    d = Node("d", parent=b, weight = 1)
+    c = Node("c", parent=d, weight = 3)
+    e = Node("e", parent=d, weight = 2)
+    i = Node("i", parent=g, weight = 2)
+    h = Node("h", parent=i, weight = 2)
+    some = f.weight + b.weight + a.weight
     print(RenderTree(f, style=AsciiStyle()))
+    print(some)
+    print(f.children)
+    print(len(f.children))
     # theTree = fillTheTree(input)
 
 main()
