@@ -40,16 +40,35 @@ TASKS:
 5. 
 """
 
-def fillTheTree(input):
-    ...
-    #####HOW TO CONSTRUCT THIS>>  
+# def fillTheTree(input):
+#     ...
+#     #####HOW TO CONSTRUCT THIS>>  
+
+
+#WHEN WHICH ALGORITHM IS USED
+def execute_the_algorithm(tree, input):
+    if input == 1:
+        minimum = 0
+        temp_minimum = 0
+        result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
+        print(result)
+        
+    # elif input == 2:
+    #     bestFirstSearch(tree)
+        
 
 
 def main():
     # file = 'Example1.csv'
     # matrix_input = pd.read_csv(file)
     # input = [1,4,8,14,55,21,44,61]
+    nodes = ['A', 'B', 'C', 'D', 'E']
+    nodes_size = 5
     Start = Node("A", weight = 0)
+    '''
+    THE TREE IS HARDCODED FOR NOW
+    IN THE FUTURE, GOING TO GENERATE IT FROM THE CSV FILE 
+    '''
     #ABCDEA
     B = Node("B", parent=Start, weight = 8)
     C = Node("C", parent=B, weight = 1)
@@ -187,7 +206,18 @@ def main():
     B = Node("B", parent=C, weight = 9)
     A = Node("A", parent=B, weight = 4)
 
-    print(RenderTree(Start, style=ContRoundStyle()))
+    # print(RenderTree(Start, style=ContStyle()))
+    
+    # print( (Start.children[0].children[1], Start.children[0].weight + Start.children[0].children[1].weight), Start.children[2], Start.children[0].children[0], Start.children[1])
+    # print(Start.children[0].weight + Start.children[0].children[1].weight)
+
+    # print(len(Start.children[0].children))
+    # print(Start.children[0].children)
+
+    # print(Start.children[0].children[0].children[0].weight)
+    ##execute_the_algorithm(Start)
+
+    execute_the_algorithm(Start, 1)
     # print(some)
     # print(f.children)
     # print(len(f.children))
