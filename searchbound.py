@@ -1,38 +1,80 @@
 
 
-#####
-"""
-The input will be unsorted/sorted?
-When using a tree value, to retrieve a value, do tree.data
-if left/right, do tree.right/left
-how the tree will be made?
-look at the image made on a meeting u moron
-but assignment problem...
-WTFFFFFF.>>>>
-
-
-"""
 def depthFirstBranchAndBound(tree, minimum_cost, temp_cost):
     if len(tree.children) > 0:
         i = 0
         while(i < len(tree.children)):
             if minimum_cost > (temp_cost + tree.children[i].weight) or minimum_cost == 0:
-                temp_temp_cost = temp_cost
-                temp_temp_cost += tree.children[i].weight
-                temp_cost = depthFirstBranchAndBound(tree.children[i], 
+                temp_cost += tree.children[i].weight
+                # print("Current cost:", temp_cost)
+                minimum_cost = depthFirstBranchAndBound(tree.children[i], 
                                             minimum_cost, temp_cost)
+                temp_cost-=tree.children[i].weight
+                
             i += 1
-            
-            
-        return temp_cost
+
+        return minimum_cost
     else:
-        
         minimum_cost = temp_cost
-        print(minimum_cost)
+        # print(tree)
+        # print("CURRENT MINIMUM COST:", minimum_cost)
         return minimum_cost
 
 
-
-
 def bestFirstSearch(tree):
-    ...
+    priority_queue = []
+    closed = []
+    i = 0
+    if(len(tree.children)>0):
+        while(i < len(tree.children)):
+            priority_queue_member = (tree.children[i], tree.children[i].weight )
+            priority_queue.append(priority_queue_member)
+            i += 1
+        priority_queue = sorted(priority_queue, key= lambda x: x[1])
+        reached_minimum = False
+    
+        while(i < len(priority_queue) or reached_minimum == False):
+            # print(priority_queue[0][0])
+            if(len(priority_queue[0][0].children) > 0):
+
+                temp_branch = priority_queue.pop(0)
+                # print('Processing ',temp_branch)
+                closed.append(temp_branch)
+                if(len(temp_branch[0].children) > 0):
+                    y = 0
+                    while(y < len(temp_branch[0].children)):
+                        temp_cost = temp_branch[1]
+                        priority_queue_member = (temp_branch[0].children[y], (temp_branch[0].children[y].weight + temp_cost) )
+                        priority_queue.append(priority_queue_member)
+                        # print('WHat', priority_queue)
+                        y += 1
+                        
+                    priority_queue = sorted(priority_queue, key= lambda x: x[1])
+                    
+            else:
+                temp_branch = priority_queue.pop(0)
+                reached_minimum = True
+                # print(temp_branch)
+                # print("SO   ", temp_branch[0])
+                return temp_branch
+
+            i+=1
+
+
+        # if children == 0, return minimum_cost ###IF the tree from the priority queue no kids, end
+        # t= bestFirstSearch(tree, minimum, priority_queue)
+        # return t
+#         print(priority_queue[0][0])
+#         t = bestFirstSearch(priority_queue[0][0])
+#         if (t[0] != None):
+#             r = (priority_queue[0][0] + t[0], priority_queue[0][1] + t[1])
+#             priority_queue.append(r)
+#         return (priority_queue[0][0], priority_queue[1])
+#     else:
+#         return (None, 0)
+
+# [3,5,6]
+# [3]     [4,5,6]
+
+# x = bestFirstSearch(node0)
+# print(x[0])

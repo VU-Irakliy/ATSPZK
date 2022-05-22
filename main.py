@@ -47,166 +47,217 @@ TASKS:
 
 #WHEN WHICH ALGORITHM IS USED
 def execute_the_algorithm(tree, input):
+    
     if input == 1:
         minimum = 0
         temp_minimum = 0
         result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
         print(result)
         
+    elif input == 2:
+        minimum = 0
+        priority_queue = []
+        result = bestFirstSearch(tree)
+        print("Minimum Branch: ",result[0])
+        print("Minimum Cost: ", result[1])
+    
+    else:
+        ...
+
+    
+    # print("Result sis: ",result)
+        
     # elif input == 2:
     #     bestFirstSearch(tree)
         
+points = []
+nodes = []
+Start = Node('A', weight=0)
 
+def make_tree(q, p, names, flag):
+    print(p[0])
+    if (p[0] == 'A') & flag: 
+        print("gav")
+        return
+    else:
+        for i in range(len(p[1])):
+            # print(names)
+            if(p[1][i] != 0):
+                t = Node(names[i], parent=q, weight=p[1][i])
+                nodes.append(t)
+                print('meow', i)
+                make_tree(t, points[i], names, True)
+
+
+
+def read_matr(filename):
+#    nodes.append("A", weight=0)
+
+    f = open(filename)
+    names = f.readline().split()
+    for i in range(len(names)):
+        s = f.readline().split()
+        ch = []
+        for j in range(len(s)):
+            # if j != i:
+            ch.append(int(s[j]))
+            # else:
+            #     ch.append(0)
+        points.append((names[i], ch))
+    f.close()
+    print(points)
+    make_tree(Start, points[0], names, False)
 
 def main():
-    # file = 'Example1.csv'
+    filename = 'matr1.txt'
+    read_matr(filename)
+    print(nodes)
+    print(points)
+
     # matrix_input = pd.read_csv(file)
-    # input = [1,4,8,14,55,21,44,61]
-    nodes = ['A', 'B', 'C', 'D', 'E']
-    nodes_size = 5
-    Start = Node("A", weight = 0)
-    '''
-    THE TREE IS HARDCODED FOR NOW
-    IN THE FUTURE, GOING TO GENERATE IT FROM THE CSV FILE 
-    '''
-    #ABCDEA
-    B = Node("B", parent=Start, weight = 8)
-    C = Node("C", parent=B, weight = 1)
-    D = Node("D", parent=C, weight = 8)
-    E = Node("E", parent=D, weight = 9)
-    A = Node("A", parent=E, weight = 6)
+    # Start = Node("A", weight = 0)
+    # '''
+    # THE TREE IS HARDCODED FOR NOW
+    # IN THE FUTURE, GOING TO GENERATE IT FROM THE CSV FILE 
+    # '''
+    # #ABCDEA
+    # B = Node("B", parent=Start, weight = 8)
+    # C = Node("C", parent=B, weight = 1)
+    # D = Node("D", parent=C, weight = 8)
+    # E = Node("E", parent=D, weight = 9)
+    # A = Node("A", parent=E, weight = 6)
 
-    #A B C EDA
-    E = Node("E", parent=C, weight = 5)
-    D = Node("D", parent=E, weight = 3)
-    A = Node("A", parent=D, weight = 5)
+    # #A B C EDA
+    # E = Node("E", parent=C, weight = 5)
+    # D = Node("D", parent=E, weight = 3)
+    # A = Node("A", parent=D, weight = 5)
 
-    #ABDCEA ....................
-    D = Node("D", parent=B, weight = 7)
-    C = Node("C", parent=D, weight = 7)
-    E = Node("E", parent=C, weight = 5)
-    A = Node("A", parent=E, weight = 6)
+    # #ABDCEA ....................
+    # D = Node("D", parent=B, weight = 7)
+    # C = Node("C", parent=D, weight = 7)
+    # E = Node("E", parent=C, weight = 5)
+    # A = Node("A", parent=E, weight = 6)
 
-    #ABDECA ........................
-    E = Node("E", parent=D, weight = 9)
-    C = Node("C", parent=E, weight = 1)
-    A = Node("A", parent=C, weight = 3)
+    # #ABDECA ........................
+    # E = Node("E", parent=D, weight = 9)
+    # C = Node("C", parent=E, weight = 1)
+    # A = Node("A", parent=C, weight = 3)
 
-    #ABECDA
-    E = Node("E", parent=B, weight = 4)
-    C = Node("C", parent=E, weight = 1)
-    D = Node("D", parent=C, weight = 8)
-    A = Node("A", parent=D, weight = 5)
+    # #ABECDA
+    # E = Node("E", parent=B, weight = 4)
+    # C = Node("C", parent=E, weight = 1)
+    # D = Node("D", parent=C, weight = 8)
+    # A = Node("A", parent=D, weight = 5)
 
-    #ABEDCA
-    D = Node("D", parent=E, weight = 3)
-    C = Node("C", parent=D, weight = 7)
-    A = Node("A", parent=C, weight = 3)
+    # #ABEDCA
+    # D = Node("D", parent=E, weight = 3)
+    # C = Node("C", parent=D, weight = 7)
+    # A = Node("A", parent=C, weight = 3)
     
     
-    #ACBDEA
-    C = Node("C", parent=Start, weight = 8)
-    B = Node("B", parent=C, weight = 9)
-    D = Node("D", parent=B, weight = 7)
-    E = Node("E", parent=D, weight = 9)
-    A = Node("A", parent=E, weight = 6)
+    # #ACBDEA
+    # C = Node("C", parent=Start, weight = 8)
+    # B = Node("B", parent=C, weight = 9)
+    # D = Node("D", parent=B, weight = 7)
+    # E = Node("E", parent=D, weight = 9)
+    # A = Node("A", parent=E, weight = 6)
 
-    #ACBEDA...........................
-    E = Node("E", parent=B, weight = 4)
-    D = Node("D", parent=E, weight = 3)
-    A = Node("A", parent=D, weight = 5)
+    # #ACBEDA...........................
+    # E = Node("E", parent=B, weight = 4)
+    # D = Node("D", parent=E, weight = 3)
+    # A = Node("A", parent=D, weight = 5)
 
-    #ACDBEA
-    D = Node("D", parent=C, weight = 8)
-    B = Node("B", parent=D, weight = 1)
-    E = Node("E", parent=B, weight = 4)
-    A = Node("A", parent=E, weight = 6)
+    # #ACDBEA
+    # D = Node("D", parent=C, weight = 8)
+    # B = Node("B", parent=D, weight = 1)
+    # E = Node("E", parent=B, weight = 4)
+    # A = Node("A", parent=E, weight = 6)
 
-    #ACDEBA
-    E = Node("E", parent=D, weight = 9)
-    B = Node("B", parent=E, weight = 1)
-    A = Node("A", parent=B, weight = 4)
+    # #ACDEBA
+    # E = Node("E", parent=D, weight = 9)
+    # B = Node("B", parent=E, weight = 1)
+    # A = Node("A", parent=B, weight = 4)
 
-    #ACEBDA
-    E = Node("E", parent=C, weight = 5)
-    B = Node("B", parent=E, weight = 1)
-    D = Node("D", parent=B, weight = 7)
-    A = Node("A", parent=D, weight = 5)
+    # #ACEBDA
+    # E = Node("E", parent=C, weight = 5)
+    # B = Node("B", parent=E, weight = 1)
+    # D = Node("D", parent=B, weight = 7)
+    # A = Node("A", parent=D, weight = 5)
 
-    #ACEDBA.
-    D = Node("D", parent=E, weight = 3)
-    B = Node("B", parent=D, weight = 1)
-    A = Node("A", parent=B, weight = 4)
+    # #ACEDBA.
+    # D = Node("D", parent=E, weight = 3)
+    # B = Node("B", parent=D, weight = 1)
+    # A = Node("A", parent=B, weight = 4)
 
-    #ADBCEA  
-    D = Node("D", parent=Start, weight = 2)
-    B = Node("B", parent=D, weight = 1)
-    C = Node("C", parent=B, weight = 1)
-    E = Node("E", parent=C, weight = 5)
-    A = Node("A", parent=E, weight = 6)
+    # #ADBCEA  
+    # D = Node("D", parent=Start, weight = 2)
+    # B = Node("B", parent=D, weight = 1)
+    # C = Node("C", parent=B, weight = 1)
+    # E = Node("E", parent=C, weight = 5)
+    # A = Node("A", parent=E, weight = 6)
 
-    #ADBECA.............................
-    E = Node("E", parent=B, weight = 4)
-    C = Node("C", parent=E, weight = 1)
-    A = Node("A", parent=C, weight = 3)
+    # #ADBECA............................. THE CORRECT RESULT
+    # E = Node("E", parent=B, weight = 4)
+    # C = Node("C", parent=E, weight = 1)
+    # A = Node("A", parent=C, weight = 3)
 
-    #ADCBEA.
-    C = Node("C", parent=D, weight = 7)
-    B = Node("B", parent=C, weight = 9)
-    E = Node("E", parent=B, weight = 4)
-    A = Node("A", parent=E, weight = 6)
+    # #ADCBEA.
+    # C = Node("C", parent=D, weight = 7)
+    # B = Node("B", parent=C, weight = 9)
+    # E = Node("E", parent=B, weight = 4)
+    # A = Node("A", parent=E, weight = 6)
 
-    #ADCEBA.
-    E = Node("E", parent=C, weight = 5)
-    B = Node("B", parent=E, weight = 1)
-    A = Node("A", parent=B, weight = 4)
+    # #ADCEBA.
+    # E = Node("E", parent=C, weight = 5)
+    # B = Node("B", parent=E, weight = 1)
+    # A = Node("A", parent=B, weight = 4)
 
-    #ADEBCA
-    E = Node("E", parent=D, weight = 9)
-    B = Node("B", parent=E, weight = 1)
-    C = Node("C", parent=B, weight = 1)
-    A = Node("A", parent=C, weight = 3)
+    # #ADEBCA
+    # E = Node("E", parent=D, weight = 9)
+    # B = Node("B", parent=E, weight = 1)
+    # C = Node("C", parent=B, weight = 1)
+    # A = Node("A", parent=C, weight = 3)
 
-    #ADECBA
-    C = Node("C", parent=E, weight = 1)
-    B = Node("B", parent=C, weight = 9)
-    A = Node("A", parent=B, weight = 4)
+    # #ADECBA
+    # C = Node("C", parent=E, weight = 1)
+    # B = Node("B", parent=C, weight = 9)
+    # A = Node("A", parent=B, weight = 4)
 
-    #AEBCDA...............................
-    E = Node("E", parent=Start, weight = 4)
-    B = Node("B", parent=E, weight = 1)
-    C = Node("C", parent=B, weight = 1)
-    D = Node("D", parent=C, weight = 8)
-    A = Node("A", parent=D, weight = 5)
+    # #AEBCDA...............................
+    # E = Node("E", parent=Start, weight = 4)
+    # B = Node("B", parent=E, weight = 1)
+    # C = Node("C", parent=B, weight = 1)
+    # D = Node("D", parent=C, weight = 8)
+    # A = Node("A", parent=D, weight = 5)
 
-    #AEBDCA
-    D = Node("E", parent=B, weight = 4)
-    C = Node("C", parent=D, weight = 7)
-    A = Node("A", parent=C, weight = 3)
+    # #AEBDCA
+    # D = Node("E", parent=B, weight = 4)
+    # C = Node("C", parent=D, weight = 7)
+    # A = Node("A", parent=C, weight = 3)
 
-    #AECBDA
-    C = Node("C", parent=E, weight = 1)
-    B = Node("B", parent=C, weight = 9)
-    D = Node("D", parent=B, weight = 7)
-    A = Node("A", parent=D, weight = 5)
+    # #AECBDA
+    # C = Node("C", parent=E, weight = 1)
+    # B = Node("B", parent=C, weight = 9)
+    # D = Node("D", parent=B, weight = 7)
+    # A = Node("A", parent=D, weight = 5)
 
-    #AECDBA
-    D = Node("D", parent=C, weight = 8)
-    B = Node("B", parent=D, weight = 1)
-    A = Node("A", parent=B, weight = 4)
+    # #AECDBA
+    # D = Node("D", parent=C, weight = 8)
+    # B = Node("B", parent=D, weight = 1)
+    # A = Node("A", parent=B, weight = 4)
 
-    #AEDBCA
-    D = Node("D", parent=E, weight = 3)
-    B = Node("B", parent=D, weight = 1)
-    C = Node("C", parent=B, weight = 1)
-    A = Node("A", parent=C, weight = 3)
+    # #AEDBCA
+    # D = Node("D", parent=E, weight = 3)
+    # B = Node("B", parent=D, weight = 1)
+    # C = Node("C", parent=B, weight = 1)
+    # A = Node("A", parent=C, weight = 3)
 
-    #AEDCBA
-    C = Node("C", parent=D, weight = 7)
-    B = Node("B", parent=C, weight = 9)
-    A = Node("A", parent=B, weight = 4)
+    # #AEDCBA
+    # C = Node("C", parent=D, weight = 7)
+    # B = Node("B", parent=C, weight = 9)
+    # A = Node("A", parent=B, weight = 4)
 
-    # print(RenderTree(Start, style=ContStyle()))
+    print(RenderTree(nodes[0], style=ContStyle()))
     
     # print( (Start.children[0].children[1], Start.children[0].weight + Start.children[0].children[1].weight), Start.children[2], Start.children[0].children[0], Start.children[1])
     # print(Start.children[0].weight + Start.children[0].children[1].weight)
@@ -217,11 +268,12 @@ def main():
     # print(Start.children[0].children[0].children[0].weight)
     ##execute_the_algorithm(Start)
 
-    execute_the_algorithm(Start, 1)
+    # execute_the_algorithm(Start, 2)
     # print(some)
     # print(f.children)
     # print(len(f.children))
     # print(matrix_input)
+    # A/D/B/E/C/A
     # theTree = fillTheTree(input)
 
 main()
