@@ -10,3 +10,19 @@ Node(name, parent = , weight = )
 w = Walker() creates a walker
 It helps us traverse the tree
 w.walk(A,B) They have to be a part of the same tree
+
+
+Assignment Problem:
+Worst case scenario for formed subtoures: If N is even -> n/2 and if N is odd -> n/2 - 0.5
+
+
+
+DEF ASSIGNMENT Problem
+
+
+
+DEF ZK
+
+
+
+ASSIGNMENT(R,E,C)

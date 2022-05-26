@@ -13,80 +13,56 @@ https://anytree.readthedocs.io/en/latest/tricks/weightededges.html
 
 """
 from anytree import *
-"""
-So, we're not using binary trees
-we got n nodes in a graph, where we make a tour
-A is a starting point
-                                A(0)
 
-                   AB(0+3)      AC(0+4)        AD(0+6)
-      ABC(3+4 = 7)    ABD(0+6)
-ABCD(7 + 4 = 11)
-ABCDA(11 + 3 = 14) 
-
-Parents can have at least 1 child and more than 2 children 
- 
- 
-"""
-
-"""
-TASKS:
-1. HOW SHOULD I APPROACH IN TRAVERSAL? DO I MAKE TREE OR USE THE MATRIX TO TRAVERSE?
-2. IF I MAKE A TREE, HOW TO TRAVERSE IT? 
-   IF I USE EXISTING MATRIX, HOW DO I TRAVERSE IT? 
-3. WHEN I FIGURE ONE OF THOSE OUT, START CONSTRUCTING THE ALGORITHM.
-4. HOW TO PUT AND FOLLOW A STARTING POINT, NUM OF CITIES TRAVERSED,
-   WHICH ONES ARE ALREADY PASSED, AMINIMUM, AND OTHER CONDITIONS.
-5. 
-"""
-
-# def fillTheTree(input):
-#     ...
-#     #####HOW TO CONSTRUCT THIS>>  
 
 
 #WHEN WHICH ALGORITHM IS USED
+#DFBNB IN ZHANG N KORF ALGORITHM IS USED WHEN THERE ARE A LOT OF INSTANCES AKA A LOT OF CITIES 
+# (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
 def execute_the_algorithm(tree, input):
     
     if input == 1:
         minimum = 0
         temp_minimum = 0
         result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
+        print("Result of Depth-First Branch-and-Bound: ")
         print(result)
         
     elif input == 2:
         minimum = 0
         priority_queue = []
         result = bestFirstSearch(tree)
+        print("Result of Best-First Search: ")
         print("Minimum Branch: ",result[0])
         print("Minimum Cost: ", result[1])
     
     else:
         ...
 
-    
-    # print("Result sis: ",result)
-        
-    # elif input == 2:
-    #     bestFirstSearch(tree)
+#end
         
 points = []
+# matrix = []
 nodes = []
 Start = Node('A', weight=0)
 
-def make_tree(q, p, names, flag):
-    print(p[0])
+def make_tree(q, p, r, names, flag):
+    # print(p[0])
     if (p[0] == 'A') & flag: 
-        print("gav")
+        # print("gav")
         return
     else:
         for i in range(len(p[1])):
             # print(names)
-            if(p[1][i] != 0):
+            if(p[1][i] != 0) and (r[i] == 0) and (names[i] != 'A' or sum(r) == len(names) - 1):
                 t = Node(names[i], parent=q, weight=p[1][i])
                 nodes.append(t)
-                print('meow', i)
-                make_tree(t, points[i], names, True)
+                # print('meow', i)
+                # print('mmmm',p[1])
+                # return
+                s = r.copy()
+                s[i] = 1
+                make_tree(t, points[i], s, names, True)
 
 
 
@@ -104,22 +80,25 @@ def read_matr(filename):
             # else:
             #     ch.append(0)
         points.append((names[i], ch))
+        # matrix.append((names[i], ch))
     f.close()
     print(points)
-    make_tree(Start, points[0], names, False)
+    r = [0] * len(points)
+    make_tree(Start, points[0], r, names, False)
 
 def main():
     filename = 'matr1.txt'
     read_matr(filename)
     print(nodes)
     print(points)
+    # print('The matrix:',matrix)
 
-    # matrix_input = pd.read_csv(file)
-    # Start = Node("A", weight = 0)
+ 
     # '''
     # THE TREE IS HARDCODED FOR NOW
     # IN THE FUTURE, GOING TO GENERATE IT FROM THE CSV FILE 
     # '''
+    # Start = Node("A", weight = 0)
     # #ABCDEA
     # B = Node("B", parent=Start, weight = 8)
     # C = Node("C", parent=B, weight = 1)
@@ -257,18 +236,13 @@ def main():
     # B = Node("B", parent=C, weight = 9)
     # A = Node("A", parent=B, weight = 4)
 
-    print(RenderTree(nodes[0], style=ContStyle()))
+    print(RenderTree(Start, style=ContStyle()))
     
-    # print( (Start.children[0].children[1], Start.children[0].weight + Start.children[0].children[1].weight), Start.children[2], Start.children[0].children[0], Start.children[1])
-    # print(Start.children[0].weight + Start.children[0].children[1].weight)
+    # print(RenderTree(nodes, style=ContStyle()))
 
-    # print(len(Start.children[0].children))
-    # print(Start.children[0].children)
-
-    # print(Start.children[0].children[0].children[0].weight)
-    ##execute_the_algorithm(Start)
-
-    # execute_the_algorithm(Start, 2)
+    print("The matrix has been created!")
+    print("The tree has been created!")
+    execute_the_algorithm(Start, 2)
     # print(some)
     # print(f.children)
     # print(len(f.children))
