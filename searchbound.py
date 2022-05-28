@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def depthFirstBranchAndBound(tree, minimum_cost, temp_cost):
     if len(tree.children) > 0:
@@ -61,20 +61,24 @@ def bestFirstSearch(tree):
             i+=1
 
 
-        # if children == 0, return minimum_cost ###IF the tree from the priority queue no kids, end
-        # t= bestFirstSearch(tree, minimum, priority_queue)
-        # return t
-#         print(priority_queue[0][0])
-#         t = bestFirstSearch(priority_queue[0][0])
-#         if (t[0] != None):
-#             r = (priority_queue[0][0] + t[0], priority_queue[0][1] + t[1])
-#             priority_queue.append(r)
-#         return (priority_queue[0][0], priority_queue[1])
-#     else:
-#         return (None, 0)
+ 
 
-# [3,5,6]
-# [3]     [4,5,6]
+def ZK_algorithm(named_matrix, names, matrix):
+    result = assignment_hungarian(named_matrix, names, matrix)
+    '''
+    if we have a complete tour:
+        return result
+    else:
+        loop:
+            we find the subproblem to deconstruct (condition construction in progress...)
+            choose which one to deconstruct
+            sub_n (amount of nodes in subtour)
+            we choose which 
+    '''
 
-# x = bestFirstSearch(node0)
-# print(x[0])
+
+
+def assignment_hungarian(named_matrix, names, matrix):
+
+    return #[A, 12, D] ,[B, 21, E]
+    ...

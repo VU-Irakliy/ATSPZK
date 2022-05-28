@@ -1,11 +1,7 @@
 from searchbound import *
-import pandas as pd
+import math
 
 #DOCUMENTATION: 
-# treelib
-# https://treelib.readthedocs.io/en/latest/#:~:text=treelib%20is%20created%20to%20provide,deep%20copying%2C%20subtree%20cutting%20etc
-# from treelib import Node, Tree
-
 # anytree
 """
 https://anytree.readthedocs.io/en/latest/ 
@@ -19,7 +15,7 @@ from anytree import *
 #WHEN WHICH ALGORITHM IS USED
 #DFBNB IN ZHANG N KORF ALGORITHM IS USED WHEN THERE ARE A LOT OF INSTANCES AKA A LOT OF CITIES 
 # (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
-def execute_the_algorithm(tree, input):
+def execute_the_algorithm(tree, named_matrix, names, matrix, input):
     
     if input == 1:
         minimum = 0
@@ -37,7 +33,7 @@ def execute_the_algorithm(tree, input):
         print("Minimum Cost: ", result[1])
     
     else:
-        ...
+        ZK_algorithm(named_matrix, names, matrix)
 
 #end
         
@@ -68,8 +64,11 @@ def make_tree(q, p, r, names, flag):
 
 def read_matr(filename):
 #    nodes.append("A", weight=0)
-
-    f = open(filename)
+    try:
+        f = open(filename)
+    except:
+        print("Error: The file doesn't exist in the directory of the program")
+        exit()
     names = f.readline().split()
     for i in range(len(names)):
         s = f.readline().split()
@@ -82,172 +81,39 @@ def read_matr(filename):
         points.append((names[i], ch))
         # matrix.append((names[i], ch))
     f.close()
-    print(points)
+    # print(points)
     r = [0] * len(points)
     make_tree(Start, points[0], r, names, False)
 
 def main():
-    filename = 'matr1.txt'
+    filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
+   
     read_matr(filename)
-    print(nodes)
+    # print(nodes)
     print(points)
-    # print('The matrix:',matrix)
-
- 
-    # '''
-    # THE TREE IS HARDCODED FOR NOW
-    # IN THE FUTURE, GOING TO GENERATE IT FROM THE CSV FILE 
-    # '''
-    # Start = Node("A", weight = 0)
-    # #ABCDEA
-    # B = Node("B", parent=Start, weight = 8)
-    # C = Node("C", parent=B, weight = 1)
-    # D = Node("D", parent=C, weight = 8)
-    # E = Node("E", parent=D, weight = 9)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #A B C EDA
-    # E = Node("E", parent=C, weight = 5)
-    # D = Node("D", parent=E, weight = 3)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #ABDCEA ....................
-    # D = Node("D", parent=B, weight = 7)
-    # C = Node("C", parent=D, weight = 7)
-    # E = Node("E", parent=C, weight = 5)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #ABDECA ........................
-    # E = Node("E", parent=D, weight = 9)
-    # C = Node("C", parent=E, weight = 1)
-    # A = Node("A", parent=C, weight = 3)
-
-    # #ABECDA
-    # E = Node("E", parent=B, weight = 4)
-    # C = Node("C", parent=E, weight = 1)
-    # D = Node("D", parent=C, weight = 8)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #ABEDCA
-    # D = Node("D", parent=E, weight = 3)
-    # C = Node("C", parent=D, weight = 7)
-    # A = Node("A", parent=C, weight = 3)
+    named_points = points.copy()
+    matrix_points = []
+    names = []
+    for i in named_points:
+        names.append(i[0])
+        matrix_points.append(i[1])
     
+    for i in matrix_points:
+        print(i)
+        for j in range(0, len(i)):
+            print(j)
+            if i[j] == 0:
+                i[j] = math.nan
+                #if you want to check if it's nan then do "if math.isnan(x): then ...."
     
-    # #ACBDEA
-    # C = Node("C", parent=Start, weight = 8)
-    # B = Node("B", parent=C, weight = 9)
-    # D = Node("D", parent=B, weight = 7)
-    # E = Node("E", parent=D, weight = 9)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #ACBEDA...........................
-    # E = Node("E", parent=B, weight = 4)
-    # D = Node("D", parent=E, weight = 3)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #ACDBEA
-    # D = Node("D", parent=C, weight = 8)
-    # B = Node("B", parent=D, weight = 1)
-    # E = Node("E", parent=B, weight = 4)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #ACDEBA
-    # E = Node("E", parent=D, weight = 9)
-    # B = Node("B", parent=E, weight = 1)
-    # A = Node("A", parent=B, weight = 4)
-
-    # #ACEBDA
-    # E = Node("E", parent=C, weight = 5)
-    # B = Node("B", parent=E, weight = 1)
-    # D = Node("D", parent=B, weight = 7)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #ACEDBA.
-    # D = Node("D", parent=E, weight = 3)
-    # B = Node("B", parent=D, weight = 1)
-    # A = Node("A", parent=B, weight = 4)
-
-    # #ADBCEA  
-    # D = Node("D", parent=Start, weight = 2)
-    # B = Node("B", parent=D, weight = 1)
-    # C = Node("C", parent=B, weight = 1)
-    # E = Node("E", parent=C, weight = 5)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #ADBECA............................. THE CORRECT RESULT
-    # E = Node("E", parent=B, weight = 4)
-    # C = Node("C", parent=E, weight = 1)
-    # A = Node("A", parent=C, weight = 3)
-
-    # #ADCBEA.
-    # C = Node("C", parent=D, weight = 7)
-    # B = Node("B", parent=C, weight = 9)
-    # E = Node("E", parent=B, weight = 4)
-    # A = Node("A", parent=E, weight = 6)
-
-    # #ADCEBA.
-    # E = Node("E", parent=C, weight = 5)
-    # B = Node("B", parent=E, weight = 1)
-    # A = Node("A", parent=B, weight = 4)
-
-    # #ADEBCA
-    # E = Node("E", parent=D, weight = 9)
-    # B = Node("B", parent=E, weight = 1)
-    # C = Node("C", parent=B, weight = 1)
-    # A = Node("A", parent=C, weight = 3)
-
-    # #ADECBA
-    # C = Node("C", parent=E, weight = 1)
-    # B = Node("B", parent=C, weight = 9)
-    # A = Node("A", parent=B, weight = 4)
-
-    # #AEBCDA...............................
-    # E = Node("E", parent=Start, weight = 4)
-    # B = Node("B", parent=E, weight = 1)
-    # C = Node("C", parent=B, weight = 1)
-    # D = Node("D", parent=C, weight = 8)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #AEBDCA
-    # D = Node("E", parent=B, weight = 4)
-    # C = Node("C", parent=D, weight = 7)
-    # A = Node("A", parent=C, weight = 3)
-
-    # #AECBDA
-    # C = Node("C", parent=E, weight = 1)
-    # B = Node("B", parent=C, weight = 9)
-    # D = Node("D", parent=B, weight = 7)
-    # A = Node("A", parent=D, weight = 5)
-
-    # #AECDBA
-    # D = Node("D", parent=C, weight = 8)
-    # B = Node("B", parent=D, weight = 1)
-    # A = Node("A", parent=B, weight = 4)
-
-    # #AEDBCA
-    # D = Node("D", parent=E, weight = 3)
-    # B = Node("B", parent=D, weight = 1)
-    # C = Node("C", parent=B, weight = 1)
-    # A = Node("A", parent=C, weight = 3)
-
-    # #AEDCBA
-    # C = Node("C", parent=D, weight = 7)
-    # B = Node("B", parent=C, weight = 9)
-    # A = Node("A", parent=B, weight = 4)
-
     print(RenderTree(Start, style=ContStyle()))
-    
-    # print(RenderTree(nodes, style=ContStyle()))
 
     print("The matrix has been created!")
     print("The tree has been created!")
-    execute_the_algorithm(Start, 2)
-    # print(some)
-    # print(f.children)
-    # print(len(f.children))
-    # print(matrix_input)
+    al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
+    execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
+    
     # A/D/B/E/C/A
-    # theTree = fillTheTree(input)
+   
 
 main()
