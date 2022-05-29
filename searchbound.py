@@ -1,4 +1,15 @@
 import numpy as np
+from anytree import *
+import math
+
+#DOCUMENTATION: 
+# anytree
+"""
+https://anytree.readthedocs.io/en/latest/ 
+https://anytree.readthedocs.io/en/latest/tricks/weightededges.html
+
+"""
+
 
 def depthFirstBranchAndBound(tree, minimum_cost, temp_cost):
     if len(tree.children) > 0:
@@ -64,7 +75,8 @@ def bestFirstSearch(tree):
  
 
 def ZK_algorithm(named_matrix, names, matrix):
-    result = assignment_hungarian(named_matrix, names, matrix)
+    #result = \
+    assignment_hungarian(named_matrix, names, matrix)
     '''
     if we have a complete tour:
         return result
@@ -76,9 +88,37 @@ def ZK_algorithm(named_matrix, names, matrix):
             we choose which 
     '''
 
-
-
+# print(int(np.nanmin(matrix_points)))
+#if you want to check if it's nan then do "if math.isnan(x): then ...."
 def assignment_hungarian(named_matrix, names, matrix):
+    temp_matrix = matrix.copy()
+    # print(temp_matrix)
+    for i in temp_matrix:
+        cur_min = int(np.nanmin(i))
+        for j in range(0, len(i)):
+            if math.isnan(i[j]) != True:
+                i[j] = i[j] - cur_min
+    # print(temp_matrix)
 
-    return #[A, 12, D] ,[B, 21, E]
+    for i in range(0, len(temp_matrix)):
+        temp_array = []
+        for j in range(0, len(temp_matrix)):
+            temp_array.append(temp_matrix[j][i])
+        cur_min = int(np.nanmin(temp_array))
+        for j in range(0, len(temp_matrix)):
+            if math.isnan(temp_matrix[j][i]) != True:
+                temp_matrix[j][i] = temp_matrix[j][i] - cur_min
+            
+    print(temp_matrix)
+
+    # max_l = len(temp_matrix)
+    # l = 0
+    # while(flag):
+    #     if(l < max_l):
+    #         flag = True
+    #     else:
+
+
+            
+    # return 
     ...

@@ -1,15 +1,4 @@
 from searchbound import *
-import math
-
-#DOCUMENTATION: 
-# anytree
-"""
-https://anytree.readthedocs.io/en/latest/ 
-https://anytree.readthedocs.io/en/latest/tricks/weightededges.html
-
-"""
-from anytree import *
-
 
 
 #WHEN WHICH ALGORITHM IS USED
@@ -42,19 +31,19 @@ points = []
 nodes = []
 Start = Node('A', weight=0)
 
-def make_tree(q, p, r, names, flag):
-    # print(p[0])
-    if (p[0] == 'A') & flag: 
+def make_tree(lost_parent, temp_points, r, names, flag):
+    # print(temp_points[0])
+    if (temp_points[0] == 'A') & flag: 
         # print("gav")
         return
     else:
-        for i in range(len(p[1])):
+        for i in range(len(temp_points[1])):
             # print(names)
-            if(p[1][i] != 0) and (r[i] == 0) and (names[i] != 'A' or sum(r) == len(names) - 1):
-                t = Node(names[i], parent=q, weight=p[1][i])
+            if(temp_points[1][i] != 0) and (r[i] == 0) and (names[i] != 'A' or sum(r) == len(names) - 1):
+                t = Node(names[i], parent=lost_parent, weight=temp_points[1][i])
                 nodes.append(t)
                 # print('meow', i)
-                # print('mmmm',p[1])
+                # print('mmmm',temp_points[1])
                 # return
                 s = r.copy()
                 s[i] = 1
@@ -90,7 +79,7 @@ def main():
    
     read_matr(filename)
     # print(nodes)
-    print(points)
+    # print(points)
     named_points = points.copy()
     matrix_points = []
     names = []
@@ -99,14 +88,17 @@ def main():
         matrix_points.append(i[1])
     
     for i in matrix_points:
-        print(i)
+        # print(i)
         for j in range(0, len(i)):
-            print(j)
+            # print(j)
             if i[j] == 0:
                 i[j] = math.nan
                 #if you want to check if it's nan then do "if math.isnan(x): then ...."
     
-    print(RenderTree(Start, style=ContStyle()))
+    #KEEP THESE COMMENTS
+    # print(int(np.nanmin(matrix_points)))
+    # print(RenderTree(Start, style=ContStyle()))
+    print(matrix_points)
 
     print("The matrix has been created!")
     print("The tree has been created!")
