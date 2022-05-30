@@ -1,35 +1,9 @@
 from searchbound import *
-
-
-#WHEN WHICH ALGORITHM IS USED
-#DFBNB IN ZHANG N KORF ALGORITHM IS USED WHEN THERE ARE A LOT OF INSTANCES AKA A LOT OF CITIES 
-# (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
-def execute_the_algorithm(tree, named_matrix, names, matrix, input):
-    
-    if input == 1:
-        minimum = 0
-        temp_minimum = 0
-        result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
-        print("Result of Depth-First Branch-and-Bound: ")
-        print(result)
-        
-    elif input == 2:
-        minimum = 0
-        priority_queue = []
-        result = bestFirstSearch(tree)
-        print("Result of Best-First Search: ")
-        print("Minimum Branch: ",result[0])
-        print("Minimum Cost: ", result[1])
-    
-    else:
-        ZK_algorithm(named_matrix, names, matrix)
-
-#end
-        
+     
 points = []
-# matrix = []
 nodes = []
 Start = Node('A', weight=0)
+
 
 def make_tree(lost_parent, temp_points, r, names, flag):
     # print(temp_points[0])
@@ -74,6 +48,32 @@ def read_matr(filename):
     r = [0] * len(points)
     make_tree(Start, points[0], r, names, False)
 
+
+#WHEN WHICH ALGORITHM IS USED
+#DFBNB IN ZHANG N KORF ALGORITHM IS USED WHEN THERE ARE A LOT OF INSTANCES AKA A LOT OF CITIES 
+# (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
+def execute_the_algorithm(tree, named_matrix, names, matrix, input):
+    
+    if input == 1:
+        minimum = 0
+        temp_minimum = 0
+        result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
+        print("Result of Depth-First Branch-and-Bound: ")
+        print(result)
+        
+    elif input == 2:
+        minimum = 0
+        priority_queue = []
+        result = bestFirstSearch(tree)
+        print("Result of Best-First Search: ")
+        print("Minimum Branch: ",result[0])
+        print("Minimum Cost: ", result[1])
+    
+    else:
+        ZK_algorithm(named_matrix, names, matrix)
+
+
+#START MAIN
 def main():
     filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
    
@@ -93,7 +93,6 @@ def main():
             # print(j)
             if i[j] == 0:
                 i[j] = math.nan
-                #if you want to check if it's nan then do "if math.isnan(x): then ...."
     
     #KEEP THESE COMMENTS
     # print(int(np.nanmin(matrix_points)))
@@ -105,7 +104,7 @@ def main():
     al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
     
-    # A/D/B/E/C/A
+    # A/D/B/E/C/A FOR MATR1.TXT
    
 
 main()
