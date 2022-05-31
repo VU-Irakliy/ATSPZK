@@ -73,6 +73,11 @@ def execute_the_algorithm(tree, named_matrix, names, matrix, input):
         ZK_algorithm(named_matrix, names, matrix)
 
 
+[3,3,3]
+[2,5,1]
+[9,4,7]
+
+
 #START MAIN
 def main():
     filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
