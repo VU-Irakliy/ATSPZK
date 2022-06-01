@@ -1,3 +1,4 @@
+from unittest import result
 import numpy as np
 from anytree import *
 import math
@@ -76,14 +77,15 @@ def bestFirstSearch(tree):
             i+=1
 
 
- '''
- END
- '''
+'''
+END
+'''
 
 '''THIS ONE USES BOTH...'''
 def ZK_algorithm(named_matrix, names, matrix):
     #result = \
     curr_result = assignment_hungarian(named_matrix, names, matrix)
+    print("RESULT ARE:", curr_result)
     ...#try to connect them
     #then 
     '''
@@ -108,28 +110,50 @@ def ZK_algorithm(named_matrix, names, matrix):
  
  
  
- '''
- THESE USE MATRIX DATA STRUCTURE
- '''
+'''
+THESE USE MATRIX DATA STRUCTURE
+'''
 # print(int(np.nanmin(matrix_points)))
 # if you want to check if it's nan then do "if math.isnan(x): then ...."
 
 
 """
-Possible Reference:  https://python.plainenglish.io/hungarian-algorithm-introduction-python-implementation-93e7c0890e15
+Assignment Problem Reference:  https://python.plainenglish.io/hungarian-algorithm-introduction-python-implementation-93e7c0890e15
+Explanation on how this code works can be partially explained there.
 """
+def minimum_zero(matrix_with_0s, lined_zero):
+    
+    min_row = [len(matrix_with_0s) + 100, -1]
+    # i -> row
+    for i in range(len(matrix_with_0s)):
+        if  np.sum(matrix_with_0s[i] == True) > 0 and min_row[0] > np.sum(matrix_with_0s[i] == True):
+            min_row = [np.sum(matrix_with_0s[i] == True), i]
+        
+    # Marked the specific row and column as False
+    zero_index = np.where(matrix_with_0s[min_row[1]] == True)[0][0]
+    lined_zero.append((min_row[1], zero_index))
+    print('\n',matrix_with_0s)
+    print('soooo',matrix_with_0s[:, zero_index])
+    print('HUH',matrix_with_0s[zero_index])
+    matrix_with_0s[min_row[1], :] = False
+    
+    matrix_with_0s[:, zero_index] = False
+
+
+
 
 def possible_solution(matrix):
     curr_matrix = matrix
 
     #Transform the matrix to boolean matrix(0 = True, others = False)
-    zero_bool = (curr_matrix  == 0)
-    zero_bool_temp = zero_bool.copy()
+    matr_with_0s = (curr_matrix  == 0)
+    # print(matr_with_0s)
+    matr_with_0s_temp = matr_with_0s.copy()
 
     lined_zeros = []
     #Recording possible answer positions by marked_zero
-    while (True in zero_bool_temp):
-        ...
+    while (True in matr_with_0s_temp):
+        minimum_zero(matr_with_0s_temp, lined_zeros)
     
     lined_rows_0 = []
     lined_columns_0 = []
@@ -143,11 +167,11 @@ def possible_solution(matrix):
     while not_lined_flag:
         not_lined_flag = False
         for i in range(len(not_lined_rows)):
-            row_array = zero_bool[not_lined_rows[i], :]
+            row_array = matr_with_0s[not_lined_rows[i]]
             for j in range(len(row_array)):
                 #Step 2-2-2
                 if row_array[j] == True and j not in lined_columns:
-                    #Step 2-2-3
+                #Step 2-2-3
                     lined_columns.append(j)
                     not_lined_flag = True
 
@@ -157,15 +181,16 @@ def possible_solution(matrix):
                 #Step 2-2-5
                 not_lined_rows.append(row)
                 not_lined_flag = True
-
-
     
+    lined_rows = list(set(range(len(matrix))) - set(not_lined_rows))
+    result = [lined_zeros, lined_rows, lined_columns]
+    return result
 
 
 def change_matrix(matrix, lined_rows, lined_columns):
     curr_matrix = matrix.copy()
     non_zero = []
-
+    
     for i in range(len(curr_matrix)):
         if i not in lined_rows:
             for j in range(len(curr_matrix)):
@@ -179,8 +204,6 @@ def change_matrix(matrix, lined_rows, lined_columns):
 		    for j in range(len(curr_matrix)):
 			    if (j not in lined_columns) and (math.isnan(curr_matrix[i][j]) == False):
 				    curr_matrix[i][j] = curr_matrix[i][j] - min_num
-                
-    
     
     # print('bye') 
     # Ignore the IDE error here... 
@@ -194,6 +217,10 @@ def change_matrix(matrix, lined_rows, lined_columns):
 
 def assignment_hungarian(named_matrix, names, matrix):
     temp_matrix = matrix.copy()
+
+    temp_matrix = np.array(temp_matrix)
+    # print(temp_matrix)
+
     # print(temp_matrix)
     for i in temp_matrix:
         cur_min = int(np.nanmin(i))
@@ -211,25 +238,38 @@ def assignment_hungarian(named_matrix, names, matrix):
             if math.isnan(temp_matrix[j][i]) != True:
                 temp_matrix[j][i] = temp_matrix[j][i] - cur_min
             
-    print(temp_matrix)
+    # print('\n',temp_matrix)
     count = 0
     while count < len(matrix):
         #result[0] = , result[1] = , result[2] = ... 
         result = possible_solution(temp_matrix)
         # result = [temp_matrix, [0,1,2,3], []]
+        # print(len(result[1]))
+        # print(len(result[2]))
         count = len(result[1]) + len(result[2])
-
+        # print('count', count)
         if count < len(temp_matrix):
+            # print('NOOOOOOOOOOOOO')
             temp_matrix = change_matrix(temp_matrix, 
                                         result[1],
                                         result[2])
     
     l = 0
     main_result = []
-    while l < len(result[0]):
+    # print(r)
+    # print('SOOO', result)
+    result = result[0]
+    # print('AAAND', result)
+    # print(names)
+    # print(names[0])
+    while l < len(result):
         i = result[l][0]
         j = result[l][1]
-        
+
+        # print(re)
+        # print(j[l])
+        # tupling = [names[i], names[j]]
+        # print('FUUUCK',matrix)
         tempest = [names[i], names[j], matrix[i][j]]
         main_result.append(tempest)
         l += 1

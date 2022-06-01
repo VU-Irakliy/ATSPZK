@@ -69,19 +69,27 @@ def execute_the_algorithm(tree, named_matrix, names, matrix, input):
         print("Minimum Branch: ",result[0])
         print("Minimum Cost: ", result[1])
     
+    
     else:
         ZK_algorithm(named_matrix, names, matrix)
 
 
-[3,3,3]
-[2,5,1]
-[9,4,7]
-
 
 #START MAIN
 def main():
+    # something = list(set((0,1,2,4)))
+    # there = [[False,True,False,True,False,True,True,True,True,False],[False,True,2,True,False,True,True,True,True,False],
+    # [False,True,False,True,1,True,True,True,True,False],
+    # [False,True,False,True,3,True,True,True,True,False],
+    # [False,True,False,True,False,True,True,True,True,False],[False,True,False,True,False,True,True,True,True,False]]
+    # hi = there[something[2]]
+    # print(hi)
+
+    # filename = 'matr3.txt'
     filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
-   
+    if filename == 'exit':
+        print('Program has exited.')
+        exit()
     read_matr(filename)
     # print(nodes)
     # print(points)
@@ -106,6 +114,7 @@ def main():
 
     print("The matrix has been created!")
     print("The tree has been created!")
+    # al_input = 3
     al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
     
