@@ -1,4 +1,4 @@
-from unittest import result
+# from unittest import result
 import numpy as np
 from anytree import *
 import math
@@ -121,6 +121,7 @@ THESE USE MATRIX DATA STRUCTURE
 Assignment Problem Reference:  https://python.plainenglish.io/hungarian-algorithm-introduction-python-implementation-93e7c0890e15
 Explanation on how this code works can be partially explained there.
 """
+
 def minimum_zero(matrix_with_0s, lined_zero):
     
     min_row = [len(matrix_with_0s) + 100, -1]
@@ -132,13 +133,12 @@ def minimum_zero(matrix_with_0s, lined_zero):
     # Marked the specific row and column as False
     zero_index = np.where(matrix_with_0s[min_row[1]] == True)[0][0]
     lined_zero.append((min_row[1], zero_index))
-    print('\n',matrix_with_0s)
-    print('soooo',matrix_with_0s[:, zero_index])
-    print('HUH',matrix_with_0s[zero_index])
+    # print('\n',matrix_with_0s)
+    # print('soooo',matrix_with_0s[:, zero_index])
+    # print('HUH',matrix_with_0s[zero_index])
     matrix_with_0s[min_row[1], :] = False
     
     matrix_with_0s[:, zero_index] = False
-
 
 
 
@@ -214,7 +214,11 @@ def change_matrix(matrix, lined_rows, lined_columns):
     return curr_matrix
 
 
+"""
+WE GOTTA MODIFY THIS WITH INCLUDE, EXCLUDE AND 'THE ONES THAT ARE BEING DECOMPOSED IN THIS SUBTREE' (IF THERE IS A EDGE THAT IS IN DECOMPOSED, THEN ADD IT TO INCLUDE)
+ALSO WE WILL HAVE A STORAGE OF ALL EXISTING SUBPROBLEMS THAT HAVE SUBTOURS, SO DON'T MAKE A DUPLICATE?
 
+"""
 def assignment_hungarian(named_matrix, names, matrix):
     temp_matrix = matrix.copy()
 
@@ -276,58 +280,3 @@ def assignment_hungarian(named_matrix, names, matrix):
         
     return main_result
     # something = findminstroken(temp_matrix, 0, 0, len(temp_matrix)**2, strikethrough(temp_matrix, len(temp_matrix)))
-
-
-
-# def strikethrough(matr, x_len):
-#     t_matr = matr.copy()
-#     for i in range(len(t_matr)):
-#         for j in range(len(t_matr[i])):
-#             t_matr[i][j] = 0
-#     # print("strike1", t_matr)
-#     for i in range(x_len):
-#         for j in range(x_len):
-#             if math.isnan(matr[i][j]):
-#                 for k in range(x_len):
-#                     t_matr[k][j] += 1
-#                 for k in range(x_len):
-#                     t_matr[i][k] += 1
-#     # print('strike2', t_matr)
-#     return t_matr
-
-# def countstroken(t_matr):
-#     count = 0
-#     for i in range(len(t_matr)):
-#         for j in range(len(t_matr[i])):
-#             if t_matr[i][j] > 0:
-#                 # print("HELLO")
-#                 count += 1
-#     print('count', count)              #COUNT DOESN'T INCREASE
-#     return count
-
-# def findminstroken(matr, i0, j0, rmin, tmin):
-#     # print('i0 is', i0)
-#     if i0 >= len(matr):
-#         return tmin
-#     # print('j0 is', j0)
-#     if j0 >= len(matr[i0]):
-#         return tmin
-#     m = matr.copy()
-#     # print('oh la la', m)
-#     m[i0][j0] = 0
-#     # print('ho hoh o', m)
-#     t_matr = strikethrough(m, len(matr))
-#     r = countstroken(t_matr)
-#     if (r >= rmin):
-#         tmin = t_matr
-#     tmin2 = findminstroken(m, i0, j0 + 1, rmin, tmin)
-#     tmin3 = findminstroken(m, i0 + 1, j0, rmin, tmin)
-#     tc2 = countstroken(tmin2)
-#     tc3 = countstroken(tmin3)
-#     if tc2 >= r:
-#         tmin = tmin2
-#         r = tc2
-#     if tc3 > r:
-#         tmin = tmin3
-#         r = tc3
-#     return tmin
