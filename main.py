@@ -70,8 +70,12 @@ def execute_the_algorithm(tree, named_matrix, names, matrix, input):
         print("Minimum Cost: ", result[1])
     
     
-    else:
-        ZK_algorithm(named_matrix, names, matrix)
+    else: 
+        #len(names) > ....:
+            #DFBnB version
+        #else:
+            #BFS version
+        start_ZK_algorithm(named_matrix, names, matrix)
 
 
 
@@ -85,8 +89,8 @@ def main():
     # hi = there[something[2]]
     # print(hi)
 
-    # filename = 'matr3.txt'
-    filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
+    filename = 'matr3.txt'
+    # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
     if filename == 'exit':
         print('Program has exited.')
         exit()
@@ -114,8 +118,8 @@ def main():
 
     print("The matrix has been created!")
     print("The tree has been created!")
-    # al_input = 3
-    al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
+    al_input = 3
+    # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
     
     # A/D/B/E/C/A FOR MATR1.TXT
