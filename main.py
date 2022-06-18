@@ -115,6 +115,9 @@ def main():
     # print(int(np.nanmin(matrix_points)))
     # print(RenderTree(Start, style=ContStyle()))
     print(matrix_points)
+    
+    
+    
 
     print("The matrix has been created!")
     print("The tree has been created!")
