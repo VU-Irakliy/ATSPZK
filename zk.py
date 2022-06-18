@@ -3,8 +3,7 @@ from assignment import *
 '''THIS ONE USES BOTH...'''
 #this will also have a division of BFS and DFBnB
 def start_ZK_algorithm(named_matrix, names, matrix):
-    include = []
-    exclude = []
+    
     # cand = []
     
     
@@ -83,17 +82,20 @@ def start_ZK_algorithm(named_matrix, names, matrix):
 
 
     if len(nodes) >= 1000:  ##DFBnB
+        include = []
+        exclude = []        
         ...
         # for i in cand:
         #     exclude.append(i)
         #     zk_algorithm
         #     exclude = []
     else: #BFS
-        ...
+        include = []
+        # exclude = []
         priority_queue = []
         closed = []
         excludes = []
-        min_not_found = True
+        
         for i in range(len(cand)):
             bran = 'A' + str(i)
             exclude.append(cand[i])
@@ -102,12 +104,21 @@ def start_ZK_algorithm(named_matrix, names, matrix):
             exclude = []
             valu = Node(bran, parent = Start, weight = curr[1])
             priority_queue.append([valu, curr[1]])
+            
         excludes = sorted(excludes, key= lambda x: x[1])
         print(excludes)
+
+        min_not_found = True
         # priority_queue = sorted(priority_queue, key= lambda x: x[1])
-        priority_queue = sorted(priority_queue, key= lambda x: x[1])
+        priority_queue = sorted(priority_queue, key= lambda x: x[2])
         print(priority_queue)
-        BFS_zk_algorithm
+        while min_not_found:
+            for i in range(len(priority_queue)):
+                exclude = excludes[i]
+                BFS_zk_algorithm(named_matrix, names, matrix, 
+                            include, exclude, cand, priority_queue, min_not_found)
+                if min_not_found == False:
+                    break
 
             
         # print(assignment_hungarian(named_matrix, names, matrix, include, exclude))
@@ -119,7 +130,10 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # if len(include) != 0:    THIS IS FOR THE OTHER FUNCTION
                     
             
-def BFS_zk_algorithm(named_matrix, names, matrix, include, exclude, cand, priority_queue ): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
+def BFS_zk_algorithm(named_matrix, names, matrix, include, exclude, cand, priority_queue, min_not_found): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
+    
+    
+    
     """
     resulting_complete tours = [] (DFBnB)
     min_result = 0 (BFS)
