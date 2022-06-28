@@ -5,9 +5,9 @@ from assignment import *
 def start_ZK_algorithm(named_matrix, names, matrix):
     
     # cand = []
+    empty = []
     
-    
-    curr_result = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+    curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
     Start = Node("Start", weight = curr_result[1])
     min_total = curr_result[1]
     nodes = [(x[0], x[1]) for x in curr_result[0]]
@@ -55,10 +55,16 @@ def start_ZK_algorithm(named_matrix, names, matrix):
                         if flag == False:
                             break
     print(list_of_coords)
-    # print(used_nodes)
-    # print(list_of_tours)
-    if len(list_of_coords) == 1:
-        #return result
+    print('NOOO')
+    # print(len_of_tours)
+    if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
+        cost = 0
+        for list in list_of_coords:
+            for coord in list:
+                cost += matrix[coord[0]][coord[1]]
+        return cost
+
+        
         ...
     len_of_tours = []
 
@@ -90,35 +96,10 @@ def start_ZK_algorithm(named_matrix, names, matrix):
         #     zk_algorithm
         #     exclude = []
     else: #BFS
-        include = []
-        # exclude = []
-        priority_queue = []
-        closed = []
-        excludes = []
+        #######MAYBE COPY ALL OF BELOW AND ADD IT TO THE FUNCTIONS?
+        BFS_zk_algorithm(named_matrix, names, matrix, 
+                            cand)
         
-        for i in range(len(cand)):
-            bran = 'A' + str(i)
-            exclude.append(cand[i])
-            curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
-            excludes.append([exclude, curr[1]])
-            exclude = []
-            valu = Node(bran, parent = Start, weight = curr[1])
-            priority_queue.append([valu, curr[1]])
-            
-        excludes = sorted(excludes, key= lambda x: x[1])
-        print(excludes)
-
-        min_not_found = True
-        # priority_queue = sorted(priority_queue, key= lambda x: x[1])
-        priority_queue = sorted(priority_queue, key= lambda x: x[2])
-        print(priority_queue)
-        while min_not_found:
-            for i in range(len(priority_queue)):
-                exclude = excludes[i]
-                BFS_zk_algorithm(named_matrix, names, matrix, 
-                            include, exclude, cand, priority_queue, min_not_found)
-                if min_not_found == False:
-                    break
 
             
         # print(assignment_hungarian(named_matrix, names, matrix, include, exclude))
@@ -130,10 +111,44 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # if len(include) != 0:    THIS IS FOR THE OTHER FUNCTION
                     
             
-def BFS_zk_algorithm(named_matrix, names, matrix, include, exclude, cand, priority_queue, min_not_found): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
+def BFS_zk_algorithm(named_matrix, names, matrix, cand): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
     
+    # curr_result = assignment_hungarian(named_matrix, names, matrix, include, exclude)
     
-    
+    include = []
+        # exclude = []
+    priority_queue = []
+    closed = []
+    excludes = []
+        
+    for i in range(len(cand)):
+        exclude = []
+        bran = 'A' + str(i)
+        exclude.append(cand[i])
+        curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+        excludes.append([exclude, curr[1]])
+        # exclude = []
+        valu = Node(bran, parent = Start, weight = curr[1])
+        priority_queue.append([valu, curr[1]])
+    exclude = []
+    excludes = sorted(excludes, key= lambda x: x[1])
+    print(excludes)
+
+    min_not_found = True
+    priority_queue = sorted(priority_queue, key= lambda x: x[1])
+    # priority_queue = sorted(priority_queue, key= lambda x: x[2])
+    print(priority_queue)
+    while min_not_found:
+        for i in range(len(priority_queue)):
+            exclude = excludes[i]
+            BFS_zk_algorithm(named_matrix, names, matrix, 
+                        include, exclude, cand, priority_queue, min_not_found) #can min_not_found from this func influence one here????
+                        ##IF NO, then we should return it
+                        #WE ALSO HAVE TO PUT THE ONES THAT WE DID ON CLOSED, SO WE CAN FOCUS ON NEW ONES ON PRIORITY QUEUE
+            if min_not_found == False:
+                break
+
+
     """
     resulting_complete tours = [] (DFBnB)
     min_result = 0 (BFS)

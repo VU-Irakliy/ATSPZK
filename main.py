@@ -75,7 +75,8 @@ def execute_the_algorithm(tree, named_matrix, names, matrix, input):
             #DFBnB version
         #else:
             #BFS version
-        start_ZK_algorithm(named_matrix, names, matrix)
+        result = start_ZK_algorithm(named_matrix, names, matrix)
+        print(result)
 
 
 
