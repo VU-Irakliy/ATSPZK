@@ -24,3 +24,48 @@ matrix_points = [([0, 8, 8, 2, 4]), ([4, 0, 1, 7, 4]), ([3, 9, 0, 8, 5]), ( [5, 
 
 
 ASSIGNMENT(R,E,C)
+
+
+    """
+    resulting_complete tours = [] (DFBnB)
+    min_result = 0 (BFS)
+
+    if complete:
+        BFS:
+        min_result = ass_result[1]
+        return
+
+        
+    if not complete:
+        we pick the subtour
+        IF include > 0:
+            we substract the number of edges to eliminate from that subtour
+            check all tours
+        which one has minimum number of edges to elminate:
+            our_pick = []
+            if len(resulting_subtours) == 1: for formality
+                our_pick = resulting_subtours[0]
+            else:
+                pick resulting_subtours[0]
+            cand = dissolve the subtour into edges
+            create children
+            generate their names/variables
+            add each one of them 1 unique edge from cand and from their parent's exclude to child's exclude
+            add your resulting include to them
+
+
+            
+            
+        tours
+    """
+
+  
+    """
+    include = []
+    exclude = []
+    cand = []
+    A1 = Node("A1", weight = assignment_hungarian(named_matrix, names, matrix, include, exclude, cand)[1])
+    A/B/D/C
+
+    A2 = Node("A2", parent = A1, weight = assignment_hungarian(named_matrix, names, matrix, include, exclude, cand)[1])
+    """

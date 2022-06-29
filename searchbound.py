@@ -40,7 +40,7 @@ def bestFirstSearch(tree):
         priority_queue = sorted(priority_queue, key= lambda x: x[1])
         reached_minimum = False
     
-        while(i < len(priority_queue) or reached_minimum == False):
+        while(reached_minimum == False): 
             # print(priority_queue[0][0])
             if(len(priority_queue[0][0].children) > 0):
 
@@ -66,7 +66,7 @@ def bestFirstSearch(tree):
                 # print("SO   ", temp_branch[0])
                 return temp_branch
 
-            i+=1
+           
 
 
 '''
