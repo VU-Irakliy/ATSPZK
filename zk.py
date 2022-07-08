@@ -16,7 +16,6 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     list_of_coords = make_tours(names, curr_result[0])
     # print(len_of_tours)
 
-    print("CHRIS IS BAKA")
     if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
         cost = 0
         for list in list_of_coords:
@@ -24,7 +23,6 @@ def start_ZK_algorithm(named_matrix, names, matrix):
                 cost += matrix[coord[0]][coord[1]]
         return cost
 
-    print('HAA!')
     min_total = curr_result[1]
     len_of_tours = []
 
@@ -40,8 +38,8 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # cand = len_of_tours[min_len_subtour]
 
     if len(nodes) >= 1000:  ##DFBnB
-        include = []
-        exclude = []        
+        # include = []
+        # exclude = []        
         ...
         # for i in cand:
         #     exclude.append(i)
@@ -64,7 +62,6 @@ def start_ZK_algorithm(named_matrix, names, matrix):
                     
             
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
-    print('WELL CUM')
     priority_queue = []
     inc_excludes = []
     used_nums = []
@@ -83,8 +80,8 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
         priority_queue.append([valu, curr[0], curr[1]])
         used_nums.append(i)
     ##[]
-    exclude = []
-    include = []
+    # exclude = []
+    # include = []
     inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
     print(inc_excludes)
     min_not_found = True
@@ -113,12 +110,58 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
 
             tours = make_tours(names, temp_paths)
             if len(tours) == 1:
+                min_not_found = False
                 cost = 0
                 for list in tours:
                     for coord in list:
                         cost += matrix[coord[0]][coord[1]]
                 return cost
+            temp_children = []
+            temp_ie_list = []
+            len_of_tours = []
+            for i in range(len(tours)):
+                count = 0
+                for j in tours:
+                    if j in temp_inc:
+                        count += 1
+                len_of_tours.append(len(tours) - count)
+            cand = tours[len_of_tours.index(min(len_of_tours))]
+            for i in cand:
+                if i in temp_inc:
+                    um = temp_inc.pop(temp_inc.index(i))
+                    del um
+            print(cand)
+            last_num = used_nums[-1]
+            print('USED NUMS', used_nums)
+            print(last_num)
+            for i in range(len(cand)):
+                exclude = temp_exc.copy()
+                exclude.append(cand[i])
+                temp_i = i + last_num + 1
+                print(temp_i)
+                bran = 'A' + str(temp_i)
+                include = temp_inc.copy()
+                curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+                ##THEY HAVE INCLUDE. ADD THEM.
+                print('MINININI', curr[1])
+                temp_inc = get_include(names, curr, cand)
+                for j in temp_inc:
+                    if j not in include:
+                        include.append(j)
+                inc_excludes.append([exclude, include, curr[1]])
+                # exclude = []
+                valu = Node(bran, parent = Start, weight = curr[1])
+                priority_queue.append([valu, curr[0], curr[1]])
+                used_nums.append(temp_i)
+            inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
+            print('Includes and Excludes')
+            print(inc_excludes)
+            priority_queue = sorted(priority_queue, key= lambda x: x[2])
+
+
             
+            #we make children
+            #then we make put them into a priority queue
 
             #
             ...
@@ -153,14 +196,13 @@ def get_include(names, curr_result, cand):
         
         for j in coords:
             if i == j:
-                print('i',i)
-                print('j', j)
                 include.append(i)
     return include
 
 
 def make_tours(names, curr_nodes): ##curr[0]
     nodes = [(x[0], x[1]) for x in curr_nodes]
+    print('SHiiet')
     print(nodes)
     coords = []
     for j in nodes:
@@ -175,12 +217,14 @@ def make_tours(names, curr_nodes): ##curr[0]
     tours = []
     # list_of_tours = []
     used_nodes = [] ###use a map
-#     used_nodes = new Map()
+    #     used_nodes = new Map()
 
-# used_nodes.put(node[node], 1/0/TRUE/FALSE);
+    # used_nodes.put(node[node], 1/0/TRUE/FALSE);
     flag = True
     list_of_coords = []#######################TODO : RENAME NODES TO PATHS!!! DON'T BE ILLITERATE
     while len(used_nodes) != len(nodes):
+        # print('This is my start', nodes)
+        # print('This is how is it going', used_nodes)
         for node in range(len(nodes)):
             if len(used_nodes) == 0:
                 tours.append([nodes[node][0], nodes[node][1]])
