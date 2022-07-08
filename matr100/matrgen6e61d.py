@@ -40,14 +40,12 @@ def gluematr(z):
         s += "\n"
         r.append(s)
     return r
-
 print("Enter matrix size: ")
 n = int(input())
 print('How many matrices? :')
-lll = int(input())
-om = 1
+lll = int(input)
 j = ""
-for i in range(1 + om, lll + om+ 1):
+for i in range(1, lll + 1):
     
     z = genmatr(n)
     r = gluematr(z)
@@ -64,5 +62,4 @@ for i in range(1 + om, lll + om+ 1):
             Flag = False
         else:
             print("File already exists!")
-            print('Making with a new name')
             j += "a"

@@ -16,7 +16,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     list_of_coords = make_tours(names, curr_result[0])
     # print(len_of_tours)
 
-
+    print("CHRIS IS BAKA")
     if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
         cost = 0
         for list in list_of_coords:
@@ -24,7 +24,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
                 cost += matrix[coord[0]][coord[1]]
         return cost
 
-
+    print('HAA!')
     min_total = curr_result[1]
     len_of_tours = []
 
@@ -64,7 +64,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
                     
             
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
-    
+    print('WELL CUM')
     priority_queue = []
     inc_excludes = []
     used_nums = []
@@ -118,9 +118,9 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                     for coord in list:
                         cost += matrix[coord[0]][coord[1]]
                 return cost
+            
 
-            ##first check number of subtours
-
+            #
             ...
             # BFS_zk_algorithm(named_matrix, names, matrix, 
             #             include, exclude, cand, priority_queue, min_not_found) #can min_not_found from this func influence one here????
@@ -170,10 +170,14 @@ def make_tours(names, curr_nodes): ##curr[0]
                 if names[i] == l:
                     temp.append(i)
         coords.append(temp)
-    print(coords)
+    # print(coords)
+    # print('YAHPPPPP')
     tours = []
     # list_of_tours = []
-    used_nodes = []
+    used_nodes = [] ###use a map
+#     used_nodes = new Map()
+
+# used_nodes.put(node[node], 1/0/TRUE/FALSE);
     flag = True
     list_of_coords = []#######################TODO : RENAME NODES TO PATHS!!! DON'T BE ILLITERATE
     while len(used_nodes) != len(nodes):
@@ -195,7 +199,11 @@ def make_tours(names, curr_nodes): ##curr[0]
                             # list_of_tours[j].append(nodes[node])
                         elif j == (len(tours) -1) and tours[j][0] == tours[j][-1]:
                             for m in range(len(nodes)):
-                                if nodes[m] not in used_nodes:
+                                if nodes[m] not in used_nodes: #what about deleting it?
+                                    # if node[node] in used_nodes -> NO
+                                    #     USE:
+                                    #     used_nodes.get(node[node]): 
+                                    #     #do stuff
                                     tours.append([nodes[m][0], nodes[m][1]])
                                     used_nodes.append(nodes[m])
                                     list_of_coords.append([coords[m]])

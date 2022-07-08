@@ -5,7 +5,7 @@ nodes = []
 Start = Node('A', weight=0)
 
 
-def make_tree(lost_parent, temp_points, r, names, flag):
+def make_tree(lost_parent, temp_points, r, names, flag): ####MULTITHREADING REQUIRED HERE MAYBE? NO
     # print(temp_points[0])
     if (temp_points[0] == 'A') & flag: 
         # print("gav")
@@ -25,7 +25,7 @@ def make_tree(lost_parent, temp_points, r, names, flag):
 
 
 
-def read_matr(filename):
+def read_matr(filename, input):
 #    nodes.append("A", weight=0)
     try:
         f = open(filename)
@@ -46,7 +46,13 @@ def read_matr(filename):
     f.close()
     # print(points)
     r = [0] * len(points)
-    make_tree(Start, points[0], r, names, False)
+    # print(points[0], r)
+    if input == 1 or input == 2:
+        if len(names) <= 10:
+            make_tree(Start, points[0], r, names, False)
+        else: 
+            print('Please, choose ZK algorithm.')
+            exit()
 
 
 #WHEN WHICH ALGORITHM IS USED
@@ -90,12 +96,22 @@ def main():
     # hi = there[something[2]]
     # print(hi)
 
-    filename = 'matr3.txt'
+    # filename = 'matr100/matr3.txt' #100 nodes
+    # filename = 'matr2a.txt'  #15 nodes
+    filename = 'matr1aa.txt'
     # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
     if filename == 'exit':
         print('Program has exited.')
         exit()
-    read_matr(filename)
+    
+    al_input = 3  #look at the line below
+    # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
+    
+    read_matr(filename, al_input)
+    print("The matrix has been created!")
+    if al_input == 1 or al_input == 2: 
+        print("The tree has been created!")
+
     # print(nodes)
     # print(points)
     named_points = points.copy()
@@ -118,15 +134,9 @@ def main():
     print(matrix_points)
     
     
-    
-
-    print("The matrix has been created!")
-    print("The tree has been created!")
-    al_input = 3
-    # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
+   
     execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
     
-    # A/D/B/E/C/A FOR MATR1.TXT
    
 
 main()
