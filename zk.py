@@ -12,7 +12,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     
     # print('Min total', min_total)
     nodes = [(x[0], x[1]) for x in curr_result[0]]
-    print(nodes)
+    # print(nodes)
     list_of_coords = make_tours(names, curr_result[0])
     # print(len_of_tours)
 
@@ -29,7 +29,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     for i in range(len(list_of_coords)):
          len_of_tours.append(len(list_of_coords[i]))
     #if include, then we copy the list of coords, check where in list of coords each path located then we find it, take it away and decrease the len of subtour
-    print(len_of_tours)
+    # print(len_of_tours)
     ### WE CHOOSE MIN() FUNCTION FOR RESULT OF ONE OF THEM, BECAUSE THERE IS NO SOLUTION FOR IF THERE ARE MORE THAN ONE SUBTOUR WITH MIN AMOUNT OF
     ### EDGES TO ELIMINATE, THEREFORE THIS IS THE CURRENT METHOD
     cand = list_of_coords[len_of_tours.index(min(len_of_tours))]
@@ -63,8 +63,10 @@ def start_ZK_algorithm(named_matrix, names, matrix):
             
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
     priority_queue = []
+    print('START OF THE AlGO')
     inc_excludes = []
     used_nums = []
+    print(cand)
     for i in range(len(cand)):
         exclude = []
         include = []
@@ -72,20 +74,19 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
         exclude.append(cand[i])
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
         ##THEY HAVE INCLUDE. ADD THEM.
-        print('MINININI', curr[1])
         include = get_include(names, curr, cand)
-        inc_excludes.append([exclude, include, curr[1]])
+        # inc_excludes.append([exclude, include, curr[1]])
         # exclude = []
         valu = Node(bran, parent = Start, weight = curr[1])
-        priority_queue.append([valu, curr[0], curr[1]])
+        priority_queue.append([valu, curr[0], exclude, include, curr[1]])
         used_nums.append(i)
     ##[]
     # exclude = []
     # include = []
-    inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
-    print(inc_excludes)
+    # inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
+    # print(inc_excludes)
     min_not_found = True
-    priority_queue = sorted(priority_queue, key= lambda x: x[2])
+    priority_queue = sorted(priority_queue, key= lambda x: x[4])  ### x[0] - NODE, x[1] - PATH RESULT,  x[2] - EXCLUDE, x[3] - INCLUDE, x[4] - WEIGHT 
     #[[Node('/Start/A1', weight=13), 13], [Node('/Start/A2', weight=14), 14], 
     # [Node('/Start/A0', weight=15), 15]]
     #valu = Node(bran, parent = closed[-1], weight = curr[1])
@@ -93,20 +94,22 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
     #closed[[Node, cand], [Node, cand], [Node, cand], [Node, cand]]
     print(priority_queue)
     closed_priority = []
-    closed_additions = [] #include and exclude
+    # closed_additions = [] #include and exclude
     i = 0
+    print('\n START OF THE LOOP \n')
     while min_not_found:
         if min_not_found == False:
             break
         else:
             temps_prio = priority_queue.pop(0)
-            temp_branch, temp_paths, temp_weight = temps_prio
-            temps_ie = inc_excludes.pop(0)
-            temp_exc =  temps_ie[0]
-            temp_inc = temps_ie[1]
+            print(temps_prio)
+            temp_branch, temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
+            # temps_ie = inc_excludes.pop(0)
+            # temp_exc =  temps_ie[0]
+            # temp_inc = temps_ie[1]
 
             closed_priority.append(temps_prio)
-            closed_additions.append(temps_ie)
+            # closed_additions.append(temps_ie)
 
             tours = make_tours(names, temp_paths)
             if len(tours) == 1:
@@ -119,44 +122,59 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
             temp_children = []
             temp_ie_list = []
             len_of_tours = []
+            print('Tours', tours)
             for i in range(len(tours)):
                 count = 0
                 for j in tours:
                     if j in temp_inc:
                         count += 1
-                len_of_tours.append(len(tours) - count)
-            cand = tours[len_of_tours.index(min(len_of_tours))]
-            for i in cand:
-                if i in temp_inc:
-                    um = temp_inc.pop(temp_inc.index(i))
+                len_of_tours.append(len(tours[i]) - count)
+            print(len_of_tours)
+            candid = tours[len_of_tours.index(min(len_of_tours))]
+            for i in temp_inc:
+                if i in candid:
+                    um = candid.pop(candid.index(i))
                     del um
-            print(cand)
+            print('CANDID', candid)
             last_num = used_nums[-1]
             print('USED NUMS', used_nums)
-            print(last_num)
-            for i in range(len(cand)):
+            for i in range(len(candid)):
                 exclude = temp_exc.copy()
-                exclude.append(cand[i])
+                exclude.append(candid[i])
                 temp_i = i + last_num + 1
                 print(temp_i)
                 bran = 'A' + str(temp_i)
                 include = temp_inc.copy()
+                
+                print('WTF ARE THESE')
+                print(exclude)
+                print(include)
                 curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+                if len(curr[0]) != 10:
+                    print("THIS IS THE CURRENT RESULT", curr[0])
+                    print('\n \n  AAAAAAAH \n \n')
                 ##THEY HAVE INCLUDE. ADD THEM.
+                
                 print('MINININI', curr[1])
-                temp_inc = get_include(names, curr, cand)
-                for j in temp_inc:
+                temp_temp_inc = get_include(names, curr, candid)
+                for j in temp_temp_inc:
                     if j not in include:
                         include.append(j)
-                inc_excludes.append([exclude, include, curr[1]])
+                print('WTF ARE THESE 2')
+                print(exclude)
+                print(include)
+                # inc_excludes.append([exclude, include, curr[1]])
                 # exclude = []
                 valu = Node(bran, parent = Start, weight = curr[1])
-                priority_queue.append([valu, curr[0], curr[1]])
+                priority_queue.append([valu, curr[0], exclude, include, curr[1]])
                 used_nums.append(temp_i)
-            inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
-            print('Includes and Excludes')
-            print(inc_excludes)
-            priority_queue = sorted(priority_queue, key= lambda x: x[2])
+                del include
+                del exclude
+            # inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
+            # print('\n Includes and Excludes')
+            # print(inc_excludes)
+            priority_queue = sorted(priority_queue, key= lambda x: x[4])
+            print('\n The Priority QUEUE', priority_queue)
 
 
             

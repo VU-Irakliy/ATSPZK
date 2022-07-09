@@ -99,6 +99,7 @@ def main():
     # filename = 'matr100/matr3.txt' #100 nodes
     # filename = 'matr2a.txt'  #15 nodes
     filename = 'matr1aa.txt'
+    # filename = 'matr3.txt'
     # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
     if filename == 'exit':
         print('Program has exited.')

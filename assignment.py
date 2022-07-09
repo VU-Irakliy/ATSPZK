@@ -103,19 +103,20 @@ def change_matrix(matrix, lined_rows, lined_columns):
     curr_matrix = matrix.copy()
     non_zero = []
     
+
     for i in range(len(curr_matrix)):
         if i not in lined_rows:
             for j in range(len(curr_matrix)):
                 if j not in lined_columns:
                     non_zero.append(curr_matrix[i][j])
-    
-    
+
+
     min_num = np.nanmin(non_zero)
     for i in range(len(curr_matrix)):
-	    if i not in lined_rows:
-		    for j in range(len(curr_matrix)):
-			    if (j not in lined_columns) and (math.isnan(curr_matrix[i][j]) == False):
-				    curr_matrix[i][j] = curr_matrix[i][j] - min_num
+        if i not in lined_rows:
+            for j in range(len(curr_matrix)):
+                if (j not in lined_columns) and (math.isnan(curr_matrix[i][j]) == False):
+                    curr_matrix[i][j] = curr_matrix[i][j] - min_num
     
     # print('bye') 
     # Ignore the IDE error here... 
@@ -139,7 +140,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     if len(exclude) > 0:
         for node in exclude:
             temp_matrix[node[0]][node[1]] = math.nan
-
+    # print(temp_matrix)
     '''
     IF exclude will coordiantes of the edge
 
@@ -173,11 +174,14 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     while count < len(matrix):
         #result[0] = , result[1] = , result[2] = ... 
         result = possible_solution(temp_matrix, include)
+        # print('\n \n POSSIBLE RESULT', result)
         # result = [temp_matrix, [0,1,2,3], []]
         # print(len(result[1]))
         # print(len(result[2]))
         count = len(result[1]) + len(result[2])
+        # count = len(result[0])    
         # print('count', count)
+        # print('SIZE OF THE POSS SOL',count)
         if count < len(temp_matrix):
             # print('NOOOOOOOOOOOOO')
             temp_matrix = change_matrix(temp_matrix, 
