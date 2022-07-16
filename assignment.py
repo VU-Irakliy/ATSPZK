@@ -3,6 +3,7 @@ from re import L
 import re
 import numpy as np
 from anytree import *
+import heapq as hq
 import math
 import sys
 
@@ -152,7 +153,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     temp_matrix = matrix.copy()
     shadow = include.copy()
 
-    temp_matrix = np.array(temp_matrix)
+    # temp_matrix = np.array(temp_matrix)
 
     if len(exclude) > 0:
         for node in exclude:

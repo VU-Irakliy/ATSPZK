@@ -60,6 +60,7 @@ def read_matr(filename, input):
 # (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
 def execute_the_algorithm(named_matrix, names, matrix, input):
     matrix = np.array(matrix)
+    print(matrix)
     
     if input == 1:
         minimum = 0
@@ -101,8 +102,8 @@ def main():
 
     # filename = 'matr100/matr3.txt' #100 nodes
     filename = 'matr2a.txt'  #15 nodes
-    # filename = 'matr3.txt'
-    # filename = 'matr1aa.txt'
+    # filename = 'matr3.txt' # 7 nodes
+    # filename = 'matr1aa.txt' # 10 nodes
     # filename = 'matr3.txt'
     # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
     if filename == 'exit':
