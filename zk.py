@@ -6,8 +6,21 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     
     # cand = []
     empty = [] #for the first run only
+
+    #include = []
+    # exclude = []
+    # exclude = [[4, 1], [5, 9]] # (E, B) , (F, J)
+    # include = [[1, 4]] # (B, E)
+    # exclude = [[1,7]]
+    # exclude = [[4, 1], [14, 3]]
+    # include = [[1, 7], [7, 4]]
+
+    # exclude = [[10, 9], [4, 1], [3, 13]]
+    # include = [[0, 10], [9, 0], [1, 7], [7, 4]]
     
+    # curr_result = assignment_hungarian(named_matrix, names, matrix, include, exclude)
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
+
     Start = Node("Start", weight = curr_result[1])
     
     # print('Min total', min_total)
@@ -36,15 +49,41 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     #here we don't do anything with include, cause this is a starting function
     # cand = [min_len_subtour]
     # cand = len_of_tours[min_len_subtour]
-
-    if len(nodes) >= 1000:  ##DFBnB
+    
+    #we might choose different if statement
+    if len(nodes) >= 1000:  ## ############DFBnB ###################
         # include = []
+        childs = cand.copy()
+        children = []
+        print('START OF THE AlGO')
+        used_nums = []
+        print(cand)
+        for i in range(len(cand)):
+            exclude = []
+            include = []
+            bran = 'A' + str(i)
+            exclude.append(cand[i])
+            print('NOOOO')
+            print('WTF ARE THESE')
+            print(exclude)
+            print(include)
+            curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+            ##THEY HAVE INCLUDE. ADD THEM.
+            print('SOOOOO')
+            include = get_include(names, curr, cand)
+            # inc_excludes.append([exclude, include, curr[1]])
+            # exclude = []
+            valu = Node(bran, parent = Start, weight = curr[1])
+            # priority_queue.append([valu, curr[0], exclude, include, curr[1]])s
+            used_nums.append(i)
         # exclude = []        
         ...
         # for i in cand:
         #     exclude.append(i)
         #     zk_algorithm
         #     exclude = []
+    
+    
     else: #BFS
 
         result = BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total)
@@ -64,7 +103,6 @@ def start_ZK_algorithm(named_matrix, names, matrix):
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
     priority_queue = []
     print('START OF THE AlGO')
-    inc_excludes = []
     used_nums = []
     print(cand)
     for i in range(len(cand)):
@@ -72,29 +110,26 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
         include = []
         bran = 'A' + str(i)
         exclude.append(cand[i])
+        print('NOOOO')
+        print('WTF ARE THESE')
+        print(exclude)
+        print(include)
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
         ##THEY HAVE INCLUDE. ADD THEM.
+        print('SOOOOO')
         include = get_include(names, curr, cand)
         # inc_excludes.append([exclude, include, curr[1]])
         # exclude = []
         valu = Node(bran, parent = Start, weight = curr[1])
         priority_queue.append([valu, curr[0], exclude, include, curr[1]])
         used_nums.append(i)
-    ##[]
-    # exclude = []
-    # include = []
-    # inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
-    # print(inc_excludes)
+   
     min_not_found = True
     priority_queue = sorted(priority_queue, key= lambda x: x[4])  ### x[0] - NODE, x[1] - PATH RESULT,  x[2] - EXCLUDE, x[3] - INCLUDE, x[4] - WEIGHT 
     #[[Node('/Start/A1', weight=13), 13], [Node('/Start/A2', weight=14), 14], 
     # [Node('/Start/A0', weight=15), 15]]
-    #valu = Node(bran, parent = closed[-1], weight = curr[1])
-    # priority_queue = sorted(priority_queue, key= lambda x: x[2])
-    #closed[[Node, cand], [Node, cand], [Node, cand], [Node, cand]]
-    print(priority_queue)
+   
     closed_priority = []
-    # closed_additions = [] #include and exclude
     i = 0
     print('\n START OF THE LOOP \n')
     while min_not_found:
@@ -102,16 +137,13 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
             break
         else:
             temps_prio = priority_queue.pop(0)
-            print(temps_prio)
             temp_branch, temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
-            # temps_ie = inc_excludes.pop(0)
-            # temp_exc =  temps_ie[0]
-            # temp_inc = temps_ie[1]
+           
 
             closed_priority.append(temps_prio)
-            # closed_additions.append(temps_ie)
-
+            print('count')
             tours = make_tours(names, temp_paths)
+            print('HHHHH')
             if len(tours) == 1:
                 min_not_found = False
                 cost = 0
@@ -119,8 +151,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                     for coord in list:
                         cost += matrix[coord[0]][coord[1]]
                 return cost
-            temp_children = []
-            temp_ie_list = []
+            
             len_of_tours = []
             print('Tours', tours)
             for i in range(len(tours)):
@@ -137,7 +168,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                     del um
             print('CANDID', candid)
             last_num = used_nums[-1]
-            print('USED NUMS', used_nums)
+            # print('USED NUMS', used_nums)
             for i in range(len(candid)):
                 exclude = temp_exc.copy()
                 exclude.append(candid[i])
@@ -150,21 +181,21 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                 print(exclude)
                 print(include)
                 curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
-                if len(curr[0]) != 10:
-                    print("THIS IS THE CURRENT RESULT", curr[0])
-                    print('\n \n  AAAAAAAH \n \n')
+                
+                    
                 ##THEY HAVE INCLUDE. ADD THEM.
                 
-                print('MINININI', curr[1])
+                # print('MINININI', curr[1])
                 temp_temp_inc = get_include(names, curr, candid)
                 for j in temp_temp_inc:
                     if j not in include:
                         include.append(j)
-                print('WTF ARE THESE 2')
-                print(exclude)
-                print(include)
+                # print('WTF ARE THESE 2')
+                # print(exclude)
+                # print(include)
                 # inc_excludes.append([exclude, include, curr[1]])
                 # exclude = []
+                #####################SHOULD BE closed_priority[-1]
                 valu = Node(bran, parent = Start, weight = curr[1])
                 priority_queue.append([valu, curr[0], exclude, include, curr[1]])
                 used_nums.append(temp_i)
@@ -174,32 +205,20 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
             # print('\n Includes and Excludes')
             # print(inc_excludes)
             priority_queue = sorted(priority_queue, key= lambda x: x[4])
-            print('\n The Priority QUEUE', priority_queue)
-
-
-            
-            #we make children
-            #then we make put them into a priority queue
-
-            #
-            ...
-            # BFS_zk_algorithm(named_matrix, names, matrix, 
-            #             include, exclude, cand, priority_queue, min_not_found) #can min_not_found from this func influence one here????
-                        ##IF NO, then we should return it
-                        #WE ALSO HAVE TO PUT THE ONES THAT WE DID ON CLOSED, SO WE CAN FOCUS ON NEW ONES ON PRIORITY QUEUE
-        
         if min_not_found == False:
             break
 
 
 def DFBnB_zk_algorithm():
     ...
+    
+    ...
  
 
 def get_include(names, curr_result, cand):
     nodes = [(x[0], x[1]) for x in curr_result[0]]
-    print('Candidates', cand) #A -0, G - 6  [B, E] [E,F] [F,B] [[1, 4], [4, 5], [5, 1]]
-    print('Nodes ',nodes)
+    # print('Candidates', cand) #A -0, G - 6  [B, E] [E,F] [F,B] [[1, 4], [4, 5], [5, 1]]
+    # print('Nodes ',nodes)
     coords = []
     for j in nodes:
         temp = []
@@ -243,6 +262,7 @@ def make_tours(names, curr_nodes): ##curr[0]
     while len(used_nodes) != len(nodes):
         # print('This is my start', nodes)
         # print('This is how is it going', used_nodes)
+        # print(list_of_coords)
         for node in range(len(nodes)):
             if len(used_nodes) == 0:
                 tours.append([nodes[node][0], nodes[node][1]])

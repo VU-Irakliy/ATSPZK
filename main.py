@@ -5,23 +5,23 @@ nodes = []
 Start = Node('A', weight=0)
 
 
-def make_tree(lost_parent, temp_points, r, names, flag): ####MULTITHREADING REQUIRED HERE MAYBE? NO
-    # print(temp_points[0])
-    if (temp_points[0] == 'A') & flag: 
-        # print("gav")
-        return
-    else:
-        for i in range(len(temp_points[1])):
-            # print(names)
-            if(temp_points[1][i] != 0) and (r[i] == 0) and (names[i] != 'A' or sum(r) == len(names) - 1):
-                t = Node(names[i], parent=lost_parent, weight=temp_points[1][i])
-                nodes.append(t)
-                # print('meow', i)
-                # print('mmmm',temp_points[1])
-                # return
-                s = r.copy()
-                s[i] = 1
-                make_tree(t, points[i], s, names, True)
+# def make_tree(lost_parent, temp_points, r, names, flag): ####MULTITHREADING REQUIRED HERE MAYBE? NO
+#     # print(temp_points[0])
+#     if (temp_points[0] == 'A') & flag: 
+#         # print("gav")
+#         return
+#     else:
+#         for i in range(len(temp_points[1])):
+#             # print(names)
+#             if(temp_points[1][i] != 0) and (r[i] == 0) and (names[i] != 'A' or sum(r) == len(names) - 1):
+#                 t = Node(names[i], parent=lost_parent, weight=temp_points[1][i])
+#                 nodes.append(t)
+#                 # print('meow', i)
+#                 # print('mmmm',temp_points[1])
+#                 # return
+#                 s = r.copy()
+#                 s[i] = 1
+#                 make_tree(t, points[i], s, names, True)
 
 
 
@@ -47,30 +47,33 @@ def read_matr(filename, input):
     # print(points)
     r = [0] * len(points)
     # print(points[0], r)
-    if input == 1 or input == 2:
-        if len(names) <= 10:
-            make_tree(Start, points[0], r, names, False)
-        else: 
-            print('Please, choose ZK algorithm.')
-            exit()
+    # if input == 1 or input == 2:
+    #     if len(names) <= 10:
+    #         make_tree(Start, points[0], r, names, False)
+    #     else: 
+    #         print('Please, choose ZK algorithm.')
+    #         exit()
 
 
 #WHEN WHICH ALGORITHM IS USED
 #DFBNB IN ZHANG N KORF ALGORITHM IS USED WHEN THERE ARE A LOT OF INSTANCES AKA A LOT OF CITIES 
 # (COMPARE TIME OF BOTH BFS AND DFBNB IN ZK ALGORITHM) 
-def execute_the_algorithm(tree, named_matrix, names, matrix, input):
+def execute_the_algorithm(named_matrix, names, matrix, input):
+    matrix = np.array(matrix)
     
     if input == 1:
         minimum = 0
         temp_minimum = 0
-        result = depthFirstBranchAndBound(tree, minimum, temp_minimum)
+        used_rows = []
+        starting_point = 0
+        result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
         print("Result of Depth-First Branch-and-Bound: ")
         print(result)
         
     elif input == 2:
         minimum = 0
-        priority_queue = []
-        result = bestFirstSearch(tree)
+        
+        result = bestFirstSearch(matrix)
         print("Result of Best-First Search: ")
         print("Minimum Branch: ",result[0])
         print("Minimum Cost: ", result[1])
@@ -97,21 +100,22 @@ def main():
     # print(hi)
 
     # filename = 'matr100/matr3.txt' #100 nodes
-    # filename = 'matr2a.txt'  #15 nodes
-    filename = 'matr1aa.txt'
+    filename = 'matr2a.txt'  #15 nodes
+    # filename = 'matr3.txt'
+    # filename = 'matr1aa.txt'
     # filename = 'matr3.txt'
     # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
     if filename == 'exit':
         print('Program has exited.')
         exit()
     
-    al_input = 3  #look at the line below
+    al_input = 2  #look at the line below
     # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     
     read_matr(filename, al_input)
     print("The matrix has been created!")
-    if al_input == 1 or al_input == 2: 
-        print("The tree has been created!")
+    # if al_input == 1 or al_input == 2: 
+    #     print("The tree has been created!")
 
     # print(nodes)
     # print(points)
@@ -136,7 +140,7 @@ def main():
     
     
    
-    execute_the_algorithm(Start, named_points, names, matrix_points, al_input)
+    execute_the_algorithm(named_points, names, matrix_points, al_input)
     
    
 
