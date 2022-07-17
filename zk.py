@@ -133,6 +133,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
     i = 0
     print('\n START OF THE LOOP \n')
     while min_not_found:
+        # print('priority queue',priority_queue)
         if min_not_found == False:
             break
         else:
@@ -141,9 +142,9 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
            
 
             closed_priority.append(temps_prio)
-            print('count')
+            # print('count')
             tours = make_tours(names, temp_paths)
-            print('HHHHH')
+            # print('HHHHH')
             if len(tours) == 1:
                 min_not_found = False
                 cost = 0
@@ -173,7 +174,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                 exclude = temp_exc.copy()
                 exclude.append(candid[i])
                 temp_i = i + last_num + 1
-                print(temp_i)
+                # print(temp_i)
                 bran = 'A' + str(temp_i)
                 include = temp_inc.copy()
                 
@@ -239,8 +240,8 @@ def get_include(names, curr_result, cand):
 
 def make_tours(names, curr_nodes): ##curr[0]
     nodes = [(x[0], x[1]) for x in curr_nodes]
-    print('SHiiet')
-    print(nodes)
+    # print('SHiiet')
+    # print(nodes)
     coords = []
     for j in nodes:
         temp = []

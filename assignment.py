@@ -1,4 +1,5 @@
 
+from random import randint
 from re import L
 import re
 import numpy as np
@@ -27,7 +28,7 @@ Assignment Problem Reference:  https://python.plainenglish.io/hungarian-algorith
 Explanation on how this code works can be partially explained there.
 """
 
-def minimum_zero(matrix_with_0s, lined_zero, include, count_include, flag):
+def minimum_zero(matrix_with_0s, lined_zero, include, count_include, flag):#safe_net
     
     min_row = [len(matrix_with_0s) + 100, -1]
     # i -> row
@@ -41,6 +42,12 @@ def minimum_zero(matrix_with_0s, lined_zero, include, count_include, flag):
 
     else:
         # i is a row
+        '''
+        check each row if they have only 1 True
+        if no, seek other rows
+        Then repeat Step 1 and 2
+        
+        '''
         if flag == True:
             for i in range((len(matrix_with_0s) - 1), -1, -1):
                 # print(i)
@@ -51,9 +58,22 @@ def minimum_zero(matrix_with_0s, lined_zero, include, count_include, flag):
             for i in range(len(matrix_with_0s)):
                 if  np.sum(matrix_with_0s[i] == True) > 0 and min_row[0] > np.sum(matrix_with_0s[i] == True):
                     min_row = [np.sum(matrix_with_0s[i] == True), i]
+                    # print(min_row)
 
         # Marked the specific row and column as False
-        zero_index = np.where(matrix_with_0s[min_row[1]] == True)[0][0]
+        temp = np.where(matrix_with_0s[min_row[1]] == True)[0]
+        if len(temp) == 1:
+            zero_index = temp[0]
+        # elif safe_net == True:
+        else:
+            m = randint(0, len(temp) - 1)
+            zero_index = temp[m]
+        # else:
+        #     zero_index = temp[0]
+        # print(np.where(matrix_with_0s[min_row[1]] == True))
+        # print(zero_index)
+        # print(matrix_with_0s[min_row[1]])
+        # print(zero_index)
         lined_zero.append((min_row[1], zero_index))
         
         matrix_with_0s[min_row[1], :] = False
@@ -63,7 +83,7 @@ def minimum_zero(matrix_with_0s, lined_zero, include, count_include, flag):
 
 
 
-def possible_solution(matrix, include, flag): #flag
+def possible_solution(matrix, include, flag): #flag , safe_net
     curr_matrix = matrix
 
     #Transform the matrix to boolean matrix(0 = True, others = False)
@@ -75,9 +95,9 @@ def possible_solution(matrix, include, flag): #flag
     #Recording possible answer positions by marked_zero
     count_include = [0]
     while (True in matr_with_0s_temp):
-        minimum_zero(matr_with_0s_temp, lined_zeros, include, count_include, flag)
+        minimum_zero(matr_with_0s_temp, lined_zeros, include, count_include, flag) #, safe_net
         # print(matr_with_0s_temp)
-    print('so sos o',lined_zeros)
+    # print('so sos o',lined_zeros)
     
     lined_rows_0 = []
     lined_columns_0 = []
@@ -108,6 +128,8 @@ def possible_solution(matrix, include, flag): #flag
                 not_lined_flag = True
     
     lined_rows = list(set(range(len(matrix))) - set(not_lined_rows))
+    ##### NOT ALLOWED IF LEN(LINED_ROWS + LINED_COLUMNS) == LEN(MATRIX) WHILE LEN(LINED_ZEROS) < LEN(MATRIX)
+    ##### MUST BE IF LEN(LINED_ROWS + LINED_COLUMNS) == LEN(MATRIX) WHILE LEN(LINED_ZEROS) == LEN(MATRIX)
     result = [lined_zeros, lined_rows, lined_columns]
     return result
 
@@ -122,10 +144,10 @@ def change_matrix(matrix, lined_rows, lined_columns):
             for j in range(len(curr_matrix[i])):
                 if j not in lined_columns and curr_matrix[i][j] != 0:
                     non_zero.append(curr_matrix[i][j])
-    print('shit', non_zero)
+    # print('shit', non_zero)
     # print('WORK = ', np.nonzero(non_zero))
     min_num = int(np.nanmin(non_zero))
-    print('SOOO ',min_num)
+    # print('SOOO ',min_num)
     for i in range(len(curr_matrix)):
         if i not in lined_rows:
             for j in range(len(curr_matrix[i])):
@@ -189,18 +211,19 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     coords_that_miss = []
     flag = False
     didnt_work = False
-    
+    # safe_net = False
     while count < len(matrix):
         # if mini == True:
         #         break
         while count_2 < len(matrix):
             # if mini == True:
             #     break
-            print('CURR include',shadow)
+            # print('CURR include',shadow)
             #result[0] = , result[1] = , result[2] = ... 
-            result = possible_solution(temp_matrix, shadow, flag)
+            result = possible_solution(temp_matrix, shadow, flag) #, safe_net
+            # safe_net = False
             prioritise = []
-            print('\n \n POSSIBLE RESULT', result)
+            # print('\n \n POSSIBLE RESULT', result)
             temp_froms = [x[0] for x in result[0]]
             # print(temp_froms)
             temp_end = [x[1] for x in result[0]]
@@ -222,7 +245,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
             # print(result[0]   [0][0])
             # print('SIZE OF THE POSS SOL',count)
             if count < len(temp_matrix):
-                print('NOOOOOOOOOOOOO')
+                # print('NOOOOOOOOOOOOO')
                 
                 temp_matrix = change_matrix(temp_matrix, 
                                         result[1],
@@ -252,7 +275,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                 # # print(temp_froms)
                 # temp_end = [x[1] for x in result[0]]
                 if flag == False:
-                    print('pp')
+                    # print('pp')
                     flag = True
                     if len(result[1]) > 0 and len(result[2]) > 0:
                         temp_matrix = change_matrix(temp_matrix, 
@@ -260,41 +283,52 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                                             result[2])
                     missing = []
 
-                    for i in range(0, len(temp_matrix)):
-                        if i not in temp_froms:
-                            missing.append(i)
-                    print('MISSS', missing)
+                    # for i in range(0, len(temp_matrix)):
+                    #     if i not in temp_froms:
+                    #         missing.append(i)
+                    # print('MISSS', missing)
                 else:
-                    print('please pick another matrix')
-                    missing = []
+                    temp_matrix = matrix.copy()
+                    # safe_net = True
+                    # print(safe_net)
+                    # exit()
+                    # print('please pick another matrix')
+                    # missing = []
                     print("WELP, WHAT'S NEXT")
-                    for i in range(0, len(temp_matrix)):
-                        if i not in temp_froms:
-                            missing.append(i)
-                    print('MISSS', missing)
-                    exit()
-                    if didnt_work == False:
-                        didnt_work = True
-                        collectionn = []
-                        for i in missing:
-                            for j in range(0, len(matrix)):
-                                if temp_matrix[i][j] == 0:
-                                    if j in inc_ends:
-                                        print(j, 'is a trouble number')
-                                    else:
-                                        collectionn.append((i,j))
-                        # temp_matrix = change_matrix()
-                        print(collectionn)
+                    flag = False
+                    if len(result[1]) > 0 and len(result[2]) > 0:
+                        temp_matrix = change_matrix(temp_matrix, 
+                                            result[1],
+                                            result[2])
+                    # missing = []
+            print(temp_matrix)
+                    # for i in range(0, len(temp_matrix)):
+                    #     if i not in temp_froms:
+                    #         missing.append(i)
+                    # print('MISSS', missing)
+                    # exit()
+                    # if didnt_work == False:
+                    #     didnt_work = True
+                    #     collectionn = []
+                    #     for i in missing:
+                    #         for j in range(0, len(matrix)):
+                    #             if temp_matrix[i][j] == 0:
+                    #                 if j in inc_ends:
+                    #                     print(j, 'is a trouble number')
+                    #                 else:
+                    #                     collectionn.append((i,j))
+                    #     # temp_matrix = change_matrix()
+                    #     print(collectionn)
                         
 
                         
-                    else:
-                        ...
-                        for i in range(0, len(temp_matrix)):
-                            if i not in temp_froms:
-                                missing.append(i)
-                        print('MISSS', missing)
-                        break
+                    # else:
+                    #     ...
+                    #     for i in range(0, len(temp_matrix)):
+                    #         if i not in temp_froms:
+                    #             missing.append(i)
+                    #     print('MISSS', missing)
+                    #     break
 
                     # coords_that_miss = []
                     # coords_with_0s = []
@@ -335,7 +369,6 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     #             we_tried.append(i)
                     #             coords_that_miss.pop(coords_that_miss.index(i))
 
-                    ...
 
                 # have_missing_end = []
                 # for i in missing:
@@ -474,7 +507,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     # temp_matrix = change_matrix(temp_matrix, 
                     #                     result[1],
                     #                     result[2])
-            print(temp_matrix)
+            
 
                         
     

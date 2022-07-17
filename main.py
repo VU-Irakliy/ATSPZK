@@ -70,6 +70,7 @@ def execute_the_algorithm(named_matrix, names, matrix, input):
         result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
         print("Result of Depth-First Branch-and-Bound: ")
         print(result)
+        # print(result[1])
         
     elif input == 2:
         minimum = 0
@@ -100,8 +101,8 @@ def main():
     # hi = there[something[2]]
     # print(hi)
 
-    # filename = 'matr100/matr3.txt' #100 nodes
-    filename = 'matr2a.txt'  #15 nodes
+    filename = 'matr100/matr3.txt' #100 nodes
+    # filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
     # filename = 'matr3.txt' # 7 nodes
     # filename = 'matr1aa.txt' # 10 nodes
     # filename = 'matr3.txt'
@@ -110,7 +111,7 @@ def main():
         print('Program has exited.')
         exit()
     
-    al_input = 2  #look at the line below
+    al_input = 1  #look at the line below
     # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     
     read_matr(filename, al_input)
@@ -137,7 +138,7 @@ def main():
     #KEEP THESE COMMENTS
     # print(int(np.nanmin(matrix_points)))
     # print(RenderTree(Start, style=ContStyle()))
-    print(matrix_points)
+    # print(matrix_points)
     
     
    

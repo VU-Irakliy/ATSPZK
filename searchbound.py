@@ -42,6 +42,7 @@ def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, startin
                         minimum_cost = depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, copy_copy, i)
                         temp_cost -= matrix[starting_point][i]
         else:
+            # print(used_rows)
             minimum_cost = temp_cost
         
         return minimum_cost
@@ -73,6 +74,7 @@ def bestFirstSearch(matrix):
                 last_num = temp[0][-1]
                 pp = temp[0].copy()
                 pp.append(0)
+                #use insert
                 hq.heappush(priority_queue, [pp, (temp_cost + matrix[last_num][0])])
                 
             else:
@@ -83,6 +85,14 @@ def bestFirstSearch(matrix):
                     last_num = temp[0][-1]
                     pp = temp[0].copy()
                     pp.append(i)
+                    #use insert
+                    '''
+                    if weight is more than max, add to the end
+                    if equal, to the end
+
+                    if less, than we got through the list, until we find the member that has weight bigger than our weight
+                    and put it at the front of it
+                    '''
                     hq.heappush(priority_queue,[pp, (temp_cost + matrix[last_num][i])])
             priority_queue = sorted(priority_queue, key= lambda x: x[1])
         else:
