@@ -51,9 +51,9 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # cand = len_of_tours[min_len_subtour]
     
     #we might choose different if statement
-    if len(nodes) >= 100:  ## ############DFBnB ###################
+    if len(nodes) > 99:  ## ############DFBnB ###################
         # include = []
-        childs = cand.copy()
+        # childs = cand.copy()
         children = []
         print('START OF THE AlGO')
         # used_nums = []
@@ -75,15 +75,17 @@ def start_ZK_algorithm(named_matrix, names, matrix):
             # exclude = []
             # valu = Node(bran, parent = Start, weight = curr[1])
             # priority_queue.append([valu, curr[0], exclude, include, curr[1]])s
-            children.append([curr[0], exclude, include, curr[1]])
+            children.append([curr[0], exclude, include, curr[1]]) ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         print(children)
         minimum = 0
         used_rows = []
         starting_point = 0
         for i in children:
-            if minimum == 0 or minimum > (curr[0]):
-                ... 
-        result = DFBnB_zk_algorithm()
+            curr_cost = i[3]
+            if minimum == 0 or minimum > (curr_cost): #### [curr[0], exclude, include, curr[1]]
+                minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
+        result = minimum
+        print('ZK DFBnB Result')
         return result
             # used_nums.append(i)
         # exclude = []        
@@ -95,7 +97,8 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     
     else: #BFS
 
-        result = BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total)
+        result = BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total)
+        print("ZK BFS Result")
         return result
         
 
@@ -108,8 +111,62 @@ def start_ZK_algorithm(named_matrix, names, matrix):
         #     exclude = []
     # if len(include) != 0:    THIS IS FOR THE OTHER FUNCTION
                     
+def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum):
+    temp_paths, temp_exc, temp_inc, temp_weight = data
+    tours = make_tours(names, temp_paths)
+    if len(tours) == 1:
+        min_not_found = False
+        cost = 0
+        for list in tours:
+            for coord in list:
+                cost += matrix[coord[0]][coord[1]]
+        return cost
             
-def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
+    len_of_tours = []
+    print('Tours', tours)
+    for i in range(len(tours)):
+        count = 0
+        for j in tours:
+            if j in temp_inc:
+                count += 1
+        len_of_tours.append(len(tours[i]) - count)
+    print(len_of_tours)
+    cand = tours[len_of_tours.index(min(len_of_tours))]
+    for i in temp_inc:
+        if i in cand:
+            um = cand.pop(cand.index(i))
+            del um
+    children = []
+    for i in range(len(cand)):
+        exclude = temp_exc.copy()
+        exclude.append(cand[i])
+        # temp_i = i + last_num + 1
+        # print(temp_i)
+        # bran = 'A' + str(temp_i)
+        include = temp_inc.copy()
+        
+        print('WTF ARE THESE')
+        print(exclude)
+        print(include)
+        curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+
+        temp_temp_inc = get_include(names, curr, cand)
+        for j in temp_temp_inc:
+            if j not in include:
+                include.append(j)
+        children.append([curr[0], exclude, include, curr[1]])
+    for i in children:
+        print(i)
+        curr_cost = i[3]        ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
+        print('WELP, WTF')
+        print(minimum)
+        print(curr_cost)
+        if minimum == 0 or minimum > (curr_cost): #### [curr[0], exclude, include, curr[1]]
+            minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
+    result = minimum
+    return result
+            
+def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
     priority_queue = []
     print('START OF THE AlGO')
     # used_nums = []
@@ -219,10 +276,8 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
             break
 
 
-def DFBnB_zk_algorithm():
-    ...
+
     
-    ...
  
 
 def get_include(names, curr_result, cand):

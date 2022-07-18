@@ -61,15 +61,18 @@ def read_matr(filename, input):
 def execute_the_algorithm(named_matrix, names, matrix, input):
     matrix = np.array(matrix)
     print(matrix)
-    
     if input == 1:
-        minimum = 0
-        temp_minimum = 0
-        used_rows = []
-        starting_point = 0
-        result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
-        print("Result of Depth-First Branch-and-Bound: ")
-        print(result)
+        if len(matrix) <= 30:
+
+            minimum = 0
+            temp_minimum = 0
+            used_rows = []
+            starting_point = 0
+            result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
+            print("Result of Depth-First Branch-and-Bound: ")
+            print(result)
+        else:
+            print('This is dangerous')
         # print(result[1])
         
     elif input == 2:
@@ -102,7 +105,8 @@ def main():
     # print(hi)
 
     filename = 'matr100/matr3.txt' #100 nodes
-    filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
+    # filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
+    # filename = 'matr2aaa.txt'
     # filename = 'matr3.txt' # 7 nodes
     # filename = 'matr1aa.txt' # 10 nodes
     # filename = 'matr3.txt'
@@ -111,7 +115,7 @@ def main():
         print('Program has exited.')
         exit()
     
-    al_input = 1  #look at the line below
+    al_input = 3  #look at the line below
     # al_input = int(input("Which algorithm? (1-DFBnB, 2-BFS, any - ZK): "))
     
     read_matr(filename, al_input)

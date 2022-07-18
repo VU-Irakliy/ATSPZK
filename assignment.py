@@ -230,10 +230,10 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
 
 
             count = len(result[1]) + len(result[2])
-            print('lines',count)
-            # count = len(result[0])
+            # print('lines',count)
+            # # count = len(result[0])
 
-            print('actual', count_2)
+            # print('actual', count_2)
             # print(result[0]   [0][0])
             # print('SIZE OF THE POSS SOL',count)
             if count < len(temp_matrix):
@@ -243,29 +243,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                                         result[1],
                                         result[2])
             elif count == len(temp_matrix) and count_2 < len(temp_matrix):
-                # shadow = include.copy()
-                # for i in range(len(temp_matrix)):
-                #     if i not in temp_froms:
-                #         tzeros_i = []
-                #         tzeros_j = []
-                #         for j in range(0, len(temp_matrix)):
-                #             if j not in temp_end:
-                #                 if temp_matrix[i][j] == 0:
-                #                     tzeros_i.append((i, j))
-                #                 if temp_matrix[j][i] == 0:
-                #                     tzeros_j.append((j, i))
-                #         if len(tzeros_i) == 1:
-                #             shadow.append(tzeros_i[0])
-                #         if len(tzeros_j) == 1:
-                #             shadow.append(tzeros_j[0])
-                ...
-                # print('tzeros_i',tzeros_i)
-                # print('tzeros_j', tzeros_j)
-                # print('old include', include)
-                # print('new include',shadow)
-                # temp_froms = [x[0] for x in result[0]]
-                # # print(temp_froms)
-                # temp_end = [x[1] for x in result[0]]
+              
                 if flag == False:
                     # print('pp')
                     flag = True
@@ -292,8 +270,53 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                         temp_matrix = change_matrix(temp_matrix, 
                                             result[1],
                                             result[2])
-                    # missing = []
-            print(temp_matrix)
+                    
+            # print(temp_matrix)
+           
+    l = 0
+    main_result = []
+    # print(r)
+    # print('SOOO', result)
+    result = result[0]
+    # print('AAAND', result)
+    # print(names)
+    # print(names[0])
+    while l < len(result):
+        i = result[l][0]
+        j = result[l][1]
+
+
+        tempest = [names[i], names[j], matrix[i][j]]
+        main_result.append(tempest)
+        l += 1
+    total = sum([x[2] for x in main_result])
+    return (main_result, total)
+    # something = findminstroken(temp_matrix, 0, 0, len(temp_matrix)**2, strikethrough(temp_matrix, len(temp_matrix)))
+
+
+ # missing = []
+              # shadow = include.copy()
+                # for i in range(len(temp_matrix)):
+                #     if i not in temp_froms:
+                #         tzeros_i = []
+                #         tzeros_j = []
+                #         for j in range(0, len(temp_matrix)):
+                #             if j not in temp_end:
+                #                 if temp_matrix[i][j] == 0:
+                #                     tzeros_i.append((i, j))
+                #                 if temp_matrix[j][i] == 0:
+                #                     tzeros_j.append((j, i))
+                #         if len(tzeros_i) == 1:
+                #             shadow.append(tzeros_i[0])
+                #         if len(tzeros_j) == 1:
+                #             shadow.append(tzeros_j[0])
+                # print('tzeros_i',tzeros_i)
+                # print('tzeros_j', tzeros_j)
+                # print('old include', include)
+                # print('new include',shadow)
+                # temp_froms = [x[0] for x in result[0]]
+                # # print(temp_froms)
+                # temp_end = [x[1] for x in result[0]]
                     # for i in range(0, len(temp_matrix)):
                     #     if i not in temp_froms:
                     #         missing.append(i)
@@ -499,26 +522,3 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     # temp_matrix = change_matrix(temp_matrix, 
                     #                     result[1],
                     #                     result[2])
-            
-
-                        
-    
-    l = 0
-    main_result = []
-    # print(r)
-    # print('SOOO', result)
-    result = result[0]
-    # print('AAAND', result)
-    # print(names)
-    # print(names[0])
-    while l < len(result):
-        i = result[l][0]
-        j = result[l][1]
-
-
-        tempest = [names[i], names[j], matrix[i][j]]
-        main_result.append(tempest)
-        l += 1
-    total = sum([x[2] for x in main_result])
-    return (main_result, total)
-    # something = findminstroken(temp_matrix, 0, 0, len(temp_matrix)**2, strikethrough(temp_matrix, len(temp_matrix)))
