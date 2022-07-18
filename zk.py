@@ -21,7 +21,7 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # curr_result = assignment_hungarian(named_matrix, names, matrix, include, exclude)
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
 
-    Start = Node("Start", weight = curr_result[1])
+    # Start = Node("Start", weight = curr_result[1])
     
     # print('Min total', min_total)
     nodes = [(x[0], x[1]) for x in curr_result[0]]
@@ -134,7 +134,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
         # used_nums.append(i)
    
     min_not_found = True
-    priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - NODE, x[1] - PATH RESULT,  x[2] - EXCLUDE, x[3] - INCLUDE, x[4] - WEIGHT 
+    priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
     #[[Node('/Start/A1', weight=13), 13], [Node('/Start/A2', weight=14), 14], 
     # [Node('/Start/A0', weight=15), 15]]
    

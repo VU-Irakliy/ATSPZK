@@ -3,18 +3,10 @@ from random import randint
 from re import L
 import re
 import numpy as np
-from anytree import *
 import heapq as hq
 import math
 import sys
 
-#DOCUMENTATION: 
-# anytree
-"""
-https://anytree.readthedocs.io/en/latest/ 
-https://anytree.readthedocs.io/en/latest/tricks/weightededges.html
-
-"""
 
 '''
 THESE USE MATRIX DATA STRUCTURE

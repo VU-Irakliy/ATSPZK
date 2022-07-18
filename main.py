@@ -2,7 +2,7 @@ from searchbound import *
      
 points = []
 nodes = []
-Start = Node('A', weight=0)
+# Start = Node('A', weight=0)
 
 
 # def make_tree(lost_parent, temp_points, r, names, flag): ####MULTITHREADING REQUIRED HERE MAYBE? NO
