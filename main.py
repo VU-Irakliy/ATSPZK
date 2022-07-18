@@ -102,7 +102,7 @@ def main():
     # print(hi)
 
     filename = 'matr100/matr3.txt' #100 nodes
-    # filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
+    filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
     # filename = 'matr3.txt' # 7 nodes
     # filename = 'matr1aa.txt' # 10 nodes
     # filename = 'matr3.txt'

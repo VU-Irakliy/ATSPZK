@@ -51,17 +51,17 @@ def start_ZK_algorithm(named_matrix, names, matrix):
     # cand = len_of_tours[min_len_subtour]
     
     #we might choose different if statement
-    if len(nodes) >= 1000:  ## ############DFBnB ###################
+    if len(nodes) >= 100:  ## ############DFBnB ###################
         # include = []
         childs = cand.copy()
         children = []
         print('START OF THE AlGO')
-        used_nums = []
+        # used_nums = []
         print(cand)
         for i in range(len(cand)):
             exclude = []
             include = []
-            bran = 'A' + str(i)
+            # bran = 'A' + str(i)
             exclude.append(cand[i])
             print('NOOOO')
             print('WTF ARE THESE')
@@ -73,11 +73,20 @@ def start_ZK_algorithm(named_matrix, names, matrix):
             include = get_include(names, curr, cand)
             # inc_excludes.append([exclude, include, curr[1]])
             # exclude = []
-            valu = Node(bran, parent = Start, weight = curr[1])
+            # valu = Node(bran, parent = Start, weight = curr[1])
             # priority_queue.append([valu, curr[0], exclude, include, curr[1]])s
-            used_nums.append(i)
+            children.append([curr[0], exclude, include, curr[1]])
+        print(children)
+        minimum = 0
+        used_rows = []
+        starting_point = 0
+        for i in children:
+            if minimum == 0 or minimum > (curr[0]):
+                ... 
+        result = DFBnB_zk_algorithm()
+        return result
+            # used_nums.append(i)
         # exclude = []        
-        ...
         # for i in cand:
         #     exclude.append(i)
         #     zk_algorithm
@@ -103,12 +112,12 @@ def start_ZK_algorithm(named_matrix, names, matrix):
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF COMPLETE TOUR, THEN RETURN MINIMUM COST AND WE'RE DONE
     priority_queue = []
     print('START OF THE AlGO')
-    used_nums = []
+    # used_nums = []
     print(cand)
     for i in range(len(cand)):
         exclude = []
         include = []
-        bran = 'A' + str(i)
+        # bran = 'A' + str(i)
         exclude.append(cand[i])
         print('NOOOO')
         print('WTF ARE THESE')
@@ -120,12 +129,12 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
         include = get_include(names, curr, cand)
         # inc_excludes.append([exclude, include, curr[1]])
         # exclude = []
-        valu = Node(bran, parent = Start, weight = curr[1])
-        priority_queue.append([valu, curr[0], exclude, include, curr[1]])
-        used_nums.append(i)
+        # valu = Node(bran, parent = Start, weight = curr[1])
+        priority_queue.append([curr[0], exclude, include, curr[1]])
+        # used_nums.append(i)
    
     min_not_found = True
-    priority_queue = sorted(priority_queue, key= lambda x: x[4])  ### x[0] - NODE, x[1] - PATH RESULT,  x[2] - EXCLUDE, x[3] - INCLUDE, x[4] - WEIGHT 
+    priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - NODE, x[1] - PATH RESULT,  x[2] - EXCLUDE, x[3] - INCLUDE, x[4] - WEIGHT 
     #[[Node('/Start/A1', weight=13), 13], [Node('/Start/A2', weight=14), 14], 
     # [Node('/Start/A0', weight=15), 15]]
    
@@ -138,7 +147,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
             break
         else:
             temps_prio = priority_queue.pop(0)
-            temp_branch, temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
+            temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
            
 
             closed_priority.append(temps_prio)
@@ -168,14 +177,14 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                     um = candid.pop(candid.index(i))
                     del um
             print('CANDID', candid)
-            last_num = used_nums[-1]
+            # last_num = used_nums[-1]
             # print('USED NUMS', used_nums)
             for i in range(len(candid)):
                 exclude = temp_exc.copy()
                 exclude.append(candid[i])
-                temp_i = i + last_num + 1
+                # temp_i = i + last_num + 1
                 # print(temp_i)
-                bran = 'A' + str(temp_i)
+                # bran = 'A' + str(temp_i)
                 include = temp_inc.copy()
                 
                 print('WTF ARE THESE')
@@ -197,15 +206,15 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, Start, min_total): #IF C
                 # inc_excludes.append([exclude, include, curr[1]])
                 # exclude = []
                 #####################SHOULD BE closed_priority[-1]
-                valu = Node(bran, parent = Start, weight = curr[1])
-                priority_queue.append([valu, curr[0], exclude, include, curr[1]])
-                used_nums.append(temp_i)
+                # valu = Node(bran, parent = Start, weight = curr[1])
+                priority_queue.append([curr[0], exclude, include, curr[1]])
+                # used_nums.append(temp_i)
                 del include
                 del exclude
             # inc_excludes = sorted(inc_excludes, key= lambda x: x[2]) ### x[0] - EXCLUDE, x[1] - INCLUDE, x[2] - WEIGHT 
             # print('\n Includes and Excludes')
             # print(inc_excludes)
-            priority_queue = sorted(priority_queue, key= lambda x: x[4])
+            priority_queue = sorted(priority_queue, key= lambda x: x[3])
         if min_not_found == False:
             break
 

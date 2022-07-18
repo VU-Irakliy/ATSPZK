@@ -13,7 +13,7 @@ THESE USE TREE DATA STRUCTURES
 # min cost = 14
 # 5 + 11 + 16 + 12 + 16
 # - 12 - 16 - 11 - 5 
-
+countess = 0
 def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, starting_point):
     if len(used_rows) == 0:
         used_rows.append(starting_point)
@@ -33,6 +33,7 @@ def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, startin
                 if minimum_cost > (temp_cost + matrix[starting_point][0]) or minimum_cost == 0:
                     temp_cost += matrix[starting_point][0]
                     minimum_cost = depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, copy_copy , 0)
+                    temp_cost -= matrix[starting_point][0]
 
             else:
                 children = np.array([i for i in range(1, len(matrix)) if i not in copy_copy ])
@@ -41,9 +42,14 @@ def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, startin
                         temp_cost += matrix[starting_point][i]
                         minimum_cost = depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, copy_copy, i)
                         temp_cost -= matrix[starting_point][i]
+                    # else:
+                    #     print(used_rows)
         else:
             # print(used_rows)
+            
             minimum_cost = temp_cost
+            print(minimum_cost)
+            # print(used_rows)
         
         return minimum_cost
     
