@@ -24,17 +24,16 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
     matrix = np.array(matrix)
     print(matrix)
     if input == 1:
-        if len(matrix) <= 30:
-
-            minimum = 0
-            temp_minimum = 0
-            used_rows = []
-            starting_point = 0
-            result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
-            print("Result of Depth-First Branch-and-Bound: ")
-            print(result)
-        else:
-            print('This is dangerous')
+        
+        minimum = 0
+        temp_minimum = 0
+        used_rows = []
+        starting_point = 0
+        result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
+        print("Result of Depth-First Branch-and-Bound: ")
+        print(result)
+        return result
+        
         
     elif input == 2:
         minimum = 0
@@ -43,12 +42,14 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
         print("Result of Best-First Search: ")
         print("Minimum Branch: ",result[0])
         print("Minimum Cost: ", result[1])
+        return result[1]
     
     
     else: 
         
         result = start_ZK_algorithm(named_matrix, names, matrix, method)
         print(result)
+        return result
 
 
 
@@ -83,7 +84,8 @@ def start(filename, al_input, method):
             if i[j] == 0:
                 i[j] = math.nan
    
-    execute_the_algorithm(named_points, names, matrix_points, al_input, method)
+    result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
+    return result
     #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     
    

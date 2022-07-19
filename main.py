@@ -1,7 +1,7 @@
 from algorithm import *
 
 def main():
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, any - experiment) \n'))
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - my my,any - experiment) \n'))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -11,16 +11,27 @@ def main():
         else:
             method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         start(filename, al_input, method)
-    else:
+    elif hello == 1:
         filename = 'matr2aaa.txt'
         al_input = 3
         method = 2
-        start(filename, al_input, method)
+        result = start(filename, al_input, method)
         method = 1
-        start(filename, al_input, method)
+        result_2 = start(filename, al_input, method)
 
         # folder = 
         ...
+    else:
+        method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
+        cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
+        results = []
+        for i in range(1, 101):
+            filename = 'matr' + cities + '/matr' + str(i) + '.txt'
+            mm = start(filename, 3, method) #here we should capture time and a result, then store them for the sake of the presentation
+            results.append(mm)
+        print(mm)
+
+
 
 
 
