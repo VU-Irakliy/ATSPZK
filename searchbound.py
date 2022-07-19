@@ -5,16 +5,7 @@ from re import M
 from zk import *
 
 
-'''
-THESE USE TREE DATA STRUCTURES
-
-'''
-
-# min cost = 14
-# 5 + 11 + 16 + 12 + 16
-# - 12 - 16 - 11 - 5 
-countess = 0
-def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, starting_point):
+def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, starting_point): # Depth-First Branch and Bound
     if len(used_rows) == 0:
         used_rows.append(starting_point)
         children = np.array([i for i in range(1, len(matrix))])
@@ -42,26 +33,24 @@ def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, startin
                         temp_cost += matrix[starting_point][i]
                         minimum_cost = depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, copy_copy, i)
                         temp_cost -= matrix[starting_point][i]
-                    # else:
-                    #     print(used_rows)
+                    
         else:
-            # print(used_rows)
             
             minimum_cost = temp_cost
-            print(minimum_cost)
-            # print(used_rows)
+            # This is just used to see what it's current minimum is (To see how fast it's perfoming)
+            # print(minimum_cost)
         
         return minimum_cost
     
-def bestFirstSearch(matrix): 
-    priority_queue = []  ##### used_rows, weight
-    # priority_queue = priority_queue
-    # closed = []
+def bestFirstSearch(matrix): # Best-First Search
+    priority_queue = []  
+    # I decided not to include Closed Set, because it's useless in it's current form
     main_children = [i for i in range(1, len(matrix))]
     used_rows = [0]
     for i in main_children:
         temp = used_rows.copy()
         temp.append(i)
+        #TODO USE INSERT. #NO. IT'S THE START OF THE ALGO. NO POINT IN THIS
         hq.heappush(priority_queue, [temp, matrix[0][i]])
     del temp
     priority_queue = sorted(priority_queue, key= lambda x: x[1])
@@ -69,19 +58,19 @@ def bestFirstSearch(matrix):
     count = 0
     while reached_minimum == False:
         if len(priority_queue[0][0]) != (len(matrix) + 1):
-            temp = priority_queue.pop(0) ####used_rows, weight
-            # closed.append(temp)
-            if count % 10000 == 0:
-                print(temp[1])
+            temp = priority_queue.pop(0) 
+            # This is just used to see what it's current minimum is (To see how fast it's perfoming)
+            # if count % 10000 == 0:
+            #     print(temp[1])
                 
             count += 1
             if len(temp[0]) == len(matrix):
                 temp_cost = temp[1]
                 last_num = temp[0][-1]
-                pp = temp[0].copy()
-                pp.append(0)
-                #use insert
-                hq.heappush(priority_queue, [pp, (temp_cost + matrix[last_num][0])])
+                temp_path = temp[0].copy()
+                temp_path.append(0)
+                #TODO USE INSERT
+                hq.heappush(priority_queue, [temp_path, (temp_cost + matrix[last_num][0])])
                 
             else:
 
@@ -89,9 +78,23 @@ def bestFirstSearch(matrix):
                 for i in children:
                     temp_cost = temp[1]
                     last_num = temp[0][-1]
-                    pp = temp[0].copy()
-                    pp.append(i)
-                    #use insert
+                    the_curr_cost = temp_cost + matrix[last_num][i]
+                    temp_path = temp[0].copy()
+                    temp_path.append(i)
+                    ######Revisit this later
+                    # temp_cost = temp[1]
+                    # last_num = temp[0][-1]
+                    
+                    # temp_path = temp[0].copy()
+                    # temp_path.append(i)
+                    # the_curr_cost = (temp_cost + matrix[last_num][i])
+                    # for i in range(len(priority_queue)):
+                    #     if the_curr_cost < priority_queue[i][1]:
+                    #         # print('HOHO',temp_path)
+                    #         # print(the_curr_cost)
+                    #         priority_queue.insert(i, [temp_path, the_curr_cost])
+                    #         # print(priority_queue,' \n')
+                    #         break 
                     '''
                     if weight is more than max, add to the end
                     if equal, to the end
@@ -99,7 +102,8 @@ def bestFirstSearch(matrix):
                     if less, than we got through the list, until we find the member that has weight bigger than our weight
                     and put it at the front of it
                     '''
-                    hq.heappush(priority_queue,[pp, (temp_cost + matrix[last_num][i])])
+                    #TODO USE INSERT
+                    hq.heappush(priority_queue,[temp_path, the_curr_cost])
             priority_queue = sorted(priority_queue, key= lambda x: x[1])
         else:
             temp_branch = priority_queue.pop(0)
@@ -131,9 +135,9 @@ def bestFirstSearch(matrix):
 #             if len(temp[0]) == len(matrix):
 #                 temp_cost = temp[1]
 #                 last_num = temp[0][-1]
-#                 pp = temp[0].copy()
-#                 pp.append(0)
-#                 priority_queue.append([pp, (temp_cost + matrix[last_num][0])])
+#                 temp_path = temp[0].copy()
+#                 temp_path.append(0)
+#                 priority_queue.append([temp_path, (temp_cost + matrix[last_num][0])])
                 
 #             else:
 
@@ -141,9 +145,9 @@ def bestFirstSearch(matrix):
 #                 for i in children:
 #                     temp_cost = temp[1]
 #                     last_num = temp[0][-1]
-#                     pp = temp[0].copy()
-#                     pp.append(i)
-#                     priority_queue.append([pp, (temp_cost + matrix[last_num][i])])
+#                     temp_path = temp[0].copy()
+#                     temp_path.append(i)
+#                     priority_queue.append([temp_path, (temp_cost + matrix[last_num][i])])
 #             priority_queue = sorted(priority_queue, key= lambda x: x[1])
 #         else:
 #             temp_branch = priority_queue.pop(0)
