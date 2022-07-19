@@ -8,7 +8,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
 
     
-    paths = [(x[0], x[1]) for x in curr_result[0]]
+    # paths = [(x[0], x[1]) for x in curr_result[0]]
     list_of_coords = make_tours(names, curr_result[0])
 
     if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
@@ -65,8 +65,8 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
     temp_paths, temp_exc, temp_inc, temp_weight = data
     tours = make_tours(names, temp_paths)
     if len(tours) == 1:
-        min_not_found = False
         cost = 0
+        print(tours)
         for list in tours:
             for coord in list:
                 cost += matrix[coord[0]][coord[1]]
@@ -140,6 +140,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
             closed_priority.append(temps_prio)
             tours = make_tours(names, temp_paths)
             if len(tours) == 1:
+                print(tours)
                 min_not_found = False
                 cost = 0
                 for list in tours:
