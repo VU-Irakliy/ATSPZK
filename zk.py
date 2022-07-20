@@ -180,17 +180,17 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
                 
                
                 curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
-                
+                if curr == (None, None):
+                    ...
+                else:
+                    temp_temp_inc = get_include(names, curr, candid)
+                    for j in temp_temp_inc:
+                        if j not in include:
+                            include.append(j)
                     
-                
-                temp_temp_inc = get_include(names, curr, candid)
-                for j in temp_temp_inc:
-                    if j not in include:
-                        include.append(j)
-                
-                priority_queue.append([curr[0], exclude, include, curr[1]])
-                del include
-                del exclude
+                    priority_queue.append([curr[0], exclude, include, curr[1]])
+                    del include
+                    del exclude
             
             priority_queue = sorted(priority_queue, key= lambda x: x[3])
         if min_not_found == False:
