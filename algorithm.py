@@ -20,7 +20,7 @@ def read_matr(filename, points):
 
 def execute_the_algorithm(named_matrix, names, matrix, input, method):
     matrix = np.array(matrix)
-    print(matrix)
+    # print(matrix)
     if input == 1:
         
         minimum = 0
