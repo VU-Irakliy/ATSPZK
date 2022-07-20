@@ -14,7 +14,7 @@ Explanation on how this code works can be partially explained there.
 All modifications will be explained here 
 """
 
-def minimum_zero(matrix_with_0s, lined_zero, include, reverse):
+def minimum_zero(matrix_with_0s, lined_zero, include, reverse, rad): #rad = Random
     
     min_row = [len(matrix_with_0s) + 100, -1]
 
@@ -40,11 +40,14 @@ def minimum_zero(matrix_with_0s, lined_zero, include, reverse):
         # Marked the specific row and column as False
         temp = np.where(matrix_with_0s[min_row[1]] == True)[0]
         #If there is only 1 True, it will choose it
-        if len(temp) == 1:
+        if rad == True:
+            if len(temp) == 1:
+                zero_index = temp[0]
+            else: #else, it will try to pick one randomly (inspiration from Monte Carlo Methods)
+                m = randint(0, len(temp) - 1)
+                zero_index = temp[m]
+        else:
             zero_index = temp[0]
-        else: #else, it will try to pick one randomly (inspiration from Monte Carlo Methods)
-            m = randint(0, len(temp) - 1)
-            zero_index = temp[m]
         
         lined_zero.append((min_row[1], zero_index))
         
@@ -54,7 +57,7 @@ def minimum_zero(matrix_with_0s, lined_zero, include, reverse):
 
 
 
-def possible_solution(matrix, include, reverse): #reverse , safe_net
+def possible_solution(matrix, include, reverse, rad): #reverse , safe_net
     curr_matrix = matrix
 
     #Transform the matrix to boolean matrix(0 = True, others = False)
@@ -64,7 +67,7 @@ def possible_solution(matrix, include, reverse): #reverse , safe_net
     lined_zeros = []
   
     while (True in matr_with_0s_temp):
-        minimum_zero(matr_with_0s_temp, lined_zeros, include, reverse)
+        minimum_zero(matr_with_0s_temp, lined_zeros, include, reverse, rad)
     
     lined_rows_0 = []
     lined_columns_0 = []
@@ -118,11 +121,16 @@ def change_matrix(matrix, lined_rows, lined_columns): # subtracts non lined numb
             curr_matrix[lined_rows[i]][lined_columns[j]] = curr_matrix[lined_rows[i], lined_columns[j]] + min_num
     
     return curr_matrix
-
-
+#problematic
+##Include [[12, 19], [8, 24], [13, 15], [6, 26], [26, 2], [2, 16], [16, 13]]
+##Exclude [[19, 12], [24, 8], [15, 6], [17, 4]]
 def assignment_hungarian(named_matrix, names, matrix, include, exclude):
+    
     temp_matrix = matrix.copy()
     shadow = include.copy()
+    counts = 0  # if counts == len(matrix) * 100
+    print('Include',include)
+    print('Exclude',exclude)
 
     # We exclude paths from Exclude set here
     if len(exclude) > 0:
@@ -146,15 +154,17 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
             
     count = 0
     count_2 = 0
-   
+    rad = False
     reverse = False
     while count < len(matrix):
         # Additional while loop has been added, because it would give inaccurate results due to Include and Exclude involvement in the Assignment Problem
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
+            print(counts)
+            counts += 1
             
             backup = shadow.copy()
-            result = possible_solution(temp_matrix, backup, reverse) 
+            result = possible_solution(temp_matrix, backup, reverse, rad) 
             
             
             temp_froms = [x[0] for x in result[0]]
@@ -190,8 +200,10 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                 else:
                     #  if we hit dead end, the program will try again from the start
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
+                    # if counts == 10:
                     temp_matrix = matrix.copy()
-                  
+
+                    rad = True
                     reverse = False
                     
                     if len(result[1]) > 0 and len(result[2]) > 0:
@@ -214,5 +226,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         main_result.append(temp_path)
         l += 1
     total = sum([x[2] for x in main_result])
+    print('We did it\n')
     return (main_result, total)
+   
    
