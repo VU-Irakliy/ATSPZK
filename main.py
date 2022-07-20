@@ -33,6 +33,7 @@ def main():
         times = []
         for i in range(1, 101):
             filename = 'matr' + cities + '/matr' + str(i) + '.txt'
+            print(i)
             result, time = start(filename, 3, method) #here we should capture time and a result, then store them for the sake of the presentation
             results.append([i, result])
             times.append([i, time])
