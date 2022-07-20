@@ -129,10 +129,11 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
         exclude.append(cand[i])
         
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
-        
-        include = get_include(names, curr, cand)
-        
-        priority_queue.append([curr[0], exclude, include, curr[1]])
+        if curr == (None, None):
+            ...
+        else:
+            include = get_include(names, curr, cand)
+            priority_queue.append([curr[0], exclude, include, curr[1]])
    
     min_not_found = True
     priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
