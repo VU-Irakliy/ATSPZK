@@ -127,10 +127,10 @@ def change_matrix(matrix, lined_rows, lined_columns): # subtracts non lined numb
 def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     
     temp_matrix = matrix.copy()
+    
     shadow = include.copy()
-    counts = 0  # if counts == len(matrix) * 100
-    print('Include',include)
-    print('Exclude',exclude)
+    counts = 0  
+    
 
     # We exclude paths from Exclude set here
     if len(exclude) > 0:
@@ -146,6 +146,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     for i in range(len(temp_matrix)):
         temp_array = []
         for j in range(0, len(temp_matrix)):
+            # print('Current ',j, i)
             temp_array.append(temp_matrix[j][i])
         cur_min = int(np.nanmin(temp_array))
         for j in range(0, len(temp_matrix)):
@@ -156,13 +157,23 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     count_2 = 0
     rad = False
     reverse = False
+    membra = 0
     while count < len(matrix):
         # Additional while loop has been added, because it would give inaccurate results due to Include and Exclude involvement in the Assignment Problem
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
-            print(counts)
+            # if counts % 1000 == 0:
+            #     print(counts)
+            if counts == (len(matrix) * 100):
+                print('It takes too long under these conditions:')
+                print('Include', include)
+                print('Exclude', exclude)
+                print("We're moving on!")
+                return None, None
             counts += 1
-            
+
+            # print(temp_matrix)
+
             backup = shadow.copy()
             result = possible_solution(temp_matrix, backup, reverse, rad) 
             
@@ -200,16 +211,24 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                 else:
                     #  if we hit dead end, the program will try again from the start
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
-                    # if counts == 10:
-                    temp_matrix = matrix.copy()
+                    membra += 1
+                    if counts % 10 == 0:
+                        temp_matrix = matrix.copy()
+                        membra = 0
+                    else:
+                        if len(result[1]) > 0 and len(result[2]) > 0:
+                            temp_matrix = change_matrix(temp_matrix, 
+                                                result[1],
+                                                result[2])
+                        
 
                     rad = True
                     reverse = False
                     
-                    if len(result[1]) > 0 and len(result[2]) > 0:
-                        temp_matrix = change_matrix(temp_matrix, 
-                                            result[1],
-                                            result[2])
+                    # if len(result[1]) > 0 and len(result[2]) > 0:
+                    #     temp_matrix = change_matrix(temp_matrix, 
+                    #                         result[1],
+                    #                         result[2])
                     
            
     l = 0
@@ -226,7 +245,8 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         main_result.append(temp_path)
         l += 1
     total = sum([x[2] for x in main_result])
-    print('We did it\n')
+    # print('We did it\n')
+    #main_result = [()], total = 0
     return (main_result, total)
    
    

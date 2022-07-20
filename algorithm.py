@@ -1,9 +1,7 @@
 from searchbound import *
-     
-points = []
-nodes = []
+from datetime import datetime as dt
 
-def read_matr(filename):
+def read_matr(filename, points):
     try:
         f = open(filename)
     except:
@@ -31,7 +29,7 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
         starting_point = 0
         result = depthFirstBranchAndBound(matrix, minimum, temp_minimum, used_rows, starting_point)
         print("Result of Depth-First Branch-and-Bound: ")
-        print(result)
+        print(result, '\n')
         return result
         
         
@@ -41,14 +39,14 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
         result = bestFirstSearch(matrix)
         print("Result of Best-First Search: ")
         print("Minimum Branch: ",result[0])
-        print("Minimum Cost: ", result[1])
+        print("Minimum Cost: ", result[1], '\n')
         return result[1]
     
     
     else: 
         
         result = start_ZK_algorithm(named_matrix, names, matrix, method)
-        print(result)
+        print(result, '\n')
         return result
 
 
@@ -66,7 +64,9 @@ def start(filename, al_input, method):
     if filename == 'exit':
         print('Program has exited.')
         exit()
-    read_matr(filename)
+    points = []
+    nodes = []
+    read_matr(filename, points)
     print("The matrix has been created!")
     
     
@@ -83,9 +83,13 @@ def start(filename, al_input, method):
         for j in range(0, len(i)):
             if i[j] == 0:
                 i[j] = math.nan
-   
+    # Start
+    start_time = dt.now()
     result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
-    return result
+    end_time = dt.now()
+    #End
+    difference = end_time - start_time
+    return result, difference
     #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     
    

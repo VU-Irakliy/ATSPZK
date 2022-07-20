@@ -11,7 +11,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     
     # paths = [(x[0], x[1]) for x in curr_result[0]]
     list_of_coords = make_tours(names, curr_result[0])
-    print('Start ',list_of_coords)
+    # print('Start ',list_of_coords)
     
     # exit()
     if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
@@ -27,12 +27,12 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
 
     for i in range(len(list_of_coords)):
         len_of_tours.append(len(list_of_coords[i]))
-    print('So So ',len_of_tours)
+    # print('So So ',len_of_tours)
 
     ### We choose min() function to get the resulting subtour, because there is no solution for if there is more than one subtour with min amount of
     ### edges to eliminate, therefore this is the current method
     cand = list_of_coords[len_of_tours.index(min(len_of_tours))]
-    print('Candidates',cand)
+    # print('Candidates',cand)
   
     
     if method == 1:  ## This is Depth-First Branch and Bound Method
@@ -51,10 +51,10 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
             children.append([curr[0], exclude, include, curr[1]]) ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         
         minimum = 0
-        print(children)
+        # print(children)
         for i in children:
             curr_cost = i[3]
-            print('Throw it back\n')
+            # print('Throw it back\n')
             if minimum == 0 or minimum > (curr_cost):
                 minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
         result = minimum
@@ -73,12 +73,12 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
     tours = make_tours(names, temp_paths)
     if len(tours) == 1:
         cost = 0
-        print('Sussy baka',tours)
+        # print('Sussy baka',tours)
         for list in tours:
             for coord in list:
                 cost += matrix[coord[0]][coord[1]]
         return cost
-    print('Tours ',tours)
+    # print('Tours ',tours)
     len_of_tours = []
     for i in range(len(tours)):
         count = 0
@@ -99,6 +99,8 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
         include = temp_inc.copy()
         
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
+        if curr == (None, None):
+            return minimum
 
         temp_temp_inc = get_include(names, curr, cand)
         for j in temp_temp_inc:
@@ -110,7 +112,9 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
         curr_cost = i[3]        ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         
         if minimum == 0 or minimum > (curr_cost): #### [curr[0], exclude, include, curr[1]]
+            temp = minimum
             minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
+
     result = minimum
     return result
             
@@ -147,7 +151,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
             closed_priority.append(temps_prio)
             tours = make_tours(names, temp_paths)
             if len(tours) == 1:
-                print(tours)
+                # print(tours)
                 min_not_found = False
                 cost = 0
                 for list in tours:

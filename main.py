@@ -13,11 +13,16 @@ def main():
         start(filename, al_input, method)
     elif hello == 1:
         filename = 'matr2aaa.txt' ## 30 NODES
+        # filename = 'matr3.txt'
         al_input = 3
         method = 2
         result = start(filename, al_input, method)
+       
+        # exit()
         method = 1
         result_2 = start(filename, al_input, method)
+        print(result)
+        print(result_2)
 
         # folder = 
         ...
@@ -25,11 +30,16 @@ def main():
         method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
         results = []
+        times = []
         for i in range(1, 101):
             filename = 'matr' + cities + '/matr' + str(i) + '.txt'
-            mm = start(filename, 3, method) #here we should capture time and a result, then store them for the sake of the presentation
-            results.append(mm)
-        print(mm)
+            result, time = start(filename, 3, method) #here we should capture time and a result, then store them for the sake of the presentation
+            results.append([i, result])
+            times.append([i, time])
+        ####https://docs-python.ru/standart-library/modul-datetime-python/klass-timedelta-modulja-datetime/
+        
+        print(results)
+        print(time)
 
 
 
