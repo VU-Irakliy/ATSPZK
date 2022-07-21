@@ -129,7 +129,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     temp_matrix = matrix.copy()
     
     shadow = include.copy()
-    counts = 0  
+    counts = 1  
     
 
     # We exclude paths from Exclude set here
@@ -158,18 +158,20 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     rad = False
     reverse = False
     membra = 0
+    start_the_count = False
     while count < len(matrix):
         # Additional while loop has been added, because it would give inaccurate results due to Include and Exclude involvement in the Assignment Problem
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
             # if counts % 1000 == 0:
             #     print(counts)
-            if counts == (len(matrix) * (len(matrix) / 4)):
+            if counts == (len(matrix) * (len(matrix) / 8)) and start_the_count == True:
                 print('It takes too long under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
                 print("We're moving on!")
                 return None, None
+            
             counts += 1
 
             # print(temp_matrix)
@@ -211,7 +213,11 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                 else:
                     #  if we hit dead end, the program will try again from the start
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
+                    
                     membra += 1
+                    if start_the_count == True:
+                        start_the_count == True
+                        counts = 1
                     if counts % 10 == 0:
                         temp_matrix = matrix.copy()
                         membra = 0
@@ -220,7 +226,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                             temp_matrix = change_matrix(temp_matrix, 
                                                 result[1],
                                                 result[2])
-                        
+                    
 
                     rad = True
                     reverse = False

@@ -1,7 +1,8 @@
 from algorithm import *
 
 def main():
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - my my,any - experiment) \n'))
+    print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for file creation, any - experiment) \n '))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -17,10 +18,7 @@ def main():
         testie = 'test'
         f = 'results' + testie
         m = open(f, 'w')
-        # ooh = str([1, 2, "a"])
-        # m.write(ooh + '\n')
-        # m.write('Seeess ' + f + ' \n')
-        # m.write('sososos')
+      
         
         
         al_input = 3
@@ -32,7 +30,7 @@ def main():
         result_2 = start(filename, al_input, method)
         # print(result)
         # print(result_2)
-        um = input("WTF: ")
+        um = input("Type something here: ")
         m.write('Testing \n')
         m.write("BFS \n" + str(result) + "\nDFBnB \n" + str(result_2) + "\n That's all, folks." + um)
 
@@ -48,17 +46,22 @@ def main():
         times_dfbnb = []
         results_bfs = []
         times_bfs = []
+        j = 1
         # if um == 1:
-        for i in range(1, 1001):
+        for r in range(1, 1001, j):
             
-            filename = 'matr' + cities + '/matr' + str(i) + '.txt'
-            print(i)
+            filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+            print(r)
             result_d, time_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
-            results_dfbnb.append([i, result_d])
-            times_dfbnb.append([i, time_d])
+            results_dfbnb.append([r, result_d])
+            times_dfbnb.append([r, time_d])
             result, time = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
-            results_bfs.append([i, result])
-            times_bfs.append([i, time])
+            results_bfs.append([r, result])
+            times_bfs.append([r, time])
+            if r == 20:
+                j = 5
+            elif r == 100:
+                j = 10 
         ####https://docs-python.ru/standart-library/modul-datetime-python/klass-timedelta-modulja-datetime/
         print('DFBnB')
         print(results_dfbnb)
