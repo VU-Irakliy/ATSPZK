@@ -165,7 +165,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         while count_2 < len(matrix):
             # if counts % 10 == 0:
             #     print(counts)
-            if counts == (len(matrix) * 10) and start_the_count == True:
+            if counts == 1000 and start_the_count == True:
                 print('It takes too long under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
@@ -216,7 +216,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     
                     membra += 1
                     if start_the_count == False:
-                        start_the_count == True
+                        start_the_count = True
                         counts = 1
                     if counts % 10 == 0:
                         temp_matrix = matrix.copy()

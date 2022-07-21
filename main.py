@@ -24,11 +24,11 @@ def main():
         
         al_input = 3
         method = 1
-        result = start(filename, al_input, method)
+        result= start(filename, al_input, method)
        
         # # exit()
         method = 2
-        result_2 = start(filename, al_input, method)
+        result_2= start(filename, al_input, method)
         # print(result)
         # print(result_2)
         um = input("Type something here: ")
@@ -64,12 +64,29 @@ def main():
             
             filename = 'matr' + cities + '/matr' + str(r) + '.txt'
             print(r)
-            result_d, time_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
-            results_dfbnb.append([r, result_d])
-            times_dfbnb.append([r, time_d])
-            result, time = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
-            results_bfs.append([r, result])
-            times_bfs.append([r, time])
+            result_d, time_d, without_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
+            
+            if without_d == True:
+                results_dfbnb.append([r, result_d])
+                times_dfbnb.append([r, time_d])
+                print("Since it didn't reach BnB, we give the same time and result to BFS variation")
+                results_bfs.append([r, result_d])
+                times_bfs.append([r, time_d])
+            else:
+                result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
+                if without == True:
+                    print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well")
+                    results_dfbnb.append([r, result])
+                    times_dfbnb.append([r, time])
+                    results_bfs.append([r, result])
+                    times_bfs.append([r, time])
+                else:
+                    results_dfbnb.append([r, result_d])
+                    times_dfbnb.append([r, time_d])
+                    results_bfs.append([r, result])
+                    times_bfs.append([r, time])
+            print(results_dfbnb)
+            print(results_bfs)
             if r == 20:
                 j = 5
                 print('DFBnB')

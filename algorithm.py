@@ -45,9 +45,9 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
     
     else: 
         
-        result = start_ZK_algorithm(named_matrix, names, matrix, method)
+        result, without = start_ZK_algorithm(named_matrix, names, matrix, method)
         print(result, '\n')
-        return result
+        return result, without
 
 
 
@@ -85,11 +85,19 @@ def start(filename, al_input, method):
                 i[j] = math.nan
     # Start
     start_time = dt.now()
-    result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
-    end_time = dt.now()
-    #End
-    difference = end_time - start_time
-    return result, difference.seconds
+    if al_input != 1 and al_input != 2:
+        
+        result, without = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
+        end_time = dt.now()
+        #End
+        difference = end_time - start_time
+        return result, difference.seconds, without
+    else:
+        result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
+        end_time = dt.now()
+        #End
+        difference = end_time - start_time
+        return result, difference.seconds
     #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     
    

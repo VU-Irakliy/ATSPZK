@@ -7,7 +7,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     # exclude = [[5,1]]
     # curr_result = assignment_hungarian(named_matrix, names, matrix, empty, exclude)
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
-
+    without = False
     
     # paths = [(x[0], x[1]) for x in curr_result[0]]
     list_of_coords = make_tours(names, curr_result[0])
@@ -20,7 +20,8 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
             for coord in list:
                 cost += matrix[coord[0]][coord[1]]
         print('Result was achieved without going through the Branch and Bound')
-        return cost
+        without = True
+        return cost, without
 
     min_total = curr_result[1]
     len_of_tours = []
@@ -65,7 +66,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
         result = BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total)
         print("ZK BFS Result")
 
-    return result
+    return result, without
     
                     
 def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-First Branch and Bound Method
