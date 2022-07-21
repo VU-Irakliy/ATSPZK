@@ -89,7 +89,7 @@ def start(filename, al_input, method):
     end_time = dt.now()
     #End
     difference = end_time - start_time
-    return result, difference
+    return result, difference.seconds
     #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     
    

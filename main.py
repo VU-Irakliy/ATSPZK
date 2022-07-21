@@ -13,7 +13,8 @@ def main():
             method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         start(filename, al_input, method)
     elif hello == 1:
-        filename = 'matr2aaa.txt' ## 30 NODES
+        filename = input('Which File? (.txt)')
+        # filename = 'matr2aaa.txt' ## 30 NODES
         # filename = 'matr3.txt'
         testie = 'test'
         f = 'results' + testie
@@ -22,11 +23,11 @@ def main():
         
         
         al_input = 3
-        method = 2
+        method = 1
         result = start(filename, al_input, method)
        
         # # exit()
-        method = 1
+        method = 2
         result_2 = start(filename, al_input, method)
         # print(result)
         # print(result_2)
@@ -41,14 +42,25 @@ def main():
     else:
         # method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
+        prev = int(input('What was the previous r value finished? '))
+        
+        if prev == 0:
+            prev = 1
+            j = 1
+        elif prev == 20:
+            prev = 25
+            j = 5
+        elif prev == 130:
+            prev = 140
+            j = 10
         # um = int(input('Do you have your results.txt file ready? 1 - Yes'))
         results_dfbnb = []
         times_dfbnb = []
         results_bfs = []
         times_bfs = []
-        j = 1
+        
         # if um == 1:
-        for r in range(1, 1001, j):
+        for r in range(prev, 1001, j):
             
             filename = 'matr' + cities + '/matr' + str(r) + '.txt'
             print(r)
@@ -60,24 +72,79 @@ def main():
             times_bfs.append([r, time])
             if r == 20:
                 j = 5
-            elif r == 100:
-                j = 10 
+                print('DFBnB')
+                print(results_dfbnb)
+                print(times_dfbnb)
+                print('BFS')
+                print(results_bfs)
+                print(times_bfs)
+
+                f = 'results_'+ cities + 'r' + r + '.txt'
+
+                m = open(f, 'w')
+                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+                
+                m.close()
+                results_dfbnb = []
+                times_dfbnb = []
+                results_bfs = []
+                times_bfs = []
+            elif r == 130:
+                j = 10
+                print('DFBnB')
+                print(results_dfbnb)
+                print(times_dfbnb)
+                print('BFS')
+                print(results_bfs)
+                print(times_bfs)
+
+                f = 'results_'+ cities + 'r' + r + '.txt'
+
+                m = open(f, 'w')
+                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+                
+                m.close()
+                results_dfbnb = []
+                times_dfbnb = []
+                results_bfs = []
+                times_bfs = []
+            elif r == 1000:
+                print('DFBnB')
+                print(results_dfbnb)
+                print(times_dfbnb)
+                print('BFS')
+                print(results_bfs)
+                print(times_bfs)
+
+                f = 'results_'+ cities + 'r' + r + '.txt'
+
+                m = open(f, 'w')
+                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+                
+                m.close()
+                
         ####https://docs-python.ru/standart-library/modul-datetime-python/klass-timedelta-modulja-datetime/
-        print('DFBnB')
-        print(results_dfbnb)
-        print(times_dfbnb)
-        print('BFS')
-        print(results_bfs)
-        print(times_bfs)
+        # print('DFBnB')
+        # print(results_dfbnb)
+        # print(times_dfbnb)
+        # print('BFS')
+        # print(results_bfs)
+        # print(times_bfs)
 
-        f = 'results_'+ cities + '.txt'
+        # f = 'results_'+ cities + '.txt'
 
-        m = open(f, 'w')
-        m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-        m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
-        m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+        # m = open(f, 'w')
+        # m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+        # m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+        # m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
         
-        m.close()
+        # m.close()
 
 
 

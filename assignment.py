@@ -163,9 +163,9 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         # Additional while loop has been added, because it would give inaccurate results due to Include and Exclude involvement in the Assignment Problem
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
-            # if counts % 1000 == 0:
+            # if counts % 10 == 0:
             #     print(counts)
-            if counts == (len(matrix) * (len(matrix) / 8)) and start_the_count == True:
+            if counts == (len(matrix) * 10) and start_the_count == True:
                 print('It takes too long under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
@@ -215,7 +215,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
                     
                     membra += 1
-                    if start_the_count == True:
+                    if start_the_count == False:
                         start_the_count == True
                         counts = 1
                     if counts % 10 == 0:

@@ -97,7 +97,8 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
         exclude.append(cand[i])
         
         include = temp_inc.copy()
-        
+        # print('Exclude',exclude)
+        # print('Include',include)
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
         if curr == (None, None):
             return minimum
