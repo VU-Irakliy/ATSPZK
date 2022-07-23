@@ -126,7 +126,7 @@ def change_matrix(matrix, lined_rows, lined_columns): # subtracts non lined numb
 ##Exclude [[19, 12], [24, 8], [15, 6], [17, 4]]
 def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     
-    temp_matrix = matrix.copy()
+    copied_matrix = matrix.copy()
     
     shadow = include.copy()
     counts = 1  
@@ -135,7 +135,8 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     # We exclude paths from Exclude set here
     if len(exclude) > 0:
         for node in exclude:
-            temp_matrix[node[0]][node[1]] = math.nan
+            copied_matrix[node[0]][node[1]] = math.nan
+    temp_matrix = copied_matrix.copy()
     
     for i in temp_matrix:
         cur_min = int(np.nanmin(i))
@@ -165,14 +166,14 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         while count_2 < len(matrix):
             # if counts % 10 == 0:
             #     print(counts)
-            if counts == 1000 and start_the_count == True:
+            if counts == 500 and start_the_count == True:
                 print('It takes too long under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
                 print("We're moving on!")
                 return None, None
             
-            counts += 1
+            
 
             # print(temp_matrix)
 
@@ -215,12 +216,13 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
                     
                     membra += 1
+                    counts += 1
                     if start_the_count == False:
                         start_the_count = True
                         counts = 1
-                    if counts % 10 == 0:
-                        temp_matrix = matrix.copy()
-                        membra = 0
+                    if membra % 10 == 0:
+                        temp_matrix = copied_matrix.copy()
+                        membra = 1
                     else:
                         if len(result[1]) > 0 and len(result[2]) > 0:
                             temp_matrix = change_matrix(temp_matrix, 

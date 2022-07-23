@@ -2,7 +2,7 @@ from algorithm import *
 
 def main():
     print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for file creation, any - experiment) \n '))
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for file creation,\n 2 - BFS and DFBnB experiment, any - ZK experiment) \n '))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -13,7 +13,7 @@ def main():
             method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         start(filename, al_input, method)
     elif hello == 1:
-        filename = input('Which File? (.txt)')
+        filename = input('Which File? (.txt): ')
         # filename = 'matr2aaa.txt' ## 30 NODES
         # filename = 'matr3.txt'
         testie = 'test'
@@ -39,6 +39,34 @@ def main():
         # folder = 
         m.close()
         ...
+    elif hello == 2:
+        cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
+        results_dfbnb = []
+        times_dfbnb = []
+        results_bfs = []
+        times_bfs = []
+        
+        # if um == 1:
+        for r in range(1, 21):
+            
+            filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+            result_df, time_df = start(filename, 1, 1)
+            result_bf, time_bf = start(filename, 2, 1)
+            results_dfbnb.append([r, result_df])
+            times_dfbnb.append([r, time_df])
+            results_bfs.append([r, result_bf])
+            times_bfs.append([r, time_bf])
+        
+        f = 'REG_results_'+ cities + 'r' + str(r) + '.txt'
+
+        m = open(f, 'w')
+        m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+        m.write("Regular \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+        m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+        
+        m.close()
+        
+        ...
     else:
         # method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
@@ -51,8 +79,8 @@ def main():
             prev = 25
             j = 5
         elif prev == 130:
-            prev = 140
-            j = 10
+            prev = 150
+            j = 20
         # um = int(input('Do you have your results.txt file ready? 1 - Yes'))
         results_dfbnb = []
         times_dfbnb = []
@@ -69,13 +97,13 @@ def main():
             if without_d == True:
                 results_dfbnb.append([r, result_d])
                 times_dfbnb.append([r, time_d])
-                print("Since it didn't reach BnB, we give the same time and result to BFS variation")
+                print("Since it didn't reach BnB, we give the same time and result to BFS variation \n \n")
                 results_bfs.append([r, result_d])
                 times_bfs.append([r, time_d])
             else:
                 result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
                 if without == True:
-                    print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well")
+                    print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well \n \n")
                     results_dfbnb.append([r, result])
                     times_dfbnb.append([r, time])
                     results_bfs.append([r, result])
@@ -85,8 +113,8 @@ def main():
                     times_dfbnb.append([r, time_d])
                     results_bfs.append([r, result])
                     times_bfs.append([r, time])
-            print(results_dfbnb)
-            print(results_bfs)
+            # print(results_dfbnb)
+            # print(results_bfs)
             if r == 20:
                 j = 5
                 print('DFBnB')
@@ -96,11 +124,11 @@ def main():
                 print(results_bfs)
                 print(times_bfs)
 
-                f = 'results_'+ cities + 'r' + r + '.txt'
+                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
 
                 m = open(f, 'w')
                 m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
                 m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
                 
                 m.close()
@@ -117,11 +145,11 @@ def main():
                 print(results_bfs)
                 print(times_bfs)
 
-                f = 'results_'+ cities + 'r' + r + '.txt'
+                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
 
                 m = open(f, 'w')
                 m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
                 m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
                 
                 m.close()
@@ -137,11 +165,11 @@ def main():
                 print(results_bfs)
                 print(times_bfs)
 
-                f = 'results_'+ cities + 'r' + r + '.txt'
+                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
 
                 m = open(f, 'w')
                 m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
                 m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
                 
                 m.close()
