@@ -69,7 +69,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     return result, without
     
                     
-def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-First Branch and Bound Method
+def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-First Branch and Bound Method
     temp_paths, temp_exc, temp_inc, temp_weight = data
     tours = make_tours(names, temp_paths)
     if len(tours) == 1:
@@ -87,7 +87,14 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
             if j in temp_inc:
                 count += 1
         len_of_tours.append(len(tours[i]) - count)
-    cand = tours[len_of_tours.index(min(len_of_tours))]
+    if min(len_of_tours) == 0:
+        mon = sorted(len_of_tours)
+        for i in mon:
+            if i != 0:
+                mini = i
+        cand = tours[len_of_tours.index(mini)]
+    else:
+        cand = tours[len_of_tours.index(min(len_of_tours))]
     for i in temp_inc:
         if i in cand:
             um = cand.pop(cand.index(i))
@@ -114,7 +121,7 @@ def DFBnB_zk_algorithm( named_matrix, names, matrix, data, minimum): # Depth-Fir
         curr_cost = i[3]        ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         
         if minimum == 0 or minimum > (curr_cost): #### [curr[0], exclude, include, curr[1]]
-            temp = minimum
+            # temp = minimum
             minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
 
     result = minimum
@@ -169,7 +176,15 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
                     if j in temp_inc:
                         count += 1
                 len_of_tours.append(len(tours[i]) - count)
-            candid = tours[len_of_tours.index(min(len_of_tours))]
+            if min(len_of_tours) == 0:
+                mon = sorted(len_of_tours)
+                for i in mon:
+                    if i != 0:
+                        mini = i
+                candid = tours[len_of_tours.index(mini)]
+            else:
+                candid = tours[len_of_tours.index(min(len_of_tours))]
+           
             for i in temp_inc:
                 if i in candid:
                     um = candid.pop(candid.index(i))

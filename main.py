@@ -12,6 +12,7 @@ def main():
         else:
             method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         start(filename, al_input, method)
+        
     elif hello == 1:
         filename = input('Which File? (.txt): ')
         # filename = 'matr2aaa.txt' ## 30 NODES
@@ -20,7 +21,7 @@ def main():
         f = 'results' + testie
         m = open(f, 'w')
       
-        
+        ####### METHOD 1: DFBNB, METHOD 2: BFS
         
         al_input = 3
         method = 1
@@ -33,13 +34,13 @@ def main():
         # print(result_2)
         um = input("Type something here: ")
         m.write('Testing \n')
-        m.write("BFS \n" + str(result) + "\nDFBnB \n" + str(result_2) + "\n That's all, folks." + um)
+        m.write("DFBnB \n" + str(result) + "\nBFS \n" + str(result_2) + "\n That's all, folks." + um)
 
 
         # folder = 
         m.close()
         ...
-    elif hello == 2:
+    elif hello == 2: #REGULAR BFS AND DFBNB EXPERIMENT
         cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
         results_dfbnb = []
         times_dfbnb = []
