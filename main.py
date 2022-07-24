@@ -2,7 +2,7 @@ from algorithm import *
 
 def main():
     print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for file creation,\n 2 - BFS and DFBnB experiment, any - ZK experiment) \n '))
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, any - ZK experiment) \n '))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -14,7 +14,8 @@ def main():
         start(filename, al_input, method)
         
     elif hello == 1:
-        filename = input('Which File? (.txt): ')
+        # filename = input('Which File? (.txt): ')
+        filename = 'matr100/matr40.txt'
         # filename = 'matr2aaa.txt' ## 30 NODES
         # filename = 'matr3.txt'
         testie = 'test'
@@ -28,17 +29,18 @@ def main():
         result= start(filename, al_input, method)
        
         # # exit()
-        method = 2
-        result_2= start(filename, al_input, method)
-        # print(result)
-        # print(result_2)
-        um = input("Type something here: ")
-        m.write('Testing \n')
-        m.write("DFBnB \n" + str(result) + "\nBFS \n" + str(result_2) + "\n That's all, folks." + um)
+        # method = 2
+        # result_2= start(filename, al_input, method)
+
+        print('DFBnB ',result)
+        # print('BFS ',result_2)
+        # um = input("Type something here: ")
+        # m.write('Testing \n')
+        # m.write("DFBnB \n" + str(result) + "\nBFS \n" + str(result_2) + "\n That's all, folks." + um)
 
 
-        # folder = 
-        m.close()
+        # # folder = 
+        # m.close()
         ...
     elif hello == 2: #REGULAR BFS AND DFBNB EXPERIMENT
         cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')

@@ -165,16 +165,18 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
             
-            if counts == (len(matrix)) and start_the_count == True:
-                print('It takes too long under these conditions:')
+            if counts == (len(matrix)* 1.5) and start_the_count == True:
+                print('It takes too long (infinitely) under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
                 print("We're moving on!")
+                
                 return None, None
             
             
             backup = shadow.copy()
             result = possible_solution(temp_matrix, backup, reverse, rad) 
+            
             
             
             temp_froms = [x[0] for x in result[0]]
@@ -190,6 +192,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
 
 
             count = len(result[1]) + len(result[2])
+            # print(len(result[0]), count)
          
             if count < len(temp_matrix):
                 
@@ -217,13 +220,17 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     if start_the_count == False:
                         start_the_count = True
                         counts = 0
-                    if counts % 10 == 0:
+                    if membra == 5:
                         temp_matrix = copied_matrix.copy()
+                        membra = 0
                     else:
                         if len(result[1]) > 0 and len(result[2]) > 0:
+                            # print('HMMMM', len(result[1]), len(result[2]))
                             temp_matrix = change_matrix(temp_matrix, 
                                                 result[1],
                                                 result[2])
+                        else:
+                            membra += 1
                     
 
                     rad = True

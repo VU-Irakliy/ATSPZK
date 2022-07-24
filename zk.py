@@ -7,6 +7,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     # exclude = [[5,1]]
     # curr_result = assignment_hungarian(named_matrix, names, matrix, empty, exclude)
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
+    print('WHAT', curr_result[1])
     without = False
     
     # paths = [(x[0], x[1]) for x in curr_result[0]]
@@ -73,12 +74,8 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-Firs
     temp_paths, temp_exc, temp_inc, temp_weight = data
     tours = make_tours(names, temp_paths)
     if len(tours) == 1:
-        cost = 0
-        # print('Sussy baka',tours)
-        for list in tours:
-            for coord in list:
-                cost += matrix[coord[0]][coord[1]]
-        return cost
+        print('TEMP ',tours,' ', temp_weight)
+        return temp_weight
     # print('Tours ',tours)
     len_of_tours = []
     for i in range(len(tours)):
@@ -120,7 +117,7 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-Firs
     for i in children:
         curr_cost = i[3]        ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         
-        if minimum == 0 or minimum > (curr_cost): #### [curr[0], exclude, include, curr[1]]
+        if minimum == 0 or minimum > curr_cost: #### [curr[0], exclude, include, curr[1]]
             # temp = minimum
             minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
 
@@ -131,6 +128,7 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-Firs
 
 def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First Search Method
     priority_queue = []
+    values = []
     
     for i in range(len(cand)):
         exclude = []
@@ -143,18 +141,22 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
         else:
             include = get_include(names, curr, cand)
             priority_queue.append([curr[0], exclude, include, curr[1]])
+            values.append(curr[1])
    
     min_not_found = True
     priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
-   
+    # values = sorted(values)
    
     closed_priority = []
     i = 0
     while min_not_found:
+        # print(priority_queue)
+        # print(values)
         if min_not_found == False:
             break
         else:
             temps_prio = priority_queue.pop(0)
+            # values.pop(0)
             temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
            
 
@@ -163,11 +165,16 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
             if len(tours) == 1:
                 # print(tours)
                 min_not_found = False
-                cost = 0
-                for list in tours:
-                    for coord in list:
-                        cost += matrix[coord[0]][coord[1]]
-                return cost
+                # cost = 0
+                # for list in tours:
+                #     for coord in list:
+                #         cost += matrix[coord[0]][coord[1]]
+                # return cost
+                print('\nWinning Conditions: \n')
+                print('Exclude ',temp_exc)
+                print('Include ', temp_inc)
+                print('Result ',tours,' ', temp_weight)
+                return temp_weight
             
             len_of_tours = []
             for i in range(len(tours)):
@@ -207,10 +214,12 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
                             include.append(j)
                     
                     priority_queue.append([curr[0], exclude, include, curr[1]])
+                    # values.append(curr[1])
                     del include
                     del exclude
             
             priority_queue = sorted(priority_queue, key= lambda x: x[3])
+            # values = sorted(values)
         if min_not_found == False:
             break
 
