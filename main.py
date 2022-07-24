@@ -88,109 +88,154 @@ def main():
         results_bfs = []
         times_bfs = []
         
-        # if um == 1:
-        for r in range(prev, 1001, j):
-            
-            filename = 'matr' + cities + '/matr' + str(r) + '.txt'
-            print(r)
-            result_d, time_d, without_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
-            
-            if without_d == True:
-                results_dfbnb.append([r, result_d])
-                times_dfbnb.append([r, time_d])
-                print("Since it didn't reach BnB, we give the same time and result to BFS variation \n \n")
-                results_bfs.append([r, result_d])
-                times_bfs.append([r, time_d])
-            else:
-                result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
-                if without == True:
-                    print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well \n \n")
-                    results_dfbnb.append([r, result])
-                    times_dfbnb.append([r, time])
-                    results_bfs.append([r, result])
-                    times_bfs.append([r, time])
-                else:
+        if prev == 1:
+            for r in range(prev, 21):
+                
+                filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+                print(r)
+                result_d, time_d, without_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
+                
+                if without_d == True:
                     results_dfbnb.append([r, result_d])
                     times_dfbnb.append([r, time_d])
-                    results_bfs.append([r, result])
-                    times_bfs.append([r, time])
+                    print("Since it didn't reach BnB, we give the same time and result to BFS variation \n \n")
+                    results_bfs.append([r, result_d])
+                    times_bfs.append([r, time_d])
+                else:
+                    result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
+                    if without == True:
+                        print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well \n \n")
+                        results_dfbnb.append([r, result])
+                        times_dfbnb.append([r, time])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
+                    else:
+                        results_dfbnb.append([r, result_d])
+                        times_dfbnb.append([r, time_d])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
+                
+            print('DFBnB')
+            print(results_dfbnb)
+            print(times_dfbnb)
+            print('BFS')
+            print(results_bfs)
+            print(times_bfs)
+
+            f = 'ZK_results_'+ cities + 'r' + '20' + '.txt'
+
+            m = open(f, 'w')
+            m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+            m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+            m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+            
+            m.close()
+            prev = 25
+            results_dfbnb = []
+            times_dfbnb = []
+            results_bfs = []
+            times_bfs = []
+
+        if prev == 25:
+            for r in range(prev, 131, 5):
+                
+                filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+                print(r)
+                result_d, time_d, without_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
+                
+                if without_d == True:
+                    results_dfbnb.append([r, result_d])
+                    times_dfbnb.append([r, time_d])
+                    print("Since it didn't reach BnB, we give the same time and result to BFS variation \n \n")
+                    results_bfs.append([r, result_d])
+                    times_bfs.append([r, time_d])
+                else:
+                    result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
+                    if without == True:
+                        print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well \n \n")
+                        results_dfbnb.append([r, result])
+                        times_dfbnb.append([r, time])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
+                    else:
+                        results_dfbnb.append([r, result_d])
+                        times_dfbnb.append([r, time_d])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
+                
+            print('DFBnB')
+            print(results_dfbnb)
+            print(times_dfbnb)
+            print('BFS')
+            print(results_bfs)
+            print(times_bfs)
+
+            f = 'ZK_results_'+ cities + 'r' + '130' + '.txt'
+
+            m = open(f, 'w')
+            m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+            m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+            m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+            
+            m.close()
+            prev = 150
+            results_dfbnb = []
+            times_dfbnb = []
+            results_bfs = []
+            times_bfs = []
             # print(results_dfbnb)
             # print(results_bfs)
-            if r == 20:
-                j = 5
-                print('DFBnB')
-                print(results_dfbnb)
-                print(times_dfbnb)
-                print('BFS')
-                print(results_bfs)
-                print(times_bfs)
-
-                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
-
-                m = open(f, 'w')
-                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
-                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+        if prev == 150:
+            for r in range(prev, 1001, 20):
                 
-                m.close()
-                results_dfbnb = []
-                times_dfbnb = []
-                results_bfs = []
-                times_bfs = []
-            elif r == 130:
-                j = 10
-                print('DFBnB')
-                print(results_dfbnb)
-                print(times_dfbnb)
-                print('BFS')
-                print(results_bfs)
-                print(times_bfs)
-
-                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
-
-                m = open(f, 'w')
-                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
-                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+                filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+                print(r)
+                result_d, time_d, without_d = start(filename, 3, 1) #here we should capture time and a result, then store them for the sake of the presentation
                 
-                m.close()
-                results_dfbnb = []
-                times_dfbnb = []
-                results_bfs = []
-                times_bfs = []
-            elif r == 1000:
-                print('DFBnB')
-                print(results_dfbnb)
-                print(times_dfbnb)
-                print('BFS')
-                print(results_bfs)
-                print(times_bfs)
-
-                f = 'ZK_results_'+ cities + 'r' + str(r) + '.txt'
-
-                m = open(f, 'w')
-                m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-                m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
-                m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+                if without_d == True:
+                    results_dfbnb.append([r, result_d])
+                    times_dfbnb.append([r, time_d])
+                    print("Since it didn't reach BnB, we give the same time and result to BFS variation \n \n")
+                    results_bfs.append([r, result_d])
+                    times_bfs.append([r, time_d])
+                else:
+                    result, time, without = start(filename, 3, 2) #here we should capture time and a result, then store them for the sake of the presentation
+                    if without == True:
+                        print("Since it didn't reach BnB, we give the same time and result to DFBnB variation as well \n \n")
+                        results_dfbnb.append([r, result])
+                        times_dfbnb.append([r, time])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
+                    else:
+                        results_dfbnb.append([r, result_d])
+                        times_dfbnb.append([r, time_d])
+                        results_bfs.append([r, result])
+                        times_bfs.append([r, time])
                 
-                m.close()
-                
+            print('DFBnB')
+            print(results_dfbnb)
+            print(times_dfbnb)
+            print('BFS')
+            print(results_bfs)
+            print(times_bfs)
+
+            f = 'ZK_results_'+ cities + 'r' + '1000' + '.txt'
+
+            m = open(f, 'w')
+            m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+            m.write("ZK \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+            m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+            
+            m.close()
+            results_dfbnb = []
+            times_dfbnb = []
+            results_bfs = []
+            times_bfs = []
+            # print(results_dfbnb)
+            # print(results_bfs)
+            
         ####https://docs-python.ru/standart-library/modul-datetime-python/klass-timedelta-modulja-datetime/
-        # print('DFBnB')
-        # print(results_dfbnb)
-        # print(times_dfbnb)
-        # print('BFS')
-        # print(results_bfs)
-        # print(times_bfs)
-
-        # f = 'results_'+ cities + '.txt'
-
-        # m = open(f, 'w')
-        # m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
-        # m.write("DFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
-        # m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
-        
-        # m.close()
+ 
 
 
 
