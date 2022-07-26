@@ -25,15 +25,24 @@ def main():
         ####### METHOD 1: DFBNB, METHOD 2: BFS
         
         al_input = 3
-        method = 1
-        result= start(filename, al_input, method)
-       
-        # # exit()
-        # method = 2
-        # result_2= start(filename, al_input, method)
-
-        print('DFBnB ',result)
-        # print('BFS ',result_2)
+        ttd = []
+        ttd_2 = []
+        i = 0
+        while i != 10:
+            method = 1
+            result= start(filename, al_input, method)
+            print('DFBnB ',result)
+            ttd.append(result)
+            # # exit()
+            # method = 2
+            # result_2= start(filename, al_input, method)
+            # print('BFS ',result_2)
+            # ttd_2.append(result_2)
+            i += 1
+        print(ttd)
+        # print(ttd_2)
+        
+        
         # um = input("Type something here: ")
         # m.write('Testing \n')
         # m.write("DFBnB \n" + str(result) + "\nBFS \n" + str(result_2) + "\n That's all, folks." + um)

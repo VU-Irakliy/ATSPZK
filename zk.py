@@ -40,6 +40,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     if method == 1:  ## This is Depth-First Branch and Bound Method
         
         children = []
+        values = []
        
         for i in range(len(cand)):
             exclude = []
@@ -47,18 +48,26 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
             exclude.append(cand[i])
             
             curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
-            
+            if curr == (None, None):
+                ...
             include = get_include(names, curr, cand)
           
             children.append([curr[0], exclude, include, curr[1]]) ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
-        
+            values.append(curr[1])
+        how_deep = 0
+        print('How deep?: ',how_deep, values)
         minimum = 0
+        mm = 0
         # print(children)
         for i in children:
             curr_cost = i[3]
+            print(mm, curr_cost)
+            mm += 1
             # print('Throw it back\n')
-            if minimum == 0 or minimum > (curr_cost):
-                minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
+            if minimum == 0 or minimum > curr_cost:
+                print('Go here ', curr_cost)
+                minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum, how_deep)
+                print('Back to level ', how_deep)
         result = minimum
         print('ZK DFBnB Result')
         
@@ -70,9 +79,10 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     return result, without
     
                     
-def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-First Branch and Bound Method
+def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum, how_deep): # Depth-First Branch and Bound Method
     temp_paths, temp_exc, temp_inc, temp_weight = data
     tours = make_tours(names, temp_paths)
+    how_deep += 1
     if len(tours) == 1:
         print('TEMP ',tours,' ', temp_weight)
         return temp_weight
@@ -97,6 +107,7 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-Firs
             um = cand.pop(cand.index(i))
             del um
     children = []
+    values = []
     for i in range(len(cand)):
         exclude = temp_exc.copy()
         exclude.append(cand[i])
@@ -106,20 +117,27 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum): # Depth-Firs
         # print('Include',include)
         curr = assignment_hungarian(named_matrix, names, matrix, include, exclude)
         if curr == (None, None):
-            return minimum
+            ...
+        else:
 
-        temp_temp_inc = get_include(names, curr, cand)
-        for j in temp_temp_inc:
-            if j not in include:
-                include.append(j)
-        children.append([curr[0], exclude, include, curr[1]])
-
+            temp_temp_inc = get_include(names, curr, cand)
+            for j in temp_temp_inc:
+                if j not in include:
+                    include.append(j)
+            children.append([curr[0], exclude, include, curr[1]])
+            values.append(curr[1])
+            del include
+            del exclude
+    print('How deep?: ',how_deep, values)
+    # print(children)
     for i in children:
         curr_cost = i[3]        ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
         
         if minimum == 0 or minimum > curr_cost: #### [curr[0], exclude, include, curr[1]]
             # temp = minimum
-            minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum)
+            print('Go here ', curr_cost)
+            minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum, how_deep)
+            print('Back to level ', how_deep)
 
     result = minimum
     return result
@@ -145,18 +163,19 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
    
     min_not_found = True
     priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
-    # values = sorted(values)
-   
+    values = sorted(values)
+    print(values)
+   ## [[59, 67], [3, 1], [84, 46], [8, 19]]
     closed_priority = []
     i = 0
     while min_not_found:
         # print(priority_queue)
-        # print(values)
+        print(values)
         if min_not_found == False:
             break
         else:
             temps_prio = priority_queue.pop(0)
-            # values.pop(0)
+            values.pop(0)
             temp_paths, temp_exc, temp_inc, temp_weight = temps_prio
            
 
@@ -214,12 +233,12 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
                             include.append(j)
                     
                     priority_queue.append([curr[0], exclude, include, curr[1]])
-                    # values.append(curr[1])
+                    values.append(curr[1])
                     del include
                     del exclude
             
             priority_queue = sorted(priority_queue, key= lambda x: x[3])
-            # values = sorted(values)
+            values = sorted(values)
         if min_not_found == False:
             break
 

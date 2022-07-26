@@ -165,7 +165,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         # while count stands for length of lines, count_2 stands for amount of paths in the solution
         while count_2 < len(matrix):
             
-            if counts == (len(matrix)* 1.5) and start_the_count == True:
+            if counts == int(len(matrix)* 1.25) and start_the_count == True:
                 print('It takes too long (infinitely) under these conditions:')
                 print('Include', include)
                 print('Exclude', exclude)
@@ -221,6 +221,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                         start_the_count = True
                         counts = 0
                     if membra == 5:
+                        # print('restart')
                         temp_matrix = copied_matrix.copy()
                         membra = 0
                     else:
@@ -258,6 +259,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     total = sum([x[2] for x in main_result])
     # print('We did it\n')
     #main_result = [()], total = 0
+
     return (main_result, total)
    
    
