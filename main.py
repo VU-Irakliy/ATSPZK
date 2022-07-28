@@ -188,7 +188,7 @@ def main():
             # print(results_dfbnb)
             # print(results_bfs)
         if prev == 150:
-            for r in range(prev, 1001, 20):
+            for r in range(prev, 999, 50): ####
                 
                 filename = 'matr' + cities + '/matr' + str(r) + '.txt'
                 print(r)
