@@ -14,8 +14,8 @@ def main():
         start(filename, al_input, method)
         
     elif hello == 1:
-        # filename = input('Which File? (.txt): ')
-        filename = 'matr100/matr40.txt'
+        filename = input('Which File? (.txt): ')
+        # filename = 'matr100/matr40.txt'
         # filename = 'matr2aaa.txt' ## 30 NODES
         # filename = 'matr3.txt'
         testie = 'test'
@@ -25,22 +25,16 @@ def main():
         ####### METHOD 1: DFBNB, METHOD 2: BFS
         
         al_input = 3
-        ttd = []
-        ttd_2 = []
-        i = 0
-        while i != 10:
-            method = 1
-            result= start(filename, al_input, method)
-            print('DFBnB ',result)
-            ttd.append(result)
-            # # exit()
-            # method = 2
-            # result_2= start(filename, al_input, method)
-            # print('BFS ',result_2)
-            # ttd_2.append(result_2)
-            i += 1
-        print(ttd)
-        # print(ttd_2)
+       
+        # while i != 10:
+        method = 1
+        result= start(filename, al_input, method)
+        print('DFBnB ',result)
+        # # exit()
+        method = 2
+        result_2= start(filename, al_input, method)
+        print('BFS ',result_2)
+        
         
         
         # um = input("Type something here: ")
@@ -86,13 +80,10 @@ def main():
         
         if prev == 0:
             prev = 1
-            j = 1
         elif prev == 20:
             prev = 25
-            j = 5
         elif prev == 130:
             prev = 150
-            j = 20
         # um = int(input('Do you have your results.txt file ready? 1 - Yes'))
         results_dfbnb = []
         times_dfbnb = []

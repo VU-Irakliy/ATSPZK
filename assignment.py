@@ -166,10 +166,10 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         while count_2 < len(matrix):
             
             if counts == int(len(matrix)* 1.25) and start_the_count == True:
-                print('It takes too long (infinitely) under these conditions:')
-                print('Include', include)
-                print('Exclude', exclude)
-                print("We're moving on!")
+                # print('It takes too long (infinitely) under these conditions:')
+                # print('Include', include)
+                # print('Exclude', exclude)
+                # print("We're moving on!")
                 
                 return None, None
             
