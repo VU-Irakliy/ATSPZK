@@ -2,7 +2,7 @@ from algorithm import *
 
 def main():
     print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, 3 - experiment with all algorithms \n any - ZK experiment) \n '))
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - single matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, 3 - experiment with all algorithms, any - ZK experiment) \n '))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -110,7 +110,7 @@ def main():
             zktimes_dfbnb.append([r, time_d])
             zkresults_bfs.append([r, result])
             zktimes_bfs.append([r, time])
-        f = 'ALL_results_'+ cities + 'r' + '20' + '.txt'
+        f = 'ALL_results_'+ cities + 'r' + str(prev) + 'to' +str(end - 1) + '.txt'
         m = open(f, 'w')
         m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
         m.write("Regular \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
