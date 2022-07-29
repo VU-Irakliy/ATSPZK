@@ -2,7 +2,7 @@ from algorithm import *
 
 def main():
     print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
-    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, any - ZK experiment) \n '))
+    hello = int(input('Would you like to run it a matrix or do an experiment? (0 - matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, 3 - experiment with all algorithms \n any - ZK experiment) \n '))
 
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
@@ -72,6 +72,56 @@ def main():
         
         m.close()
         
+        ...
+    elif hello == 3:
+        cities = input("How many cities? ")
+        prev = int(input("From which r value to start from? 1, 25, 150? "))
+        results_dfbnb = []
+        times_dfbnb = []
+        results_bfs = []
+        times_bfs = []
+        zkresults_dfbnb = []
+        zktimes_dfbnb = []
+        zkresults_bfs = []
+        zktimes_bfs = []
+        end = 0
+        step = 1
+        if prev >= 1 and prev <= 20:
+            end =  21
+        elif prev == 25:
+            end = 131
+            step = 5
+        elif prev == 150:
+            end = 999
+            step = 50
+
+        for r in range(prev, end, step):
+            filename = 'matr' + cities + '/matr' + str(r) + '.txt'
+            result_df, time_df = start(filename, 1, 1)
+            result_bf, time_bf = start(filename, 2, 1)
+            results_dfbnb.append([r, result_df])
+            times_dfbnb.append([r, time_df])
+            results_bfs.append([r, result_bf])
+            times_bfs.append([r, time_bf])
+
+            result_d, time_d, without_d = start(filename, 3, 1)
+            result, time, without = start(filename, 3, 2)
+            zkresults_dfbnb.append([r, result_d])
+            zktimes_dfbnb.append([r, time_d])
+            zkresults_bfs.append([r, result])
+            zktimes_bfs.append([r, time])
+        f = 'ALL_results_'+ cities + 'r' + '20' + '.txt'
+        m = open(f, 'w')
+        m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
+        m.write("Regular \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+        m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
+        m.write("ZK \nDFBnB\n" + str(zkresults_dfbnb) + "\n" + str(zktimes_dfbnb) + "\n")
+        m.write("BFS\n" + str(zkresults_bfs) + "\n" + str(zktimes_bfs) + "\n")
+
+        
+        m.close()
+            
+
         ...
     else:
         # method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
