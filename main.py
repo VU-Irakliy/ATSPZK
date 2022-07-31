@@ -73,9 +73,9 @@ def main():
         m.close()
         
         ...
-    elif hello == 3:
-        cities = input("How many cities? ")
-        prev = int(input("From which r value to start from? 1, 25, 150? "))
+    elif hello == 3: #ALL ALGORITHMS
+        cities = input("How many cities? ")  
+        prev = int(input("From which r value to start from? from 10 to 20, 25, 150? ")) # r < 10 would take a lot of time
         results_dfbnb = []
         times_dfbnb = []
         results_bfs = []
@@ -86,7 +86,7 @@ def main():
         zktimes_bfs = []
         end = 0
         step = 1
-        if prev >= 1 and prev <= 20:
+        if prev >= 10 and prev <= 20:
             end =  21
         elif prev == 25:
             end = 131
@@ -94,8 +94,13 @@ def main():
         elif prev == 150:
             end = 999
             step = 50
+        
+        else:
+            print('Please choose a different r value')
+            return 0
 
         for r in range(prev, end, step):
+            print('\n r : ', str(r), '\n')
             filename = 'matr' + cities + '/matr' + str(r) + '.txt'
             result_df, time_df = start(filename, 1, 1)
             result_bf, time_bf = start(filename, 2, 1)

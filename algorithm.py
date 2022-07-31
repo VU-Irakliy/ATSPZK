@@ -91,12 +91,14 @@ def start(filename, al_input, method):
         end_time = dt.now()
         #End
         difference = end_time - start_time
+        print('Time it took (in seconds):', difference.seconds)
         return result, difference.seconds, without
     else:
         result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
         end_time = dt.now()
         #End
         difference = end_time - start_time
+        print('Time it took (in seconds):', difference.seconds, '\n')
         return result, difference.seconds
     #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     

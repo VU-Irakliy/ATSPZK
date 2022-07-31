@@ -62,7 +62,7 @@ def bestFirstSearch(matrix): # Best-First Search
     count = 0
     while reached_minimum == False:
         temp_branch = priority_queue.pop(0) 
-    
+
         if len(temp_branch[0]) != (len(matrix) + 1):
             
             # This is just used to see what it's current minimum is (To see how fast it's perfoming)
