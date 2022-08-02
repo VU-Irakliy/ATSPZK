@@ -76,7 +76,7 @@ def main():
     elif hello == 3: #ALL ALGORITHMS
         cities = input("How many cities? ")  
         prev = int(input("From which r value to start from? from 10 to 20, 25, 150? ")) # r < 10 would take a lot of time
-        inc = int(input('Include BFS? (any - Yes, 0 - No'))
+        inc = int(input('Include BFS? (any - Yes, 0 - No): '))
         results_dfbnb = []
         times_dfbnb = []
         results_bfs = []
