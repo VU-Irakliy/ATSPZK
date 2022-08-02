@@ -76,6 +76,7 @@ def main():
     elif hello == 3: #ALL ALGORITHMS
         cities = input("How many cities? ")  
         prev = int(input("From which r value to start from? from 10 to 20, 25, 150? ")) # r < 10 would take a lot of time
+        inc = int(input('Include BFS? (any - Yes, 0 - No'))
         results_dfbnb = []
         times_dfbnb = []
         results_bfs = []
@@ -103,11 +104,14 @@ def main():
             print('\n r : ', str(r), '\n')
             filename = 'matr' + cities + '/matr' + str(r) + '.txt'
             result_df, time_df = start(filename, 1, 1)
-            result_bf, time_bf = start(filename, 2, 1)
+            if inc != 0:
+                result_bf, time_bf = start(filename, 2, 1)
+                results_bfs.append([r, result_bf])
+                times_bfs.append([r, time_bf])
+
             results_dfbnb.append([r, result_df])
             times_dfbnb.append([r, time_df])
-            results_bfs.append([r, result_bf])
-            times_bfs.append([r, time_bf])
+            
 
             result_d, time_d, without_d = start(filename, 3, 1)
             result, time, without = start(filename, 3, 2)
@@ -119,6 +123,7 @@ def main():
         m = open(f, 'w')
         m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
         m.write("Regular \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
+        m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
         m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
         m.write("ZK \nDFBnB\n" + str(zkresults_dfbnb) + "\n" + str(zktimes_dfbnb) + "\n")
         m.write("BFS\n" + str(zkresults_bfs) + "\n" + str(zktimes_bfs) + "\n")
