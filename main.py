@@ -124,7 +124,6 @@ def main():
         m.write("Result of ATSP with matrices with the size of " + cities + '!\n')
         m.write("Regular \nDFBnB\n" + str(results_dfbnb) + "\n" + str(times_dfbnb) + "\n")
         m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
-        m.write("BFS\n" + str(results_bfs) + "\n" + str(times_bfs) + "\n")
         m.write("ZK \nDFBnB\n" + str(zkresults_dfbnb) + "\n" + str(zktimes_dfbnb) + "\n")
         m.write("BFS\n" + str(zkresults_bfs) + "\n" + str(zktimes_bfs) + "\n")
 
