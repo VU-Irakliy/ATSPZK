@@ -3,7 +3,7 @@ from algorithm import *
 def main():
     print("Remember, all input that have a number mentioned as input, accepts only numbers as input")
     hello = int(input('Would you like to run it a matrix or do an experiment? (0 - single matrix, 1 - demo for experiment,\n 2 - BFS and DFBnB experiment, 3 - experiment with all algorithms, any - ZK experiment) \n '))
-
+    # rec = int(input("Do you want to record these results? "))
     if hello == 0:
         filename = input('Which matrix? (Filename has to end with .txt) \n')
         al_input = int(input("Which algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n 2 - Best-First Search \n any - Zhang & Korf's Algorithm\n Type here: "))
@@ -46,7 +46,7 @@ def main():
         # m.close()
         ...
     elif hello == 2: #REGULAR BFS AND DFBNB EXPERIMENT
-        cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
+        cities = input('How many cities? \n 10, 11, 12, 15, 20, 100\n')
         results_dfbnb = []
         times_dfbnb = []
         results_bfs = []
@@ -134,7 +134,7 @@ def main():
         ...
     else:
         # method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
-        cities = input('How many cities? \n 100, 200, 300, 400, 500 \n')
+        cities = input('How many cities? \n 10, 11, 12, 15, 20, 100, 200, 300, 400, 500 \n')
         prev = int(input('What was the previous r value finished? '))
         
         if prev == 0:

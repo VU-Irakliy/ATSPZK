@@ -9,7 +9,7 @@ import sys
 
 
 """
-Assignment Problem Reference:  https://python.plainenglish.io/hungarian-algorithm-introduction-python-implementation-93e7c0890e15
+Assignment Problem code Reference:  https://python.plainenglish.io/hungarian-algorithm-introduction-python-implementation-93e7c0890e15
 Explanation on how this code works can be partially explained there.
 All modifications will be explained here 
 """
