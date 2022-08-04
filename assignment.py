@@ -57,10 +57,9 @@ def minimum_zero(matrix_with_0s, lined_zero, include, reverse, rad): #rad = Rand
 
 
 
-def possible_solution(matrix, include, reverse, rad): #reverse , safe_net
+def possible_solution(matrix, include, reverse, rad):
     curr_matrix = matrix
 
-    #Transform the matrix to boolean matrix(0 = True, others = False)
     matr_with_0s = (curr_matrix  == 0)
     matr_with_0s_temp = matr_with_0s.copy()
 
@@ -97,7 +96,7 @@ def possible_solution(matrix, include, reverse, rad): #reverse , safe_net
     return result
 
 
-def change_matrix(matrix, lined_rows, lined_columns): # subtracts non lined numbers and increases numbers that are in x > 1 lines
+def change_matrix(matrix, lined_rows, lined_columns):
     curr_matrix = matrix.copy()
     non_zero = []
     
@@ -121,9 +120,8 @@ def change_matrix(matrix, lined_rows, lined_columns): # subtracts non lined numb
             curr_matrix[lined_rows[i]][lined_columns[j]] = curr_matrix[lined_rows[i], lined_columns[j]] + min_num
     
     return curr_matrix
-#problematic
-##Include [[12, 19], [8, 24], [13, 15], [6, 26], [26, 2], [2, 16], [16, 13]]
-##Exclude [[19, 12], [24, 8], [15, 6], [17, 4]]
+
+
 def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     
     copied_matrix = matrix.copy()
@@ -192,7 +190,6 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
 
 
             count = len(result[1]) + len(result[2])
-            # print(len(result[0]), count)
          
             if count < len(temp_matrix):
                 
@@ -214,19 +211,15 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     #  if we hit dead end, the program will try again from the start
                     #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
                     
-                    # membra += 1
                     counts += 1
-                    # print(counts)
                     if start_the_count == False:
                         start_the_count = True
                         counts = 0
                     if membra == 5:
-                        # print('restart')
                         temp_matrix = copied_matrix.copy()
                         membra = 0
                     else:
                         if len(result[1]) > 0 and len(result[2]) > 0:
-                            # print('HMMMM', len(result[1]), len(result[2]))
                             temp_matrix = change_matrix(temp_matrix, 
                                                 result[1],
                                                 result[2])
@@ -237,10 +230,6 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
                     rad = True
                     reverse = False
                     
-                    # if len(result[1]) > 0 and len(result[2]) > 0:
-                    #     temp_matrix = change_matrix(temp_matrix, 
-                    #                         result[1],
-                    #                         result[2])
                     
            
     l = 0
@@ -257,8 +246,6 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
         main_result.append(temp_path)
         l += 1
     total = sum([x[2] for x in main_result])
-    # print('We did it\n')
-    #main_result = [()], total = 0
 
     return (main_result, total)
    
