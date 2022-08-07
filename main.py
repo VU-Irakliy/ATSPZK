@@ -132,7 +132,7 @@ def main():
             
 
         ...
-    else:
+    else: # RUN A SINGLE MATRIX
         # method = int(input('Which method of ZK algorithm would you like to test? \n 1 - Depth-First Branch and Bound \n any - Best-First Search\n Type here: '))
         cities = input('How many cities? \n 10, 11, 12, 15, 20, 100, 200, 300, 400, 500 \n')
         prev = int(input('What was the previous r value finished? '))

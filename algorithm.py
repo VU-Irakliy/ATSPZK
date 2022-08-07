@@ -54,18 +54,11 @@ def execute_the_algorithm(named_matrix, names, matrix, input, method):
 #START MAIN
 def start(filename, al_input, method):
  
-    # filename = 'matr100/matr3.txt' #100 nodes
-    # filename = 'matr2a.txt'  #15 nodes [0, 8, 1, 7, 4, 12, 5, 13, 6, 2, 11, 14, 3, 10, 9, 0]
-    # # filename = 'matr2aaa.txt'
-    # # filename = 'matr3.txt' # 7 nodes
-    # filename = 'matr1aa.txt' # 10 nodes
-    # filename = 'matr3.txt'
-    # filename = input("Enter the name of the file (e.g. example.txt). The matrix has to have first Node as A: ")
-    if filename == 'exit':
-        print('Program has exited.')
-        exit()
+
+    # if filename == 'exit':
+    #     print('Program has exited.')
+    #     exit()
     points = []
-    nodes = []
     read_matr(filename, points)
     print("The matrix has been created!")
     
@@ -83,25 +76,21 @@ def start(filename, al_input, method):
         for j in range(0, len(i)):
             if i[j] == 0:
                 i[j] = math.nan
-    # Start
+    # Start time
     start_time = dt.now()
     if al_input != 1 and al_input != 2:
         
         result, without = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
         end_time = dt.now()
-        #End
+        #End time
         difference = end_time - start_time
         print('Time it took (in seconds):', difference.seconds)
         return result, difference.seconds, without
     else:
         result = execute_the_algorithm(named_points, names, matrix_points, al_input, method)
         end_time = dt.now()
-        #End
+        #End time
         difference = end_time - start_time
         print('Time it took (in seconds):', difference.seconds, '\n')
         return result, difference.seconds
-    #return ( end_time - start_time   or total_time (if took longer than other algorithm))
     
-   
-# filename = 'matr1a.txt'
-# start(filename, 2, 0)

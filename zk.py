@@ -6,13 +6,11 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
     empty = [] #for the first run only
     # exclude = [[5,1]]
     # curr_result = assignment_hungarian(named_matrix, names, matrix, empty, exclude)
+
     curr_result = assignment_hungarian(named_matrix, names, matrix, empty, empty)
-    # print('WHAT', curr_result[1])
     without = False
     
-    # paths = [(x[0], x[1]) for x in curr_result[0]]
     list_of_coords = make_tours(names, curr_result[0])
-    # print('Start ',list_of_coords)
     
     # exit()
     if len(list_of_coords) == 1: ###IF WE ONLY HAVE 1 SUBTOUR/COMPLETE TOUR
@@ -29,14 +27,12 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
 
     for i in range(len(list_of_coords)):
         len_of_tours.append(len(list_of_coords[i]))
-    # print('So So ',len_of_tours)
 
     ### We choose min() function to get the resulting subtour, because there is no solution for if there is more than one subtour with min amount of
     ### edges to eliminate, therefore this is the current method
     cand = list_of_coords[len_of_tours.index(min(len_of_tours))]
-    # print('Candidates',cand)
   
-    
+##############################################################################################################    
     if method == 1:  ## This is Depth-First Branch and Bound Method
         
         children = []
@@ -63,7 +59,7 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
             curr_cost = i[3]
             # print(mm, curr_cost)
             mm += 1
-            # print('Throw it back\n')
+            # print('Back to start\n')
             if minimum == 0 or minimum > curr_cost:
                 # print('Go here ', curr_cost)
                 minimum =  DFBnB_zk_algorithm(named_matrix, names, matrix, i, minimum, how_deep)
@@ -71,9 +67,10 @@ def start_ZK_algorithm(named_matrix, names, matrix, method):
         result = minimum
         print('ZK DFBnB Result')
         
+################################################################################################################
 
     else: # This is Best-First Search Method
-        result = BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total)
+        result = BFS_zk_algorithm(named_matrix, names, matrix, cand)
         print("ZK BFS Result")
 
     return result, without
@@ -84,9 +81,8 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum, how_deep): # 
     tours = make_tours(names, temp_paths)
     how_deep += 1
     if len(tours) == 1:
-        # print('TEMP ',tours,' ', temp_weight)
         return temp_weight
-    # print('Tours ',tours)
+
     len_of_tours = []
     for i in range(len(tours)):
         count = 0
@@ -94,6 +90,7 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum, how_deep): # 
             if j in temp_inc:
                 count += 1
         len_of_tours.append(len(tours[i]) - count)
+
     if min(len_of_tours) == 0:
         mon = sorted(len_of_tours)
         for i in mon:
@@ -102,12 +99,15 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum, how_deep): # 
         cand = tours[len_of_tours.index(mini)]
     else:
         cand = tours[len_of_tours.index(min(len_of_tours))]
+
     for i in temp_inc:
         if i in cand:
             um = cand.pop(cand.index(i))
             del um
+
     children = []
     values = []
+
     for i in range(len(cand)):
         exclude = temp_exc.copy()
         exclude.append(cand[i])
@@ -144,7 +144,7 @@ def DFBnB_zk_algorithm(named_matrix, names, matrix, data, minimum, how_deep): # 
             
 
 
-def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First Search Method
+def BFS_zk_algorithm(named_matrix, names, matrix, cand): # Best-First Search Method
     priority_queue = []
     # values = []
     
@@ -165,7 +165,6 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
     priority_queue = sorted(priority_queue, key= lambda x: x[3])  ### x[0] - PATH RESULT,  x[1] - EXCLUDE, x[2] - INCLUDE, x[3] - WEIGHT 
     # values = sorted(values)
     # print(values)
-   ## [[59, 67], [3, 1], [84, 46], [8, 19]]
     closed_priority = []
     i = 0
     while min_not_found:
@@ -184,15 +183,7 @@ def BFS_zk_algorithm(named_matrix, names, matrix, cand, min_total): # Best-First
             if len(tours) == 1:
                 # print(tours)
                 min_not_found = False
-                # cost = 0
-                # for list in tours:
-                #     for coord in list:
-                #         cost += matrix[coord[0]][coord[1]]
-                # return cost
-                # print('\nWinning Conditions: \n')
-                # print('Exclude ',temp_exc)
-                # print('Include ', temp_inc)
-                # print('Result ',tours,' ', temp_weight)
+              
                 return temp_weight
             
             len_of_tours = []

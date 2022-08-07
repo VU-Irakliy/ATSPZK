@@ -37,7 +37,7 @@ def minimum_zero(matrix_with_0s, lined_zero, include, reverse, rad): #rad = Rand
                 if  np.sum(matrix_with_0s[i] == True) > 0 and min_row[0] > np.sum(matrix_with_0s[i] == True):
                     min_row = [np.sum(matrix_with_0s[i] == True), i]
 
-        # Marked the specific row and column as False
+      
         temp = np.where(matrix_with_0s[min_row[1]] == True)[0]
         #If there is only 1 True, it will choose it
         if rad == True:
@@ -77,6 +77,7 @@ def possible_solution(matrix, include, reverse, rad):
 
     lined_columns = []
     not_lined_flag = True
+
     while not_lined_flag:
         not_lined_flag = False
         for i in range(len(not_lined_rows)):
@@ -156,7 +157,7 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
     count_2 = 0
     rad = False
     reverse = False
-    membra = 0
+    restart_count = 0
     start_the_count = False
     while count < len(matrix):
         # Additional while loop has been added, because it would give inaccurate results due to Include and Exclude involvement in the Assignment Problem
@@ -209,25 +210,26 @@ def assignment_hungarian(named_matrix, names, matrix, include, exclude):
 
                 else:
                     #  if we hit dead end, the program will try again from the start
-                    #  with the chance of the different outcome (because if x > 1 0s, than it pick a 0 randomly)
+                    #  with the chance of the different outcome (because if x > 1 0s, then it might pick another 0 randomly)
                     
                     counts += 1
                     if start_the_count == False:
                         start_the_count = True
                         counts = 0
-                    if membra == 5:
+                    if restart_count == 5:
                         temp_matrix = copied_matrix.copy()
-                        membra = 0
+                        restart_count = 0
                     else:
                         if len(result[1]) > 0 and len(result[2]) > 0:
                             temp_matrix = change_matrix(temp_matrix, 
                                                 result[1],
                                                 result[2])
                         else:
-                            membra += 1
+                            restart_count += 1
                     
-
+                    ####Random choice is activated
                     rad = True
+                    #Bring back the initial matrix traversal
                     reverse = False
                     
                     

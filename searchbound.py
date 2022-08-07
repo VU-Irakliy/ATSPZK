@@ -37,7 +37,6 @@ def depthFirstBranchAndBound(matrix, minimum_cost, temp_cost, used_rows, startin
         else:
             
             minimum_cost = temp_cost
-            # This is just used to see what it's current minimum is (To see how fast it's perfoming)
             
         
         return minimum_cost
@@ -59,7 +58,7 @@ def bestFirstSearch(matrix): # Best-First Search
     del temp
     priority_queue = sorted(priority_queue, key= lambda x: x[1])
     reached_minimum = False
-    count = 0
+    # count = 0
     while reached_minimum == False:
         temp_branch = priority_queue.pop(0) 
 
