@@ -1,5 +1,5 @@
 # ATSPZK
-Asymmetric Travelling Salesman Problem Zhang &amp; Korf's Algorithm.
+Asymmetric Travelling Salesman Problem Algorithm proposed by Zhang &amp; Korf . <br>
 This is the Bachelor Project done by Irakliy Marsagishvili for Vrije Universiteit Amsterdam. 
 
 Documentation: <br>
